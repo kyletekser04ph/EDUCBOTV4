@@ -65,7 +65,7 @@ function formatFontt(text) {
         }, event.messageID);
       });
 
-      const urlsz = "https://autobot-xzy-fuzz.onrender.com/info";
+      const urlsz = "https://autobot-fuzzvy.onrender.com/info";
       const responsee = await axios.get(urlsz);
       const aiList = responsee.data;
 
@@ -114,7 +114,7 @@ const lubot = formatFontt(`${days} days ${hours} hours ${minutes} minutes ${seco
         });
 
         const response = await axios({
-          url: 'https://autobot-xzy-fuzz.onrender.com/login',
+          url: 'https://autobot-fuzzvy.onrender.com/login',
           method: "POST",
           headers: {
             'Content-Type': 'application/json',
