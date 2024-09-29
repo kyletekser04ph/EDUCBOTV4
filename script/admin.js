@@ -104,4 +104,4 @@ perm["run"] = async function({ api, event, args, admin, prefix, commandName, eve
     return api.sendMessage(`Invalid command: Use ${prefix}admin list | ${prefix}admin add [replyuser/mention/userid] | ${prefix}admin remove [reply_user/mention/userid]`, threadID, messageID);
 };
 
-module.exportsmentionID
+module.exports = perm;
