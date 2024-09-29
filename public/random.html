@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Random Quote</title>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+ <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700">
+ <style>
+		body {
+				font-family: 'Montserrat', sans-serif;
+				font-weight: 400;
+				background-color: #E3E3E3; /* New background color */
+				margin: 0;
+				padding: 0;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 100vh;
+		}
+
+		.container {
+				background-color: #FFFFFF;
+				border-radius: 12px;
+				padding: 60px;
+				width: 60%; /* Increased width */
+				box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Larger shadow for depth */
+				text-align: center;
+		}
+
+		h1 {
+				font-size: 2.5em; /* Larger font size */
+				color: #181335;
+				margin-bottom: 30px; /* Increased spacing */
+		}
+
+		.quote {
+				font-size: 1.8em; /* Larger font size */
+				color: #333;
+				margin-bottom: 30px;
+		}
+
+		.author {
+				font-size: 1.5em; /* Larger font size */
+				color: #555;
+				font-weight: 700;
+				text-align: right;
+				margin-top: 20px;
+		}
+
+		.buttons {
+				margin-top: 40px;
+		}
+
+		.button {
+				background-color: #181335;
+				color: white;
+				border: none;
+				padding: 15px 30px; /* Larger padding for bigger buttons */
+				font-size: 1.1em; /* Larger text on buttons */
+				border-radius: 6px;
+				cursor: pointer;
+				margin-right: 10px;
+		}
+
+		.button:hover {
+				background-color: #4537AC;
+		}
+ </style>
+</head>
+<body>
+
+ <div class="container">
+		<h1>Random Quote</h1>
+		<div class="quote">
+				<i class="fa fa-quote-left fa-lg"></i>
+				<p class="random-quote"><span id="text">Click below to get a quote</span></p>
+		</div>
+		<div class="author">- <span id="author"></span></div>
+		<div class="buttons">
+				<button class="button" id="new-quote">New Quote</button>
+		</div>
+ </div>
+
+ <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+ <script>
+		var randomQuote = "";
+		var randomAuthor = "";
+
+		function getQuote() {
+				$.ajax({
+						url: "https://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=jsonp&jsonp=?",
+						method: "GET",
+						dataType: "jsonp",
+						success: function (request) {
+								randomQuote = request.quoteText;
+								randomAuthor = request.quoteAuthor || "Unknown";
+								$('#text').html(randomQuote);
+								$('#author').html(randomAuthor);
+						},
+						error: function () {
+								$('#text').text('An error occurred! Try again.');
+								$('#author').text('Unknown');
+						}
+				});
+		}
+
+		$(document).ready(function () {
+				$("#new-quote").click(function () {
+						getQuote();
+				});
+		});
+ </script>
+</body>
+</html>
