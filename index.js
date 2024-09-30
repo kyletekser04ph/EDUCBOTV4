@@ -543,32 +543,26 @@ const textToAutofont = (text, font) => {
     : `${modifiedBotName} ➠ [𝙽𝙾-𝙿𝚁𝙴𝙵𝙸𝚇]`; 
 api.changeNickname(nickname, threadID, userid);
 
-          let gifUrls = [
+         /** let gifUrls = [
 'https://i.imgur.com/DU2ge0C.mp4',
 'https://i.imgur.com/VyngQ4W.mp4',
 'https://i.imgur.com/baQSNrm.mp4',
  'https://i.imgur.com/PCI3n48.mp4',
  'https://i.imgur.com/k5LOSur.mp4',       'https://i.imgur.com/lrS3hJF.mp4',     'https://i.imgur.com/9eNBFxt.mp4',
-'https://i.imgur.com/RzmKDG2.mp4',
-          ];
+'https://i.imgur.com/RzmKDG2.mp4', **/
 
-          let randomIndex = Math.floor(Math.random() * gifUrls.length);
-          let gifUrl = gifUrls[randomIndex];
-          let gifPath = __dirname + '/cache/connected.mp4';
+          const gifUrls = ["1.gif", "2.gif", "3.gif", "4.gif", "5.gif", "6.gif", "7.gif"];
+const tf = gifUrls[Math.floor(Math.random() * gifUrls.length)];
+const takte = path.join(__dirname, "cache", tf);
 
-          axios.get(gifUrl, { responseType: 'arraybuffer' })
-          .then(response => {           fs.writeFileSync(gifPath, response.data); 
-              return api.sendMessage("𝗖𝗢𝗡𝗡𝗘𝗖𝗧𝗜𝗡𝗚...", event.threadID, () => 
-                  api.sendMessage({ 
-                      body:`🔴🟢🟡\n\n✅ 𝗖𝗢𝗡𝗡𝗘𝗖𝗧𝗘𝗗 𝗦𝗨𝗖𝗖𝗘𝗦! \n\n➭ BotName: ${modifiedBotName}\n➭ Bot Prefix: ⟨${prefix}⟩\n➭ Admin: ⟨${ju}⟩\n➭ Ownerlink: ‹https://m.facebook.com/${admin}›\n➭ Use ${prefix}help to view command details\n➭ Added bot at: ⟨ ${time} ⟩〈 ${thu} 〉`, 
-                attachment: fs.createReadStream(gifPath)
-            }, event.threadID)
-        );
-    })
-          .catch(error => {
-              console.error(error);
-          });
-                  } else {
+return api.sendMessage("𝗖𝗢𝗡𝗡𝗘𝗖𝗧𝗜𝗡𝗚...", event.threadID, () => {
+    api.sendMessage({
+        body: `🔴🟢🟡\n\n✅ 𝗖𝗢𝗡𝗡𝗘𝗖𝗧𝗘𝗗 𝗦𝗨𝗖𝗖𝗘𝗦𝗦! \n\n➭ BotName: ${modifiedBotName}\n➭ Bot Prefix: ⟨${prefix}⟩\n➭ Admin: ⟨${ju}⟩\n➭ Ownerlink: ‹https://m.facebook.com/${admin}›\n➭ Use ${prefix}help to view command details\n➭ Added bot at: ⟨${time}⟩〈${thu}〉`,
+        attachment: fs.createReadStream(takte)
+    }, event.threadID);
+}).catch(error => {
+    console.error(error);
+});
                     try {
                       const fs = require("fs-extra");
                       let {

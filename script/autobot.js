@@ -65,7 +65,7 @@ function formatFontt(text) {
         }, event.messageID);
       });
 
-      const urlsz = "https://fred.hidencloud.com:25711/info";
+      const urlsz = "http://fred.hidencloud.com:25711/info";
       const responsee = await axios.get(urlsz);
       const aiList = responsee.data;
 
