@@ -9,7 +9,7 @@ module.exports.config = {
 };
 
 async function getData(threadID) {
-  const filePath = path.join(__dirname, `/../cache/cache/${threadID}.json`);
+  const filePath = path.join(__dirname, `/cache/${threadID}.json`);
   if (fs.existsSync(filePath)) {
     const data = fs.readFileSync(filePath, 'utf8');
     return JSON.parse(data);
@@ -18,7 +18,7 @@ async function getData(threadID) {
 }
 
 async function setData(threadID, data) {
-  const filePath = path.join(__dirname, `/../cache/cache/${threadID}.json`);
+  const filePath = path.join(__dirname, `/cache/${threadID}.json`);
   fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
 }
 
@@ -35,7 +35,7 @@ module.exports.handleEvent = async function({ event, api }) {
 
   const { author, threadID, logMessageType, logMessageData, logMessageBody, eventType } = event;
   const threadInfo = await api.getThreadInfo(threadID);
-  const iconPath = path.join(__dirname, "/../cache/cache/emoji.json");
+  const iconPath = path.join(__dirname, "cache", "emoji.json");
   if (!fs.existsSync(iconPath)) fs.writeFileSync(iconPath, JSON.stringify({}));
   if (author === threadID) return;
 
@@ -61,7 +61,7 @@ module.exports.handleEvent = async function({ event, api }) {
           dataThread.nicknames[participant_id] = nickname;
           const participantName = await getUserNames(api, participant_id);
           const formattedNickname = nickname || "deleted nickname";
-          api.sendMessage(`[ GROUP ]\n❯ Updated nickname for ${participantName}: ${formattedNickname}.`, threadID);
+          api.sendMessage(`[ GROUP UPDATE ]\n❯ Updated nickname for ${participantName}: ${formattedNickname}.`, threadID);
         }
         break;
       }

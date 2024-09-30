@@ -26,9 +26,6 @@ module.exports.handleEvent = async function ({ api, event }) {
         "12:00:00 PM": {
             message: "🌞 𝗔𝗨𝗧𝗢𝗚𝗥𝗘𝗘𝗧 🌞\n▬▬▬▬▬▬▬▬▬▬▬▬▬\n⏰ time now: 12:00 PM\n\nGood afternoon! Kumain na kayo"
         },
-        "01:00:00 PM": {
-            message: "🌤️ 𝗔𝗨𝗧𝗢𝗚𝗥𝗘𝗘𝗧 🌤️\n▬▬▬▬▬▬▬▬▬▬▬▬▬\n⏰ time now: 01:00 PM\n\nGood afternoon! 🌅 Hope your day is going well. Let's keep the momentum going!"
-        },
         "02:00:00 PM": {
             message: "🌞 𝗔𝗨𝗧𝗢𝗚𝗥𝗘𝗘𝗧 🌞\n▬▬▬▬▬▬▬▬▬▬▬▬▬\n⏰ time now: 02:00 PM\n\n Mag miryenda muna kayo"
         },
