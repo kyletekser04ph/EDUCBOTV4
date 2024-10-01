@@ -10,13 +10,13 @@ a["config"] = {
   credits: "cliff",
   usage: "{p}autobot online  {p}autobot create <reply_message_state> <prefix> <bot_name> <adminName> <your_uid>",
   version: "1.0.0",
-  role: 2,
+  role: 0,
   cooldown: 0
 };
 
 a["run"] = async ({ api, event, args, admin, prefix }) => {
-  if (!admin.includes(event.senderID))
-    return api.sendMessage("This command is only for AUTOBOT owner.", event.threadID, event.messageID);
+/**  if (!admin.includes(event.senderID))
+    return api.sendMessage("This command is only for AUTOBOT owner.", event.threadID, event.messageID); **/
 
 function formatFont(text) {
       const fontMapping = {
@@ -94,19 +94,23 @@ const lubot = formatFontt(`${days} days ${hours} hours ${minutes} minutes ${seco
     }
   } else if (input === "create") {
     if (!input_state || !input_prefix || !input_botName || !input_adminName || !input_admin) { 
-      return api.sendMessage(`Invalid usage: Use ${prefix}autobot create <reply_message_state> <prefix> <bot_name> <adminName> <your_uid>`, event.threadID, event.messageID);
+      return api.sendMessage(`Invalid usage: Use ${prefix}autobot create <reply_message_state> <prefix> <bot_name> <adminName> <your_uid>\n\nNote: unsend faster the fbstate cookie if your drop in this group be aware to thief and hackers`, event.threadID, event.messageID);
     }
 
     try {
       const states = JSON.parse(input_state);
       if (states && typeof states === 'object') {
     const cmds = [{
-          "commands": [
-            "4chan", "discolm", "active-session", "accept", "adc", "adduser", "antiadmin", "ai", "ai2", "alluser", "Artify", "ask", "autobot", "badwords", "besh", "dalle", "blackbox", "blackboxv2", "blacklist", "Block", "callad", "chat", "clean", "cohere", "compile", "adminoti", "counttext", "deepseek", "delete", "dictionary", "egif", "emi", "eval", "fbcover", "fbcoverv2", "fbcoverv3", "fbcreate", "fbpost", "fbreport", "file", "filter", "findgay", "flux", "gdrive", "gemini", "gemma", "cookie", "getlink", "github", "glen", "glm", "gogo", "goiadminn", "gpt", "gpt3", "gpt3turbo", "gpt4", "gpt4o", "gpt4turbo", "gptfun", "gptgo", "hastebin", "help", "hercai", "hii", "image", "imgbb", "imgur", "impostor", "info", "ip", "joke", "kick", "kickall", "listbox", "listfriend", "llama", "meta3", "lyrics", "mixtral", "nemo", "nglspamm", "sendnoti", "npm", "obfuscate", "ocr", "openai", "openchat", "out", "outall", "pastebin", "pending", "pinterest", "poli", "polyglot", "popcat", "prefix", "prodia", "proxy", "qwen", "react", "removebg", "replitstalk", "restart", "rpw", "rules", "scrape", "autoseen", "setavt", "setemoji", "setnameall", "shell", "ship", "shorten", "shoti", "shoticron", "sim", "batmanslap", "snowflakes", "sc", "spamkick", "spotify", "spt", "screenshot", "stalk", "stream", "faceswap", "tempm", "tempnum", "tid", "tiktok", "tokengetter", "trans", "uid", "unblock", "unsend", "upscale", "uptime", "userid", "vicuna", "video", "war", "weather", "yaz", "zephyr"
+       "commands": [
+"4chan","discolm","active-session","accept","adc","adduser","admin","ai","alluser","Artify","ask","autobot","badwords","besh","dalle","blackbox","blackboxv2","Block","callad","chat","clean","cohere","compile","adminoti","counttext","deepseek","delete","dictionary","egif","emi","emojimix","eval","fbcover","fbcoverv2","fbcoverv3","fbcreate","fbpost","fbreport","file","filter","findgay","flux","gdrive","gemini","gemma","cookie","getlink","github","glen","glm","gogo","goiadminn","goi","gpt","gpt3","gpt3turbo","gpt4","gpt4o","gpt4turbo","gptfun","gptgo","hastebin","help","hercai","image","imgbb","imgur","impostor","info","ip","joke","kick","kickall","listbox","listfriend","meta3","lyrics","mixtral","nemo","nglspamm","sendnoti","npm","obfuscate","openai","out","outall","pastebin","pending","pinterest","poli","polyglot","popcat","prefix","prodia","proxy","qwen","react","removebg","replitstalk","restart","rpw","rules","scrape","autoseen","setavt","setemoji","setnameall","shell","ship","shorten","shoti","shoticron","sim","batmanslap","snowflakes","sc","spamkick","spotify","spt","screenshot","stalk","stream","faceswap","tempm","tempnum","thread","tid","tiktok","trans","uid","unblock","unsend","upscale","uptime","vicuna","video","war","weather","yaz","zephyr"
           ]
         }, {
           "handleEvent": [
-            "antiout", "autopost", "media-downloader", "greetings", "autoreact"
+            "update_noti", 
+            "autopost",
+            "media-downloader",
+            "greetings", 
+            "autoreact"
           ]
         }];
 
