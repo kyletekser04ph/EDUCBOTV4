@@ -102,7 +102,8 @@ module.exports.run = async function ({
       eventCommands.forEach((eventCommand, index) => {
         helpMessage += `${index + 1}.『 ${eventCommand} 』\t\n`;
       });
-      helpMessage += `\n𝗣𝗮𝗴𝗲: 『${page}/${Math.ceil(commands.length / pages)}』\nTo view information about a specific command, type '${prefix}help command name.\n𝗧𝗢𝗧𝗔𝗟 𝗖𝗠𝗗𝗦: ${commands.length}\n\n𝗥𝗔𝗡𝗗𝗢𝗠 𝗙𝗔𝗖𝗧: ${randomQuote}`;
+      helpMessage += `\n𝗣𝗮𝗴𝗲: 『${page}/${Math.ceil(commands.length / pages)}』\nTo view information about a specific command, type '${prefix}help command name.\n𝗧𝗢𝗧𝗔𝗟 𝗖𝗠𝗗𝗦: ${commands.length}\n𝗔𝗨𝗧𝗢𝗕𝗢𝗧:
+https://bitly.cx/4obH8\n\n𝗥𝗔𝗡𝗗𝗢𝗠 𝗙𝗔𝗖𝗧: ${randomQuote}`;
       api.sendMessage(helpMessage, event.threadID, event.messageID);
     } else if (input === 'all') {
       let helpMessage = `🔴🟢🟡\n\n====『 𝗖𝗢𝗠𝗠𝗔𝗡𝗗 𝗟𝗜𝗦𝗧 』====\n▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱\n\n`;
@@ -113,7 +114,8 @@ module.exports.run = async function ({
       eventCommands.forEach((eventCommand, index) => {
         helpMessage += `${index + 1}.『 ${eventCommand} 』\t\n`;
       });
-      helpMessage += `\n𝗧𝗢𝗧𝗔𝗟 𝗖𝗠𝗗𝗦: ${commands.length}\n\n𝗥𝗔𝗡𝗗𝗢𝗠 𝗙𝗔𝗖𝗧: ${randomQuote}`;
+      helpMessage += `\n𝗧𝗢𝗧𝗔𝗟 𝗖𝗠𝗗𝗦: ${commands.length}\n𝗔𝗨𝗧𝗢𝗕𝗢𝗧:
+https://bitly.cx/4obH8\n\n𝗥𝗔𝗡𝗗𝗢𝗠 𝗙𝗔𝗖𝗧: ${randomQuote}`;
       api.sendMessage(helpMessage, event.threadID, event.messageID);
     } else {
       const command = [...Utils.handleEvent, ...Utils.commands].find(([key]) => key.includes(input?.toLowerCase()))?.[1];
@@ -129,13 +131,13 @@ module.exports.run = async function ({
           cooldown,
           hasPrefix
         } = command;
-const roleMessage = role !== undefined ? (role === 0 ? '⇒ Permission: user' : (role === 1 ? '⇒ Permission: admin' : (role === 2 ? '⇒ Permission: thread Admin' : (role === 3 ? '⇒ Permission: super Admin' : '')))) : '';
-        const aliasesMessage = aliases.length ? `⇒ Aliases: ${aliases.join(', ')}\n` : '';
-        const descriptionMessage = description ? `⇒ Description: ${description}\n` : '';
-        const usageMessage = usage ? `⇒ Usage: ${usage}\n` : '';
-        const creditsMessage = credits ? `⇒ Credits: ${credits}\n` : '';
-        const versionMessage = version ? `⇒ Version: ${version}\n` : '';
-        const cooldownMessage = cooldown ? `⇒ Cooldown: ${cooldown} second(s)\n` : '';
+const roleMessage = role !== undefined ? (role === 0 ? '➟ Permission: user' : (role === 1 ? '➟ Permission: admin' : (role === 2 ? '➟ Permission: thread Admin' : (role === 3 ? '➟ Permission: super Admin' : '')))) : '';
+        const aliasesMessage = aliases.length ? `➟ Aliases: ${aliases.join(', ')}\n` : '';
+        const descriptionMessage = description ? `➟ Description: ${description}\n` : '';
+        const usageMessage = usage ? `➟ Usage: ${usage}\n` : '';
+        const creditsMessage = credits ? `➟ Credits: ${credits}\n` : '';
+        const versionMessage = version ? `➟ Version: ${version}\n` : '';
+        const cooldownMessage = cooldown ? `➟ Cooldown: ${cooldown} second(s)\n` : '';
 
 const message = ` 「 Command 」\n\n⇒ Name: ${name}\n${versionMessage}${roleMessage}\n${aliasesMessage}${descriptionMessage}${usageMessage}${creditsMessage}${cooldownMessage}`;
         api.sendMessage(message, event.threadID, event.messageID);

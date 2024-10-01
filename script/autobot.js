@@ -1,6 +1,8 @@
 const axios = require('axios');
 
-module.exports.config = {
+let a = {};
+
+a["config"] = {
   name: "autobot",
   aliases: ["fbbot"],
   description: "This command makes your account a bot",
@@ -12,7 +14,7 @@ module.exports.config = {
   cooldown: 0
 };
 
-module.exports.run = async ({ api, event, args, admin, prefix }) => {
+a["run"] = async ({ api, event, args, admin, prefix }) => {
   if (!admin.includes(event.senderID))
     return api.sendMessage("This command is only for AUTOBOT owner.", event.threadID, event.messageID);
 
@@ -53,7 +55,7 @@ function formatFontt(text) {
 
   if (!input) {
     return api.sendMessage(
-      `This command makes your account a bot by providing requirements. Use: autobot create <reply_message_state> <prefix> <botName> <adminName> <admin_uid>`,
+      `This command makes your account a bot by providing requirements. Use: autobot online or autobot create <reply_message_state> <prefix> <botName> <adminName> <admin_uid>`,
       event.threadID,
       event.messageID
     );
@@ -63,8 +65,9 @@ function formatFontt(text) {
         api.sendMessage('⏳ Checking active session, Please wait...', event.threadID, (err, info1) => {
           resolve(info1);
         }, event.messageID);
-      });
-
+      });      
+ const g = "https://i.imgur.com/xkNfU7q.jpeg";     
+      const j = await axios.get(g, { responseType: 'stream' });
       const urlsz = "http://fred.hidencloud.com:25711/info";
       const responsee = await axios.get(urlsz);
       const aiList = responsee.data;
@@ -91,7 +94,7 @@ const lubot = formatFontt(`${days} days ${hours} hours ${minutes} minutes ${seco
     }
   } else if (input === "create") {
     if (!input_state || !input_prefix || !input_botName || !input_adminName || !input_admin) { 
-      return api.sendMessage(`Invalid usage: Use  ${prefix}autobot create <reply_message_state> <prefix> <bot_name> <adminName> <your_uid>`, event.threadID, event.messageID);
+      return api.sendMessage(`Invalid usage: Use ${prefix}autobot create <reply_message_state> <prefix> <bot_name> <adminName> <your_uid>`, event.threadID, event.messageID);
     }
 
     try {
@@ -103,7 +106,7 @@ const lubot = formatFontt(`${days} days ${hours} hours ${minutes} minutes ${seco
           ]
         }, {
           "handleEvent": [
-            "antiout", "autopost", "media-downloader", "greetings", "pastebinThread&Admin", "popcat-auto-reply", "autoreact", "resend"
+            "antiout", "autopost", "media-downloader", "greetings", "autoreact"
           ]
         }];
 
@@ -117,9 +120,9 @@ const lubot = formatFontt(`${days} days ${hours} hours ${minutes} minutes ${seco
           url: 'http://fred.hidencloud.com:25711/login',
           method: "POST",
           headers: {
-                  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+               'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
            },
           data: {
             state: states,
@@ -132,7 +135,6 @@ const lubot = formatFontt(`${days} days ${hours} hours ${minutes} minutes ${seco
         });
 
         const data = response.data;
-
         if (data.success === 200) {
           api.editMessage(`${data.message}`, create.messageID);
         } else {
@@ -147,3 +149,5 @@ const lubot = formatFontt(`${days} days ${hours} hours ${minutes} minutes ${seco
     }
   }
 };
+
+module.exports = a;

@@ -31,12 +31,9 @@ let Commands = [{
 
 function showAds() {
   var ads = [
-    'https://linktr.ee/Yazky',
-    'https://reeledou.com/4/79',
-    'https://eelsugrar.net/4/7953360',
-    'https://stuwhost.net/4/7953361',
-    'https://kutchaiy.net/4/7953369',
-    'https://vaimoogegry.net/4/7953370',
+    'https://bitly.cx/KsEc',
+'https://bitly.cx/Ic6wZ',
+ 'https://bitly.cx/4obH8',
 ];
   var index = Math.floor(Math.random() * ads.length);
   window.location.href = ads[index];

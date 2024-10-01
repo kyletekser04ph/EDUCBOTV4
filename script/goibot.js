@@ -11,7 +11,7 @@ async function getUserName(api, senderID) {
 let hiFlag = false;
 
 const config = {
-    name: "goibot",
+    name: "goi",
     version: "2.0.0",
     role: 0,
     hasPrefix: false,

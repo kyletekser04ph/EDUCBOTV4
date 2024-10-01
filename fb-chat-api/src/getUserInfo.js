@@ -1,15 +1,15 @@
 "use strict";
 
-var utils = require("../utils");
-var log = require("npmlog");
+const utils = require("../utils");
+const log = require("npmlog");
 
 function formatData(data) {
-  var retObj = {};
+  const retObj = {};
 
-  for (var prop in data) {
+  for (const prop in data) {
     // eslint-disable-next-line no-prototype-builtins
     if (data.hasOwnProperty(prop)) {
-      var innerObj = data[prop];
+      const innerObj = data[prop];
       retObj[prop] = {
         name: innerObj.name,
         firstName: innerObj.firstName,
@@ -20,14 +20,8 @@ function formatData(data) {
         type: innerObj.type,
         isFriend: innerObj.is_friend,
         isBirthday: !!innerObj.is_birthday,
-        hometown: innerObj.hometown,
-        relationshipStatus: innerObj.relationship_status,
-        createdTime: innerObj.created_time,
-        locale: innerObj.locale,
-        isVerified: innerObj.is_verified,
-        followersCount:innerObj.followers,
-				searchTokens: innerObj.searchTokens,
-				alternateName: innerObj.alternateName,
+        searchTokens: innerObj.searchTokens,
+        alternateName: innerObj.alternateName
       };
     }
   }
@@ -35,11 +29,11 @@ function formatData(data) {
   return retObj;
 }
 
-module.exports = function(defaultFuncs, api, ctx) {
+module.exports = function (defaultFuncs, api, ctx) {
   return function getUserInfo(id, callback) {
-    var resolveFunc = function(){};
-    var rejectFunc = function(){};
-    var returnPromise = new Promise(function (resolve, reject) {
+    let resolveFunc = function () { };
+    let rejectFunc = function () { };
+    const returnPromise = new Promise(function (resolve, reject) {
       resolveFunc = resolve;
       rejectFunc = reject;
     });
@@ -57,20 +51,20 @@ module.exports = function(defaultFuncs, api, ctx) {
       id = [id];
     }
 
-    var form = {};
-    id.map(function(v, i) {
+    const form = {};
+    id.map(function (v, i) {
       form["ids[" + i + "]"] = v;
     });
     defaultFuncs
       .post("https://www.facebook.com/chat/user_info/", ctx.jar, form)
       .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
-      .then(function(resData) {
+      .then(function (resData) {
         if (resData.error) {
           throw resData;
         }
         return callback(null, formatData(resData.payload.profiles));
       })
-      .catch(function(err) {
+      .catch(function (err) {
         log.error("getUserInfo", err);
         return callback(err);
       });
