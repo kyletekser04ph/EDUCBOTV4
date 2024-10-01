@@ -551,7 +551,7 @@ api.changeNickname(nickname, threadID, userid);
  'https://i.imgur.com/k5LOSur.mp4',       'https://i.imgur.com/lrS3hJF.mp4',     'https://i.imgur.com/9eNBFxt.mp4',
 'https://i.imgur.com/RzmKDG2.mp4', **/
 
-          const gifUrls = ["1.gif", "2.gif", "3.gif", "4.gif", "5.gif", "6.gif", "7.gif"];
+          const gifUrls = ["1.gif", "2.gif", "3.gif", "4.gif", "5.gif", "6.gif", "7.gif", "8.gif", "9.gif"];
 const tf = gifUrls[Math.floor(Math.random() * gifUrls.length)];
 const takte = path.join(__dirname, "cache", tf);
 
@@ -563,8 +563,9 @@ return api.sendMessage("𝗖𝗢𝗡𝗡𝗘𝗖𝗧𝗜𝗡𝗚...", event.thre
 }).catch(error => {
     console.error(error);
 });
-                    try {
-                      const fs = require("fs-extra");
+  } else {
+    try {
+      const fs = require("fs-extra");
                       let {
                         threadName,
                         participantIDs
@@ -628,7 +629,13 @@ return api.sendMessage("𝗖𝗢𝗡𝗡𝗘𝗖𝗧𝗜𝗡𝗚...", event.thre
           const randomGif = gifs[Math.floor(Math.random() * gifs.length)];
           const gifPath = path.join(__dirname, "gif", randomGif);
 
-                        api.sendMessage({ body: `${name} ${type}, There are now ${participantIDs.length} members in this group, please be kind and enjoy!`, attachment: fs.createReadStream(gifPath) }, event.threadID);
+    let mentions = [];
+    mentions.push({
+        tag: name,
+        id: event.senderID
+    });
+
+    api.shareContact(`${name} ${type}, There are now ${participantIDs.length} members in this group, please be kind and enjoy!`, leaverID, event.threadID);
                     });
                 });
             }

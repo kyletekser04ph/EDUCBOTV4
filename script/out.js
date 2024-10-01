@@ -1,4 +1,4 @@
-module.exports.config = {
+module.exports["config"] = {
   name: "out",
   version: "1.0.0",
   role: 2,
@@ -9,7 +9,7 @@ module.exports.config = {
   cooldowns: 10,
 };
 
-module.exports.run = async function({ api, event, args, admin }) {
+module.exports["run"] = async function({ api, event, args, admin }) {
   const leave = args.join(" ");
 let threadInfo = await api.getThreadInfo(leave);
 
@@ -19,7 +19,7 @@ let threadInfo = await api.getThreadInfo(leave);
     } else if (!isNaN(args[0])) {
       await api.removeUserFromGroup(api.getCurrentUserID(), leave);
     }
-    api.sendMessage(`Successfull left on\n⇒𝗧𝗵𝗿𝗲𝗮𝗱𝗡𝗮𝗺𝗲: ${threadInfo.threadName}\n⇒𝗧𝗵𝗿𝗲𝗮𝗱𝗜𝗗: ${leave}`, event.threadID, event.messageID);
+    api.sendMessage(`✅ Successfully left the thread.\n𝗧𝗵𝗿𝗲𝗮𝗱𝗡𝗮𝗺𝗲: ${threadInfo.threadName}\n𝗧𝗵𝗿𝗲𝗮𝗱𝗜𝗗: ${leave}`, event.threadID, event.messageID);
   } catch (error) {
     api.sendMessage(`Error leaving the thread: ${error.message}`, event.threadID, event.messageID);
   }

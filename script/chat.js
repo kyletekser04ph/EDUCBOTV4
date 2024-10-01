@@ -45,7 +45,7 @@ module.exports.handleEvent = async function({ api, event }) {
 
 module.exports.run = async function({ api, event, args }) {
     const { writeFileSync } = require("fs");
-    const path = __dirname + "/cache/chat.json";
+    const path = "./cache/chat.json";
 
     if (!(String(event.threadID) in chat)) chat[String(event.threadID)] = false;
 

@@ -115,4 +115,91 @@ post["handleEvent"] = async function ({ api, admin }) {
     });
 };
 
+
+/** function baho(api) {
+cron.schedule("", async function () { **/
+
+/**      const currentTime = Date.now();
+if (currentTime - lastPostTime < 30 * 60 * 1000) {
+return;
+}
+
+lastPostTime = currentTime;       
+
+try {
+const response = await axios.get("https://catfact.ninja/fact");
+
+const apple = response.data.fact;
+const message = `𝚁𝙰𝙽𝙳𝙾𝙼 𝙲𝙰𝚃 𝙵𝙰𝙲𝚃: “${apple}”`;
+
+api.setOptions({
+selfListen: false, 
+});
+baho(api);
+
+};
+
+const formData = {
+input: {
+composer_entry_point: "inline_composer",
+composer_source_surface: "timeline",
+idempotence_token: `${Date.now()}_FEED`,
+source: "WWW",
+message: {
+text: message,
+
+},
+
+audience: {
+
+privacy: {
+
+base_state: "EVERYONE",
+
+},
+
+},
+
+actor_id: api.getCurrentUserID(),
+
+},
+
+};
+
+
+const postResult = await api.httpPost(
+
+"https://www.facebook.com/api/graphql/",
+
+{
+
+av: api.getCurrentUserID(),
+
+fb_api_req_friendly_name: "ComposerStoryCreateMutation",
+
+fb_api_caller_class: "RelayModern",
+
+doc_id: "7711610262190099",
+
+variables: JSON.stringify(formData),
+
+}
+
+);
+
+
+const postID = postResult.data.story_create.story.legacy_story_hideable_id;
+
+const postLink = `https://www.facebook.com/${api.getCurrentUserID()}/posts/${postID}`;
+api.sendMessage(`[AUTO POST]\nLink: ${postLink}`, admin); 
+
+} catch (error) {
+console.error();
+}
+}, {
+scheduled: true,
+timezone: "Asia/Manila",
+});
+} **/
+
 module.exports = post;

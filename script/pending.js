@@ -28,7 +28,7 @@ module.exports.run = async function({ api, event, args, admin, prefix }) {
         const list = [...spam, ...pending].filter(group => group.isSubscribed && group.isGroup);
 
         for (const single of list) {
-            msg += `𓊈 ${index++} 𓊉\n  『${single.name} </> ${single.threadID}』\n`;
+            msg += `${index++}. 『${single.name} </> ${single.threadID}』\n`;
         }
 
         if (list.length === 0) {
