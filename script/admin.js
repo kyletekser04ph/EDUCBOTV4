@@ -9,7 +9,7 @@ perm["config"] = {
     hasPrefix: false,
     aliases: [],
     description: "Permission to use the bot",
-    credits: 'Developer',
+    credits: 'cliff',
     usage: "{p}admin list | {p}admin add [replyuser/mention/userid] | {p}admin remove [reply_user/mention/userid]",
     cooldowns: 0,
 };

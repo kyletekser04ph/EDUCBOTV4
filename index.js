@@ -177,6 +177,9 @@ const routes = [{
 },{
   path: '/error',
   file: '404.html'
+}, {
+  path: '/obs',
+  file: 'obs.html'
 },{
   path: '/deob',
   file: 'de.html'
