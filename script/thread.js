@@ -35,13 +35,13 @@ join["run"] = async function ({ api, event, args, prefix}) {
             }
 
             const groupIdentifier = args[1];
-            const groupList = await api.getThreadList(10, null, ['INBOX']);
+            const groupList = await api.getThreadList(25, null, ['INBOX']);
             const filteredList = groupList.filter(group => group.threadName !== null);
 
             let selectedGroup;
 
             if (!isNaN(groupIdentifier)) {
-                const groupIndex = parseInt(groupIdentifier, 10);
+                const groupIndex = parseInt(groupIdentifier, 25);
 
                 if (groupIndex <= 0 || groupIndex > filteredList.length) {
                     api.sendMessage('Invalid group number. Please choose a valid group.', event.threadID);

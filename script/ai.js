@@ -21,7 +21,7 @@ module.exports.run = async function ({ api, event, args }) {
               });
           });
           setTimeout(() => {            api.unsendMessage(messageInfo.messageID);
-          }, 5000);         
+          }, 8000);         
           return;
   }
   
