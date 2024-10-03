@@ -4,8 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>⩇⩇:⩇⩇</title>
+    <body>
+    <div class="loading" id="loading">
+        <img src="/XOsX.gif" alt="Loading...">
+    </div>
+    <script>
+        setTimeout(() => {
+            document.getElementById('loading').style.display = 'none';
+        }, 1200);
+    </script>
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+
+        .loading { position: absolute; display: flex;  justify-content: center; align-items: center; height: 100%; width: 110%; } img { width: 150px; height: auto; }
 
         * {
             box-sizing: border-box;

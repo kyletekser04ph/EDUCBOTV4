@@ -5,6 +5,9 @@
   width: 100%;
 }
 
+.loading { position: absolute; display: flex;  justify-content: center; align-items: center; height: 100%; width: 110%; } img { width: 150px; height: auto; }
+
+
 .section {
   background-color: rgb(63, 25, 170);
   justify-content: center;
