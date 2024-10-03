@@ -3,7 +3,7 @@ const fs = require("fs-extra");
 const spamStatesFile = "spam.json";
 let spamStates = loadSpamStates();
 let messageCounts = {};
-const spamThreshold = 15;
+const spamThreshold = 10;
 const spamInterval = 60000;
 
 function loadSpamStates() {

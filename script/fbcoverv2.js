@@ -23,14 +23,16 @@ module.exports.run = async function({ api, event, args, prefix }) {
           return api.sendMessage(`Invalid Usage: Use ${prefix}fbcoverv2 <name>  <color> <address>  <email> <subname> <number>.`, event.threadID);
       }
 
-      const apiUrl = `https://hiroshi-rest-api.replit.app/canvas/fbcoverv2?name=${encodeURIComponent(name)}&color=${encodeURIComponent(color)}&address=${encodeURIComponent(address)}&email=${encodeURIComponent(email)}&subname=${encodeURIComponent(subname)}&sdt=${encodeURIComponent(sdt)}&uid=${event.senderID}`;
+      const apiUrl = `https://betadash-api-swordslush.vercel.app/fbcover?name=${encodeURIComponent(name)}&color=${encodeURIComponent(color)}&address=${encodeURIComponent(address)}&email=${encodeURIComponent(email)}&subname=${encodeURIComponent(subname)}&uid=${event.senderID}&sdt=${encodeURIComponent(sdt)}`;
 
-      api.sendMessage("🔍 | Generating Your Fbcover canvas...", event.threadID);
+      const message = await api.sendMessage(`Generating Your Fbcover canvas...`, event.threadID);
 
       const response = await axios.get(apiUrl, { responseType: 'arraybuffer' });
-      const coverPhotoPath = path.join(__dirname, "fbCover.jpg");
+      const coverPhotoPath = path.join(__dirname, "cache", "fbCover.jpg");
 
       fs.writeFileSync(coverPhotoPath, response.data);
+
+api.unsendMessage(message.messageID);    
 
       api.sendMessage({
           body: "Here is your Fbcover ❤️",
@@ -39,7 +41,6 @@ module.exports.run = async function({ api, event, args, prefix }) {
           fs.unlinkSync(coverPhotoPath);
       });
   } catch (error) {
-      console.error('Error:', error);
       api.sendMessage("An error bawal kana gumamit haha", event.threadID);
   }
 };

@@ -10,9 +10,7 @@ module.exports.config = {
 };
 
 const rules = `
-╔══════════════════════════════════╗
-║          🌟 GROUP RULES 🌟       ║
-╚══════════════════════════════════╝
+🌟 GROUP RULES 🌟
 
 1. 🚫 Do not buy/sell in group
 2. ⚠️ Do not change the box information
@@ -34,9 +32,7 @@ const rules = `
 18. 🔞 No 18+ content
 19. 🌙 Don't mention Cliff at night
 
-╔══════════════════════════════════╗
-║     Follow the rules, be kind!   ║
-╚══════════════════════════════════╝`;
+Follow the rules, be kind!`;
 
 module.exports.run = async function ({ api, event }) {
   api.sendMessage(rules, event.threadID, event.messageID);

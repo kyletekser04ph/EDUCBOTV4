@@ -13,7 +13,7 @@ async function getUserName(api, senderID) {
 }
 
 module.exports.config = {
-  name: "batmanslap",
+  name: "trash",
   version: "1.0.0",
   role: 0,
   hasPrefix: false,
@@ -21,21 +21,20 @@ module.exports.config = {
   description: "",
   usages: "{p}{n} mention",
   cooldown: 5,
-  aliases: ["slap"]
+  aliases: ["basura"]
 };
 
 module.exports.run = async function ({ api, event, args }) {
   const mentionID = Object.keys(event.mentions)[0];
   if (!mentionID) {
-    return api.sendMessage('Please mention a user to slap!', event.threadID, event.messageID);
+    return api.sendMessage('Please mention a user!', event.threadID, event.messageID);
   }
 
   const userInfo = await api.getUserInfo(mentionID);
   const realName = userInfo[mentionID].name;
 
-  const senderID = event.senderID;
-  const url = `https://betadash-api-swordslush.vercel.app/slap?uid=${senderID}&uid2=${mentionID}`;
-  const filePath = path.join(__dirname, 'cache', 'slap.png');
+  const url = `https://betadash-api-swordslush.vercel.app/trash?uid=${mentionID}`;
+  const filePath = path.join(__dirname, 'cache', 'trash.png');
 
   try {
     let response = await get(url, { responseType: 'arraybuffer' });
@@ -46,7 +45,7 @@ module.exports.run = async function ({ api, event, args }) {
       tag: name,
       id: event.senderID
     });
-    api.sendMessage({ body: `${realName} slapped by ${name}`, attachment: fs.createReadStream(filePath) }, event.threadID, () => {
+    api.sendMessage({ body: `kupal kaba boss`, attachment: fs.createReadStream(filePath) }, event.threadID, () => {
       fs.unlinkSync(filePath);
     });
   } catch (error) {

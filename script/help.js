@@ -87,7 +87,7 @@ module.exports.run = async function ({
       eventCommands.forEach((eventCommand, index) => {
         helpMessage += `${index + 1}.『 ${eventCommand} 』\t\n`;
       });
-      helpMessage += `\n𝗣𝗮𝗴𝗲: 『${page}/${Math.ceil(commands.length / pages)}』\nTo view information about a specific command, type '${prefix}help command name.\n𝗧𝗢𝗧𝗔𝗟 𝗖𝗠𝗗𝗦: ${commands.length}\n\n𝗥𝗔𝗡𝗗𝗢𝗠 𝗙𝗔𝗖𝗧: ${randomQuote}`;
+      helpMessage += `\n𝗣𝗮𝗴𝗲: 『${page}/${Math.ceil(commands.length / pages)}』\nTo view information about a specific command, type '${prefix}help command name.\n\n𝗧𝗢𝗧𝗔𝗟 𝗖𝗠𝗗𝗦: ${commands.length}\n𝗔𝗨𝗧𝗢𝗕𝗢𝗧: https://autobotzzx-ads-web.vercel.app\n\n𝗥𝗔𝗡𝗗𝗢𝗠 𝗙𝗔𝗖𝗧: ${randomQuote}`;
       api.sendMessage(helpMessage, event.threadID, event.messageID);
     } else if (!isNaN(input)) {
       const page = parseInt(input);
@@ -102,8 +102,8 @@ module.exports.run = async function ({
       eventCommands.forEach((eventCommand, index) => {
         helpMessage += `${index + 1}.『 ${eventCommand} 』\t\n`;
       });
-      helpMessage += `\n𝗣𝗮𝗴𝗲: 『${page}/${Math.ceil(commands.length / pages)}』\nTo view information about a specific command, type '${prefix}help command name.\n𝗧𝗢𝗧𝗔𝗟 𝗖𝗠𝗗𝗦: ${commands.length}\n𝗔𝗨𝗧𝗢𝗕𝗢𝗧:
-https://bitly.cx/4obH8\n\n𝗥𝗔𝗡𝗗𝗢𝗠 𝗙𝗔𝗖𝗧: ${randomQuote}`;
+      helpMessage += `\n𝗣𝗮𝗴𝗲: 『${page}/${Math.ceil(commands.length / pages)}』\nTo view information about a specific command, type '${prefix}help command name.\n\n𝗧𝗢𝗧𝗔𝗟 𝗖𝗠𝗗𝗦: ${commands.length}\n𝗔𝗨𝗧𝗢𝗕𝗢𝗧:
+https://autobotzzx-ads-web.vercel.app/\n\n𝗥𝗔𝗡𝗗𝗢𝗠 𝗙𝗔𝗖𝗧: ${randomQuote}`;
       api.sendMessage(helpMessage, event.threadID, event.messageID);
     } else if (input === 'all') {
       let helpMessage = `🔴🟢🟡\n\n====『 𝗖𝗢𝗠𝗠𝗔𝗡𝗗 𝗟𝗜𝗦𝗧 』====\n▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱\n\n`;
@@ -114,8 +114,8 @@ https://bitly.cx/4obH8\n\n𝗥𝗔𝗡𝗗𝗢𝗠 𝗙𝗔𝗖𝗧: ${randomQuo
       eventCommands.forEach((eventCommand, index) => {
         helpMessage += `${index + 1}.『 ${eventCommand} 』\t\n`;
       });
-      helpMessage += `\n𝗧𝗢𝗧𝗔𝗟 𝗖𝗠𝗗𝗦: ${commands.length}\n𝗔𝗨𝗧𝗢𝗕𝗢𝗧:
-https://bitly.cx/4obH8\n\n𝗥𝗔𝗡𝗗𝗢𝗠 𝗙𝗔𝗖𝗧: ${randomQuote}`;
+      helpMessage += `\n\n𝗧𝗢𝗧𝗔𝗟 𝗖𝗠𝗗𝗦: ${commands.length}\n𝗔𝗨𝗧𝗢𝗕𝗢𝗧:
+https://autobotzzx-ads-web.vercel.app/\n\n𝗥𝗔𝗡𝗗𝗢𝗠 𝗙𝗔𝗖𝗧: ${randomQuote}`;
       api.sendMessage(helpMessage, event.threadID, event.messageID);
     } else {
       const command = [...Utils.handleEvent, ...Utils.commands].find(([key]) => key.includes(input?.toLowerCase()))?.[1];

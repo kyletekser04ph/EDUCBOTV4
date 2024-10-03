@@ -35,15 +35,14 @@ module.exports.run = async function({ api, event, args }) {
   try {
     name = await getUserName(api, event.senderID);
   } catch (error) {
-    console.error('Error fetching user name:', error);
     name = "User";
   }
 
   try {
-    const apiUrl = `https://ggwp-yyxy.onrender.com/canvas/fbpost?uid=${event.senderID}&text=${encodeURIComponent(text)}&name=${name}`;
+    const apiUrl = `https://betadash-api-swordslush.vercel.app/fbpost?uid=${event.senderID}&text=${encodeURIComponent(text)}&name=${name}`;
 
     const response = await axios.get(apiUrl, { responseType: 'arraybuffer' });
-    const coverPhotoPath = path.join(__dirname, "post.jpg");
+    const coverPhotoPath = path.join(__dirname, "cache", "post.jpg");
 
     fs.writeFileSync(coverPhotoPath, response.data);
 
@@ -54,7 +53,6 @@ module.exports.run = async function({ api, event, args }) {
       fs.unlinkSync(coverPhotoPath);
     });
   } catch (error) {
-    console.error('Error:', error);
     api.sendMessage("An error occurred while processing your request.", event.threadID);
   }
 };

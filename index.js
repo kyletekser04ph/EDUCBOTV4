@@ -480,7 +480,13 @@ async function accountLogin(state, enableCommands = [], prefix, botName, adminNa
           let database = fs.existsSync('./data/database.json') ? JSON.parse(fs.readFileSync('./data/database.json', 'utf8')) : createDatabase();
           let data = Array.isArray(database) ? database.find(item => Object.keys(item)[0] === event?.threadID) : {};
           let adminIDS = data ? database : createThread(event.threadID, api);
-          let blacklist = (JSON.parse(fs.readFileSync('./data/history.json', 'utf-8')).find(blacklist => blacklist.userid === userid) || {}).blacklist || [];
+          let be = JSON.parse(fs.readFileSync('./data/history.json', 'utf-8'));
+
+// Find the user by their userid
+let user = be.find(entry => entry.userid === userid) || {};
+
+// Extract the blacklist array or set it as an empty array if not found
+let blacklist = user.blacklist || [];
           let hasPrefix = (event.body && aliases((event.body || '')?.trim().toLowerCase().split(/ +/).shift())?.hasPrefix == false) ? '' : prefix;
           let [command, ...args] = ((event.body || '').trim().toLowerCase().startsWith(hasPrefix?.toLowerCase()) ? (event.body || '').trim().substring(hasPrefix?.length).trim().split(/\s+/).map(arg => arg.trim()) : []);
           if (hasPrefix && aliases(command)?.hasPrefix === false) {
@@ -496,11 +502,15 @@ async function accountLogin(state, enableCommands = [], prefix, botName, adminNa
               return;
             }
           }
-          if (event.body && event.body?.toLowerCase().startsWith(prefix.toLowerCase()) && aliases(command)?.name) {
-            if (blacklist.includes(event.senderID)) {
-              api.sendMessage("We're sorry, but you've been banned from using bot. If you believe this is a mistake or would like to appeal, please contact one of the bot admins for further assistance.", event.threadID, event.messageID);
-              return;
-            }
+          if (event.body && event.body.toLowerCase().startsWith(prefix.toLowerCase()) && aliases(command)?.name) {
+              if (blacklist.includes(event.senderID)) {
+                  api.sendMessage(
+                    "We're sorry, but you've been banned from using the bot. If you believe this is a mistake or would like to appeal, please contact one of the bot admins for further assistance.",
+                    event.threadID,
+                    event.messageID
+                  );
+                  return;
+              }
           }
           if (event.body !== null) {
             if (event.logMessageType === "log:subscribe") {

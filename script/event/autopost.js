@@ -16,7 +16,7 @@ post["handleEvent"] = async function ({ api, admin }) {
 
     async function sendMotivation() {
       const currentTime = Date.now();
-        if (currentTime - lastPostTime < 30 * 60 * 1000) { /** for hours [< 30 * 60 * 60 * 1000] **/
+        if (currentTime - lastPostTime < 40 * 60 * 1000) { /** for hours [< 30 * 60 * 60 * 1000] **/
             return;
         }
         lastPostTime = currentTime;
@@ -109,7 +109,7 @@ post["handleEvent"] = async function ({ api, admin }) {
         timezone: "Asia/Manila"
     });
 
-    cron.schedule('*/30 * * * *', sendMotivation, { // every 30 minutes 
+    cron.schedule('*/40 * * * *', sendMotivation, { // every 40 minutes 
         scheduled: true,
         timezone: "Asia/Manila"
     });
