@@ -17,7 +17,7 @@ v["run"] = async function({api: yazky, event: e, args: a}) {
   if (!i) {
     return yazky.sendMessage("Please provide text to convert to char codes.", e.threadID, e.messageID);
   }
-  const charCodes = i.split('').map(char => char.charCodeAt(0)).join(' '); 
+  const charCodes = i.split('').map(char => char.charCodeAt(0)).join(', '); 
   yazky.sendMessage(`String.fromCharCode('${charCodes}');`, e.threadID, e.messageID);
 };
 module.exports = v;

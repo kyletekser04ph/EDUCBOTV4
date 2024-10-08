@@ -7,6 +7,7 @@ module.exports.config = {
     version: "1.0.5",
     credits: "Mirai Team",
     role: 2,
+    usage: "{p}pending list | {p}pending approve by_number/groupID | {p}pending cancel by_number/groupID",
     hasPrefix: false,
     usePrefix: false,
     description: "Manage bot's waiting messages",
@@ -15,9 +16,19 @@ module.exports.config = {
 };
 
 module.exports.run = async function({ api, event, args, admin, prefix }) {
-  if (!admin.includes(event.senderID))
-   return api.sendMessage("This Command is only for AUTOBOT owner.", event.threadID, event.messageID);   
+    if (!admin.includes(event.senderID))
+        return api.sendMessage("This Command is only for AUTOBOT owner.", event.threadID, event.messageID);
+
     const { threadID, messageID } = event;
+
+    if (!args[0]) {
+        return api.sendMessage(
+            `Invalid usage: Use\n{p}pending list\n{p}pending approve by_number/groupID\n{p}pending cancel by_number/groupID`,
+            threadID,
+            messageID
+        );
+    }
+
     let msg = "";
     let index = 1;
     let count = 0;
@@ -35,9 +46,21 @@ module.exports.run = async function({ api, event, args, admin, prefix }) {
             return api.sendMessage("「PENDING」There is no thread in the pending list", threadID, messageID);
         }
 
+        if (args[0] === "list") {
+            return api.sendMessage(`»「PENDING」«❮ The whole number of threads to approve is: ${list.length} thread(s) ❯\n\n${msg}`, threadID, messageID);
+        }
+
         if (args[0] === "approve" || args[0] === "cancel") {
             const isApprove = args[0] === "approve";
             const threadIndexes = args.slice(1).map(Number).filter(n => !isNaN(n) && n > 0 && n <= list.length);
+
+            if (threadIndexes.length === 0) {
+                return api.sendMessage(
+                    `Invalid usage: Use\n{p}pending list\n{p}pending approve by_number/groupID\n{p}pending cancel by_number/groupID`,
+                    threadID,
+                    messageID
+                );
+            }
 
             for (const singleIndex of threadIndexes) {
                 const groupThreadID = list[singleIndex - 1].threadID;
@@ -83,7 +106,7 @@ module.exports.run = async function({ api, event, args, admin, prefix }) {
 
                     const ju = textToAutofont(userName, autofont.sansbold);
                     const jh = textToAutofont(je, autofont.sansbold);
-                     const d = textToAutofont(prefix, autofont.sansbold); 
+                    const d = textToAutofont(prefix, autofont.sansbold);
 
                     const approvalMessage = `🔴🟢🟡\n\n✅ 𝗖𝗢𝗡𝗡𝗘𝗖𝗧𝗘𝗗 𝗦𝗨𝗖𝗖𝗘𝗦! \n\n➭ BotName: ${jh}\n➭ Bot Prefix: ⟨${prefix}⟩\n➭ Approved-by: ⟨${ju}⟩\n➭ Owner: ‹https://m.me/${admin}›\n➭ Use ${prefix}help to view command details\n➭ Added bot at: ⟨${moment().tz('Asia/Manila').format("HH:mm:ss - DD/MM/YYYY")}⟩〈${moment().tz('Asia/Manila').format('dddd')}〉`;
 
@@ -101,9 +124,12 @@ module.exports.run = async function({ api, event, args, admin, prefix }) {
 
             return api.sendMessage(`Successfully ${isApprove ? 'approved' : 'canceled'} ${count} threads`, threadID, messageID);
         } else {
-            return api.sendMessage(`»「PENDING」«❮ The whole number of threads to approve is: ${list.length} thread(s) ❯\n\n${msg}`, threadID, messageID);
+            return api.sendMessage(
+                `Invalid usage: Use\n{p}pending list\n{p}pending approve by_number/groupID\n{p}pending cancel by_number/groupID`,
+                threadID,
+                messageID
+            );
         }
-
     } catch (error) {
         return api.sendMessage("Cannot get pending list", threadID, messageID);
     }

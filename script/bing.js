@@ -1,66 +1,38 @@
-const axios = require('axios');
-const fs = require('fs');
-const path = require('path');
+const axios = require("axios");
 
 module.exports.config = {
-    name: "dalle",
-    description: "Fetch and download images from Bing",
-    cooldown: 5,
-    aliases: ["bing"],
-    role: 0, 
-    hasPrefix: false,
-    cooldowns: 5,
-    credits: "cliff", //api by kshtiz 
-    usage: "{p}{n} <query>",
+  name: "bing",
+  credits: "AkhiroDEV",
+  version: "1.0.0",
+  role: 0,
+  hasPrefix: false,
+  description: "A conversational AI with a clear function",
+  usage: "{p}{n} <message> | clear"
 };
 
-module.exports.run = async function ({ api, event, args }) {
-    try {
-        const { messageID } = event;
-        const query = args.join(' ');
+module.exports.run = async function({ api, event, args }) {
+  const user = event.senderID;
+  const query = args.join(" ").trim();
 
-        if (!query) {
-            return api.sendMessage('Please provide a search query.', event.threadID, messageID);
-        }
+  switch (query.toLowerCase()) {
+    case "clear":
+      try {
+        await axios.get(`https://akhirotech.onrender.com/api/clear?userId=${encodeURIComponent(user)}`);
+        return api.sendMessage("Your conversation has been cleared.", event.threadID, event.messageID);
+      } catch (error) {
+        return api.sendMessage(`ERROR: Unable to clear the conversation. ${error.message}`, event.threadID, event.messageID);
+      }
 
-        const cliff = await new Promise(resolve => { 
-            api.sendMessage(`🔍 | Generating ${query} image...`, event.threadID, (err, info1) => {
-                resolve(info1);
-            }, event.messageID);
-        });
-
-        const apiUrl = `https://dall-e-tau-steel.vercel.app/kshitiz?prompt=${encodeURIComponent(query)}`;
-        const response = await axios.get(apiUrl);
-
-        if (response.data && response.data.response) {
-            const imageUrl = response.data.response;
-            const fileName = `image.jpg`;
-            const filePath = path.join(__dirname, fileName);
-
-            const imageResponse = await axios.get(imageUrl, {
-                responseType: 'arraybuffer'
-            });
-
-            fs.writeFileSync(filePath, Buffer.from(imageResponse.data, 'binary'));
-
-            const message = {
-                body: `Here is your request`,
-                attachment: fs.createReadStream(filePath),   
-            };
-
-            api.sendMessage(message, event.threadID, (error, info) => {
-                if (error) {
-                    console.error('Error sending message:', error);
-                } else {
-                    fs.unlinkSync(filePath);
-                    api.unsendMessage(cliff.messageID);
-                }
-            });
-        } else {
-            api.sendMessage('No image found.', event.threadID);
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        api.sendMessage(`An error occurred: ${error.message}`, event.threadID);
-    }
+    default:
+      if (!query) {
+        return api.sendMessage("Please provide a query.", event.threadID, event.messageID);
+      }
+      try {
+        const AkhiroTECH = await axios.get(`https://akhirotech.onrender.com/api?model=bing&q=${encodeURIComponent(query)}&userId=${user}`);
+        const reply = AkhiroTECH.data.message;
+        return api.sendMessage(reply, event.threadID, event.messageID);
+      } catch (error) {
+        return api.sendMessage(`ERROR: ${error.message}`, event.threadID, event.messageID);
+      }
+  }
 };

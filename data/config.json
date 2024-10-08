@@ -6,7 +6,7 @@
       "adminName": [],
       "devMode": false,
       "database": false,
-      "restartTime": 99999
+      "restartTime": 20
 		},
 		"fcaOption": {
 			"forceLogin": true,
@@ -14,7 +14,7 @@
 			"logLevel": "silent",
 			"updatePresence": true,
 			"selfListen": false,
-			"userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64",
+			"userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3",
 			"online": true,
 			"autoMarkDelivery": false,
 			"autoMarkRead": true		

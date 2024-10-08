@@ -57,10 +57,8 @@ module.exports.handleEvent = async function({ api, event }) {
       api.removeUserFromGroup(senderID, threadID); 
       warnings[senderID] = 1;
     } else {
-      api.sendMessage({
-             body: `Last Warning! Your message has been detected Badwords "${messageContent}" if you two attempts you will kick you automatically!`,
-             attachment: h.data
-         }, threadID, messageID);
+      api.sendMessage(`Last Warning! Your message has been detected Badwords "${messageContent}" if you two attempts you will kick you automatically!`,
+      threadID, messageID);
     }
   }
 };

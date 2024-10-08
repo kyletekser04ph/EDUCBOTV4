@@ -21,19 +21,20 @@ module.exports.config = {
   description: "",
   usages: "{p}{n} mention",
   cooldown: 5,
-  aliases: ["basura"]
+  aliases: []
 };
 
 module.exports.run = async function ({ api, event, args }) {
   const mentionID = Object.keys(event.mentions)[0];
   if (!mentionID) {
-    return api.sendMessage('Please mention a user!', event.threadID, event.messageID);
+    return api.sendMessage('Please mention a user', event.threadID, event.messageID);
   }
 
   const userInfo = await api.getUserInfo(mentionID);
   const realName = userInfo[mentionID].name;
 
-  const url = `https://betadash-api-swordslush.vercel.app/trash?uid=${mentionID}`;
+  const senderID = event.senderID;
+  const url = `https://api-canvass.vercel.app/trash?userid=${mentionID}`;
   const filePath = path.join(__dirname, 'cache', 'trash.png');
 
   try {
@@ -45,7 +46,7 @@ module.exports.run = async function ({ api, event, args }) {
       tag: name,
       id: event.senderID
     });
-    api.sendMessage({ body: `kupal kaba boss`, attachment: fs.createReadStream(filePath) }, event.threadID, () => {
+    api.sendMessage({ attachment: fs.createReadStream(filePath) }, event.threadID, () => {
       fs.unlinkSync(filePath);
     });
   } catch (error) {

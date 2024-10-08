@@ -219,7 +219,6 @@ const lubot = formatFontt(`${days} days ${hours} hours ${minutes} minutes ${seco
     "snowflakes",
     "sc",
     "spamkick",
-    "spamleave",
     "spotify",
     "spt",
     "screenshot",

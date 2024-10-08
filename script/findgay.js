@@ -33,7 +33,7 @@ module.exports.run = async function ({ event, api }) {
     const randomUserID = getRandomUserID(friends);
     const userInfo = await api.getUserInfo(randomUserID);
     const realName = userInfo[randomUserID].name;
-    const avatarURL = `https://graph.facebook.com/${randomUserID}/picture?width=1500&height=1500&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`;
+    const avatarURL = `https://api-canvass.vercel.app/rainbow?userid=${randomUserID}`;
 
     const pathSave = path.join(__dirname, "cache", `${randomUserID}_gay.png`);
 
@@ -48,7 +48,6 @@ module.exports.run = async function ({ event, api }) {
     });
 
   } catch (error) {
-    console.error("Error generating image:", error.message);
     api.sendMessage("An error occurred while generating the image.", event.threadID);
   }
 };

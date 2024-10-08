@@ -1,10 +1,10 @@
 module.exports.config = {
-  name: "delete",
+  name: "del",
   version: "1.0.0",
   role: 2,
   credits: "CLIFF",
   description: "delete file",
-  aliases: ["del"],
+  aliases: [],
   usages: "{p}delete {filename}",
   hasPrefix: false,
   cooldown: 5,

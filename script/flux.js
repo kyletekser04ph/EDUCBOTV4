@@ -16,7 +16,7 @@ c["config"] = {
 c["run"] = async ({ api, event, args }) => {
     const p = args.join(" ");
     if (!p) {
-                 const tf = await new Promise(resolve => {
+        const tf = await new Promise(resolve => {
                 api.sendMessage('Please provide a prompt first', event.threadID, (err, info) => {
                     resolve(info);
                 });

@@ -35,7 +35,7 @@ module.exports.run = async function ({ api, event, args }) {
   }
 
   try {
-    const geminiApi = `https://deku-rest-api.gleeze.com`;
+    const geminiApi = `https://deku-rest-apis.ooguy.com`;
     if (event.type == "message_reply") {
       if (event.messageReply.attachments[0]?.type == "photo") {
         url = encodeURIComponent(event.messageReply.attachments[0].url);

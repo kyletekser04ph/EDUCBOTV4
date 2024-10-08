@@ -34,7 +34,7 @@ module.exports.run = async function ({ api, event, args }) {
   const realName = userInfo[mentionID].name;
 
   const senderID = event.senderID;
-  const url = `https://betadash-api-swordslush.vercel.app/slap?uid=${senderID}&uid2=${mentionID}`;
+  const url = `https://api-canvass.vercel.app/slap?batman=${senderID}&superman=${mentionID}`;
   const filePath = path.join(__dirname, 'cache', 'slap.png');
 
   try {
@@ -46,7 +46,7 @@ module.exports.run = async function ({ api, event, args }) {
       tag: name,
       id: event.senderID
     });
-    api.sendMessage({ body: `${realName} slapped by ${name}`, attachment: fs.createReadStream(filePath) }, event.threadID, () => {
+    api.sendMessage({ body: `${realName} slapped by ${name}`, mentions, attachment: fs.createReadStream(filePath) }, event.threadID, () => {
       fs.unlinkSync(filePath);
     });
   } catch (error) {

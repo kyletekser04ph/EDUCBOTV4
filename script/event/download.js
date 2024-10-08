@@ -225,17 +225,16 @@ async function fbDownloader(url) {
     const syukk = event.body;
     if (regex.test(syukk)) {
       try {
-        const atay = await axios.get(`https://cprojectapisjonellv2.adaptable.app/api/fbdl?url=${encodeURIComponent(syukk)}`);
-        if (atay.data && atay.data.url && atay.data.url.data.length > 0) {
-          const aww = atay.data.url.data[0].url;
-          const juk = atay.data.title;
+        const atay = await axios.get(`https://betadash-search-download.vercel.app/insta?url=${encodeURIComponent(syukk)}`);
+        if (atay.data && atay.data.result && atay.data.result.length > 0) {
+          const aww = atay.data.result[0]._url;
           const jkm = await axios.get(aww, { responseType: "stream" });
           const ffath = path.join(downloadDirectory, `insta.mp4`);
           const trar = fs.createWriteStream(ffath);
           jkm.data.pipe(trar);
           trar.on('finish', () => {
             api.sendMessage({
-              body: `𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 Instagram Reels\n\n𝗬𝗔𝗭𝗞𝗬 𝗕𝗢𝗧 𝟮.𝟬.𝟬𝘃`,
+              body: `𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 Instagram\n\n𝗬𝗔𝗭𝗞𝗬 𝗕𝗢𝗧 𝟮.𝟬.𝟬𝘃`,
               attachment: fs.createReadStream(ffath)
             }, event.threadID, () => fs.unlinkSync(ffath), event.messageID);
           });
@@ -250,11 +249,11 @@ async function fbDownloader(url) {
     const capLink = event.body;
     if (regex.test(capLink)) {
       try {
-        const downloadData = await axios.get(`https://cprojectapisjonellv2.adaptable.app/api/capcut?url=${encodeURIComponent(capLink)}`);
-        if (downloadData.data && downloadData.data.url) {
+        const downloadData = await axios.get(`https://www.noobs-api.000.pe/dipto/alldl?url=${encodeURIComponent(capLink)}`);
+        if (downloadData.data && downloadData.data.result) {
           const bi = downloadData.data.result.title;
         const des = downloadData.data.result.description;
-          const fileUrl = downloadData.data.url;
+          const fileUrl = downloadData.data.result;
           const fileName = `capcut_${Date.now()}.mp4`;
           const filePath = path.join(downloadDirectory, fileName);
           const response = await axios.get(fileUrl, { responseType: 'stream' });
@@ -263,7 +262,7 @@ async function fbDownloader(url) {
           response.data.pipe(fileStream);
           fileStream.on('finish', () => {
             api.sendMessage({
-              body: '𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 CapCut\n\nTitle: ${bi}\nDescription: ${des}\n\n𝗬𝗔𝗭𝗞𝗬 𝗕𝗢𝗧 𝟮.𝟬.𝟬𝘃',
+              body: '𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 CapCut\n\n𝗬𝗔𝗭𝗞𝗬 𝗕𝗢𝗧 𝟮.𝟬.𝟬𝘃',
               attachment: fs.createReadStream(filePath)
             }, event.threadID, () => fs.unlinkSync(filePath));
           });

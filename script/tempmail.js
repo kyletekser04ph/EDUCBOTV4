@@ -1,68 +1,58 @@
-const axios = require("axios");
+const { TempMail } = require("1secmail-api");
+
+function generateRandomId() {
+    var length = 6;
+    var characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    var randomId = '';
+
+    for (var i = 0; i < length; i++) {
+        randomId += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+
+    return randomId;
+}
 
 module.exports.config = {
     name: "tempm",
-    version: "1.0",
-    author: "cliff",
-    countDown: 5,
+    role: 0,
+    credits: "Deku",
+    description: "Generate temporary email (auto get inbox)",
+    usages: "[tempmail]",
     hasPrefix: false,
     cooldown: 5,
-    role: 0,
-    description: {
-        en: "generate temporary email and retrieve inbox messages",
-        vi: "generate temporary email and retrieve inbox messages",
-    },
-    commandCategory: "tool",
-    usages: "{pn} gen\n{pn} inbox (email) |  {pn} create (email)",
+    aliases: ["temp"]
 };
 
-module.exports.run = async function ({ api, args, event }) {
-    const command = args[0];
+module.exports.run = async function ({ api, event }) {
+    const reply = (msg) => api.sendMessage(msg, event.threadID, event.messageID);
 
     try {
-        if (command === "gen") {
-            const response = await axios.get(`https://temp-teach-mail-syuzz.vercel.app/api/generate_email`);
-            const email = response.data.email;
+        // Generate temporary email
+        const mail = new TempMail(generateRandomId());
 
-            return api.sendMessage(`ɢᴇɴᴇʀᴀᴛᴇᴅ ᴛᴇᴍᴘᴏʀᴀʀʏ ᴇᴍᴀɪʟ:\n\n${email}`, event.threadID);
+        mail.autoFetch();
 
-        } else if (command === "inbox") {
-            const email = args[1];
+        if (mail) reply("Your temporary email: " + mail.address);
 
-            if (!email) {
-                return api.sendMessage("Please provide a valid email address for retrieving inbox messages.", event.threadID);
-            }
+        const fetch = () => {
+            mail.getMail().then((mails) => {
+                if (!mails[0]) {
+                    return;
+                } else {
+                    let b = mails[0];
+                    var msg = `You have a message!\n\nFrom: ${b.from}\n\nSubject: ${b.subject}\n\nMessage: ${b.textBody}\nDate: ${b.date}`;
+                    reply(msg + `\n\nOnce the email and message are received, they will be automatically deleted.`);
+                    return mail.deleteMail();
+                }
+            });
+        };
 
-            const inboxResponse = await axios.get(`https://temp-teach-mail-syuzz.vercel.app/api/inbox?email=${email}`);
-            const inbox = inboxResponse.data.data;
-            let subject = inboxResponse.map(item => item.subject).join('\n\n');
-            let uid = inboxResponse.map(item => item.uid).join('\n\n');
-            let date = inboxResponse.map(item => item.date).join('\n\n');
-            let message_id = inboxResponse.map(item => item.message_id).join('\n\n');
+        // Auto fetch every 3 seconds
+        fetch();
+        setInterval(fetch, 3 * 1000);
 
-            if (inboxMessages.length === 0) {
-                return api.sendMessage(`No messages found for ${email}.`, event.threadID);
-            }
-
-            return api.sendMessage(`Inbox messages for ${email}:\n\n${inbox}\n${subject}\n${uid}\n${date}\n${message_id}`, event.threadID);
-
-        } else if (command === "create") {
-            const email = args[1];
-
-            if (!email) {
-                return api.sendMessage("Please provide a valid email address to create.", event.threadID);
-            }
-
-            const createResponse = await axios.get(`https://temp-teach-mail-syuzz.vercel.app/api/create_email?email=${email}`);
-            const createdEmail = createResponse.data.error;
-
-            return api.sendMessage(`${createdEmail}`, event.threadID);
-
-        } else {
-            return api.sendMessage("Invalid command. Use {pn} gen, {pn} inbox (email), or {pn} create (email).", event.threadID);
-        }
-    } catch (error) {
-        console.error(error);
-        return api.sendMessage("An error occurred. Please try again later.", event.threadID);
+    } catch (err) {
+        console.log();
+        return reply(err.message);
     }
 };

@@ -6,7 +6,7 @@ const i = ["https://i.imgur.com/VN9ugwO.jpeg", "https://i.imgur.com/qpInllD.jpeg
 
 async function getAnswerFromAI(user, userID) {
     const services = [
-        { url: `https://deku-rest-api.gleeze.com/ai/nemotron?q=${encodeURIComponent(user)}&uid=${userID}` },
+        { url: `https://deku-rest-apis.ooguy.com/ai/nemotron?q=${encodeURIComponent(user)}&uid=${userID}` },
     ];
 
     for (const service of services) {
@@ -81,7 +81,7 @@ const y = await axios.get(g, { responseType: 'stream' });
         return;
         }
 
-        const response = await axios.get(`https://joshweb.click/ai/nemotron?q=${encodeURIComponent(user)}&uid=${userID}`);
+        const response = await axios.get(`https://deku-rest-apis.ooguy.com/ai/nemotron?q=${encodeURIComponent(user)}&uid=${userID}`);
 
         const responseData = response.data.result;
         const baby = 

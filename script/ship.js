@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 module.exports.config = {
-  name: "ship",
+  name: "calculate",
   version: "1.0.0",
   role: 0,
   credits: "cliff", 

@@ -2,7 +2,7 @@ const { get } = require('axios');
 const fs = require('fs');
 const path = require('path');
 
-let url = "https://deku-rest-api.gleeze.com";
+let url = "https://deku-rest-apis.ooguy.com";
 let f = path.join(__dirname, 'cache', 'emi.png');
 
 module.exports.config = {

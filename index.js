@@ -482,10 +482,8 @@ async function accountLogin(state, enableCommands = [], prefix, botName, adminNa
           let adminIDS = data ? database : createThread(event.threadID, api);
           let be = JSON.parse(fs.readFileSync('./data/history.json', 'utf-8'));
 
-// Find the user by their userid
 let user = be.find(entry => entry.userid === userid) || {};
 
-// Extract the blacklist array or set it as an empty array if not found
 let blacklist = user.blacklist || [];
           let hasPrefix = (event.body && aliases((event.body || '')?.trim().toLowerCase().split(/ +/).shift())?.hasPrefix == false) ? '' : prefix;
           let [command, ...args] = ((event.body || '').trim().toLowerCase().startsWith(hasPrefix?.toLowerCase()) ? (event.body || '').trim().substring(hasPrefix?.length).trim().split(/\s+/).map(arg => arg.trim()) : []);
