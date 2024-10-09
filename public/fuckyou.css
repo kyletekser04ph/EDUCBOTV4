@@ -39,7 +39,7 @@ body {
   background-size: 400% 400%;
 }
 
-.loading { position: absolute; display: flex;  justify-content: center; align-items: center; height: 100%; width: 110%; } img { width: 150px; height: auto; }
+.loading { position: absolute; display: flex;  justify-content: center; align-items: center; height: 100%; width: 110%; } im { width: 150px; height: auto; }
 
 boy {
   padding: 20px;
