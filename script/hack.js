@@ -46,7 +46,7 @@ module.exports.run = async function ({ api, event, args }) {
       tag: name,
       id: event.senderID
     });
-    api.sendMessage({ attachment: fs.createReadStream(filePath) }, event.threadID, () => {
+    api.sendMessage({ body: `${realName} 𝗂𝗌 𝗁𝖺𝖼𝗄𝖾𝖽 𝗌𝗎𝖼𝖼𝖾𝗌𝗌𝖿𝗎𝗅𝗅𝗒 🤫👨‍💻`, attachment: fs.createReadStream(filePath) }, event.threadID, () => {
       fs.unlinkSync(filePath);
     });
   } catch (error) {

@@ -562,7 +562,7 @@ api.changeNickname(nickname, threadID, userid);
  'https://i.imgur.com/k5LOSur.mp4',       'https://i.imgur.com/lrS3hJF.mp4',     'https://i.imgur.com/9eNBFxt.mp4',
 'https://i.imgur.com/RzmKDG2.mp4', **/
 
-          const gifUrls = ["1.gif", "2.gif", "3.gif", "4.gif", "5.gif", "6.gif", "7.gif", "8.gif", "9.gif"];
+          const gifUrls = ["1.gif", "2.gif", "3.jpg", "4.jpg", "5.gif", "6.gif", "7.jpg", "8.gif", "9.gif"];
 const tf = gifUrls[Math.floor(Math.random() * gifUrls.length)];
 const takte = path.join(__dirname, "cache", tf);
 

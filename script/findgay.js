@@ -41,7 +41,7 @@ module.exports.run = async function ({ event, api }) {
     fs.writeFileSync(pathSave, response.data);
 
     api.sendMessage({
-      body: `Look i found a gay: ${realName}`,
+      body: `Look i found a gay: ${realName} 😄`,
       attachment: fs.createReadStream(pathSave)
     }, event.threadID, () => {
       fs.unlinkSync(pathSave);

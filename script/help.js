@@ -50,6 +50,17 @@ const randomQuotes = [
 
  const randomQuote = randomQuotes[Math.floor(Math.random() * randomQuotes.length)];
 
+function formatFont(text) { 
+  const fontMapping = {
+    a: "𝖺", b: "𝖻", c: "𝖼", d: "𝖽", e: "𝖾", f: "𝖿", g: "𝗀", h: "𝗁", i: "𝗂", j: "𝗃", k: "𝗄", l: "𝗅", m: "𝗆",
+    n: "𝗇", o: "𝗈", p: "𝗉", q: "𝗊", r: "𝗋", s: "𝗌", t: "𝗍", u: "𝗎", v: "𝗏", w: "𝗐", x: "𝗑", y: "𝗒", z: "𝗓",
+    A: "𝖠", B: "𝖡", C: "𝖢", D: "𝖣", E: "𝖤", F: "𝖥", G: "𝖦", H: "𝖧", I: "𝖨", J: "𝖩", K: "𝖪", L: "𝖫", M: "𝖬",
+    N: "𝖭", O: "𝖮", P: "𝖯", Q: "𝖰", R: "𝖱", S: "𝖲", T: "𝖳", U: "𝖴", V: "𝖵", W: "𝖶", X: "𝖷", Y: "𝖸", Z: "𝖹",
+0: "𝟶", 1: "𝟷", 2: "𝟸", 3: "𝟹", 4: "𝟺", 5: "𝟻", 6: "𝟼", 7: "𝟽", 8: "𝟾", 9: "𝟿"
+  };
+
+  return text.split('').map(char => fontMapping[char] || char).join('');
+}
 
 module.exports.config = {
   name: 'help',
@@ -81,13 +92,13 @@ module.exports.run = async function ({
       let end = start + pages;
       let helpMessage = `🔴🟢🟡\n\n====『 𝗖𝗢𝗠𝗠𝗔𝗡𝗗 𝗟𝗜𝗦𝗧 』====\n▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱\n\n`;
       for (let i = start; i < Math.min(end, commands.length); i++) {
-        helpMessage += `${i + 1}.『 ${prefix}${commands[i]} 』\n`;
-      }
+        helpMessage += `${formatFont(String(i + 1))}.『 ${formatFont(commands[i])} 』\n`;
+}
       helpMessage += '\n\n====『𝗙𝗘𝗔𝗧𝗨𝗥𝗘 𝗟𝗜𝗦𝗧』====\n▱▱▱▱▱▱▱▱▱▱▱▱▱\n\n';
-      eventCommands.forEach((eventCommand, index) => {
-        helpMessage += `${index + 1}.『 ${eventCommand} 』\t\n`;
-      });
-      helpMessage += `\n𝗣𝗮𝗴𝗲: 『${page}/${Math.ceil(commands.length / pages)}』\nTo view information about a specific command, type '${prefix}help command name.\n\n𝗧𝗢𝗧𝗔𝗟 𝗖𝗠𝗗𝗦: ${commands.length}\n𝗔𝗨𝗧𝗢𝗕𝗢𝗧: https://autobotzzx-ads-web.vercel.app\n\n𝗥𝗔𝗡𝗗𝗢𝗠 𝗙𝗔𝗖𝗧: ${randomQuote}`;
+     eventCommands.forEach((eventCommand, index) => {
+        helpMessage += `${formatFont(String(index + 1))}.『 ${formatFont(eventCommand)} 』\t\n`;
+});
+      helpMessage += `\n𝗣𝗮𝗴𝗲: <${page}/${Math.ceil(commands.length / pages)}>\nTo view information about a specific command, type '${prefix}help command name.\n\n𝗧𝗢𝗧𝗔𝗟 𝗖𝗠𝗗𝗦: ${commands.length}\n𝗔𝗨𝗧𝗢𝗕𝗢𝗧: https://autobotzzx-ads-web.vercel.app\n\n𝗥𝗔𝗡𝗗𝗢𝗠 𝗙𝗔𝗖𝗧: ${randomQuote}`;
       api.sendMessage(helpMessage, event.threadID, event.messageID);
     } else if (!isNaN(input)) {
       const page = parseInt(input);
@@ -96,24 +107,24 @@ module.exports.run = async function ({
       let end = start + pages;
       let helpMessage = `🔴🟢🟡\n\n====『 𝗖𝗢𝗠𝗠𝗔𝗡𝗗 𝗟𝗜𝗦𝗧 』====\n▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱\n\n`;
       for (let i = start; i < Math.min(end, commands.length); i++) {
-        helpMessage += `${i + 1}.『 ${prefix}${commands[i]} 』\n`;
-      }
+        helpMessage += `${formatFont(String(i + 1))}.『 ${formatFont(commands[i])} 』\n`;
+}
       helpMessage += '\n\n====『𝗙𝗘𝗔𝗧𝗨𝗥𝗘 𝗟𝗜𝗦𝗧』====\n▱▱▱▱▱▱▱▱▱▱▱▱▱\n\n';
       eventCommands.forEach((eventCommand, index) => {
-        helpMessage += `${index + 1}.『 ${eventCommand} 』\t\n`;
-      });
-      helpMessage += `\n𝗣𝗮𝗴𝗲: 『${page}/${Math.ceil(commands.length / pages)}』\nTo view information about a specific command, type '${prefix}help command name.\n\n𝗧𝗢𝗧𝗔𝗟 𝗖𝗠𝗗𝗦: ${commands.length}\n𝗔𝗨𝗧𝗢𝗕𝗢𝗧:
+        helpMessage += `${formatFont(String(index + 1))}.『 ${formatFont(eventCommand)} 』\t\n`;
+});
+      helpMessage += `\n𝗣𝗮𝗴𝗲: <${page}/${Math.ceil(commands.length / pages)}> \nTo view information about a specific command, type '${prefix}help command name.\n\n𝗧𝗢𝗧𝗔𝗟 𝗖𝗠𝗗𝗦: ${commands.length}\n𝗔𝗨𝗧𝗢𝗕𝗢𝗧:
 https://autobotzzx-ads-web.vercel.app/\n\n𝗥𝗔𝗡𝗗𝗢𝗠 𝗙𝗔𝗖𝗧: ${randomQuote}`;
       api.sendMessage(helpMessage, event.threadID, event.messageID);
     } else if (input === 'all') {
       let helpMessage = `🔴🟢🟡\n\n====『 𝗖𝗢𝗠𝗠𝗔𝗡𝗗 𝗟𝗜𝗦𝗧 』====\n▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱\n\n`;
       for (let i = 0; i < commands.length; i++) {
-        helpMessage += `${i + 1}.『 ${prefix}${commands[i]} 』\n`;
-      }
+        helpMessage += `${formatFont(String(i + 1))}.『 ${formatFont(commands[i])} 』\n`;
+}
       helpMessage += '\n\n====『𝗙𝗘𝗔𝗧𝗨𝗥𝗘 𝗟𝗜𝗦𝗧』====\n▱▱▱▱▱▱▱▱▱▱▱▱▱\n\n';
       eventCommands.forEach((eventCommand, index) => {
-        helpMessage += `${index + 1}.『 ${eventCommand} 』\t\n`;
-      });
+        helpMessage += `${formatFont(String(index + 1))}.『 ${formatFont(eventCommand)} 』\n`;
+});
       helpMessage += `\n\n𝗧𝗢𝗧𝗔𝗟 𝗖𝗠𝗗𝗦: ${commands.length}\n𝗔𝗨𝗧𝗢𝗕𝗢𝗧:
 https://autobotzzx-ads-web.vercel.app/\n\n𝗥𝗔𝗡𝗗𝗢𝗠 𝗙𝗔𝗖𝗧: ${randomQuote}`;
       api.sendMessage(helpMessage, event.threadID, event.messageID);
@@ -139,7 +150,7 @@ const roleMessage = role !== undefined ? (role === 0 ? '➟ Permission: user' : 
         const versionMessage = version ? `➟ Version: ${version}\n` : '';
         const cooldownMessage = cooldown ? `➟ Cooldown: ${cooldown} second(s)\n` : '';
 
-const message = ` 「 Command 」\n\n⇒ Name: ${name}\n${versionMessage}${roleMessage}\n${aliasesMessage}${descriptionMessage}${usageMessage}${creditsMessage}${cooldownMessage}`;
+const message = ` 【 Command 】\n\n➟ Name: ${name}\n${versionMessage}${roleMessage}\n${aliasesMessage}${descriptionMessage}${usageMessage}${creditsMessage}${cooldownMessage}`;
         api.sendMessage(message, event.threadID, event.messageID);
       } else {
         api.sendMessage('Command not found.', event.threadID, event.messageID);

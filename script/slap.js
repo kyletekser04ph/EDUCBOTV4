@@ -25,9 +25,9 @@ module.exports.config = {
 };
 
 module.exports.run = async function ({ api, event, args }) {
-  const mentionID = Object.keys(event.mentions)[0];
+  const mentionID = Object.keys(event.mentions)[0] || event.messageReply.senderID;
   if (!mentionID) {
-    return api.sendMessage('Please mention a user to slap!', event.threadID, event.messageID);
+    return api.sendMessage('Please mention or reply a user to slap!', event.threadID, event.messageID);
   }
 
   const userInfo = await api.getUserInfo(mentionID);

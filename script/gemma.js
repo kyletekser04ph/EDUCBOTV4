@@ -29,7 +29,7 @@ module.exports.run = async function({ api, event, args }) {
         }, event.messageID);
       });
 
-      const response = await axios.get(`https://mywebsite-rest-api.vercel.app/api/redirect?model=google%2Fgemma-2-9b-it&prompt=${encodeURIComponent(user)}`);
+      const response = await axios.get(`https://nash-rest-api-production.up.railway.app/gemma?prompt=${encodeURIComponent(user)}`);
 
       const responseData = response.data.response;
       const formattedResponse = `✨ | 𝗚𝗘𝗠𝗠𝗔-𝟮-𝟵𝗯\n━━━━━━━━━━━━━━━━━━\n${responseData}\n━━━━━━━━━━━━━━━━━━`;

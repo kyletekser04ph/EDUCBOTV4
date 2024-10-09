@@ -62,9 +62,7 @@ if (!filePath || !fs.existsSync(filePath)) {
 try {
     const fileContent = fs.readFileSync(filePath, 'utf8');
         const response = await axios.get(`https://betadash-api-swordslush.vercel.app/hastebin?upload=${encodeURIComponent(fileContent)}`);
-
-        const randomResponse = [ response.data.php, response.data.csharp, response.data.js, response.data.css, response.data.ts, response.data.kotlin ];
-        const random = randomResponse[Math.floor(Math.random() * randomResponse.length)];
+        const random = `ѕкᴀʏʀᴀ: ${response.data.skyra}\n\nʀᴀᴡ: ${response.data.raw}`;
         
         const uploadMessage = "𝗨𝗣𝗟𝗢𝗔𝗗 𝗦𝗨𝗖𝗖𝗘𝗦𝗦𝗙𝗨𝗟𝗟𝗬:";
         api.sendMessage(`${uploadMessage}\n\n${random}`, event.threadID, event.messageID);

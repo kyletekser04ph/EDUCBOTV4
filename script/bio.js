@@ -1,35 +1,40 @@
-module.exports.config = {
-  name: "bio",
-  version: "1.0.0",
-  credits: "cliff",
-  role: 1,
-  hasPermision: 2,
-  description: "change bot's bio",
-  aliases: ["setbio"],
-  commandCategory: "Bio",
-  hasPrefix: false,
-  usePrefix: false,
-  usages: "{p}{n} [bio] [publish]",
-  cooldown: 5,
-  usage: "{p}{n} [bio] [publish]",
-  cooldowns: 5
+const axios = require('axios');
+const fs = require('fs');
+
+const config = {
+    name: "changebio",
+    version: "1.0.0",
+    role: 1,
+    credits: "Kenneth Aceberos",
+    description: "Change a bio on a bot.",
+    usePrefix: true,
+    cooldown: 0
 };
+module.exports.config = config;
+module.exports.run = async ({ api, event, Utils, botname }) => {
 
-module.exports.run = async ({ api, event, args }) => {
-  const { threadID, messageID, senderID } = event;
-
-  if (args.length < 1) {
-    return api.sendMessage("Please provide your new bio.", threadID, messageID);
+  if (event.type !== "message_reply"){
+    return api.sendMessage("❌ No text detected. Reply the chat that you want to change your bio.", event.threadID, event.messageID);
   }
 
-  const bio = args.slice(0, args.length - 1).join(" ");
-  const publish = args[args.length - 1] === "true";
+  const txt = event.messageReply.body;
 
-  try {
-    await api.changeBio(bio, publish);
-    return api.sendMessage("My Bio now  updated successfully.", threadID);
-  } catch (error) {
-    console.error("Error changing bio:", error);
-    return api.sendMessage("Failed to update bio. Please try again later.", threadID, messageID);
-  }
+    if (txt && txt.length > 101){
+      return api.sendMessage(`❌ Max limit is 101 characters`, event.threadID, event.messageID); 
+    }
+    try {
+      api.setMessageReaction("⏳", event.messageID, () => {}, true);
+      const info = await api.sendMessage("⏳ Please wait...", event.threadID, event.messageID);
+      api.changeBio(txt, false, (err, data) => {
+           if (err){
+             api.setMessageReaction("🤷", event.messageID, () => {}, true);
+             return api.editMessage(`Failed to change bio❌`, info.messageID, (err, data) => {});
+           }
+         api.setMessageReaction("✅", event.messageID, () => {}, true);
+         api.editMessage(`✅ ${botname}'s bio is changed\n\nTry to stalk the bot's profile.`, info.messageID, (err, data) => {});
+         });
+
+    } catch (error) {
+        api.sendMessage("❌An error occurred while processing your request.", event.threadID);
+    }
 };

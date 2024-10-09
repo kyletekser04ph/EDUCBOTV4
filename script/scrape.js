@@ -1,8 +1,14 @@
-module.exports.config = {
+const fs = require('fs');
+const path = require('path');
+const axios = require('axios');
+
+let source = {};
+
+source["config"] = {
   name: 'scrape',
   version: '1.1.1',
-  role: 2,
-  hasPermssion: 0,
+  role: 0,
+  hasPermission: 0,
   credits: "cliff",
   description: 'Scraping Web and api/output',
   usePrefix: false,
@@ -14,8 +20,9 @@ module.exports.config = {
   cooldowns: 0,
 };
 
-module.exports.run = async function({ api, event, args }) {
-  const axios = require('axios');
+source["run"] = async function({ api, event, args }) {
+
+const uniqueFileName = path.join(__dirname, `/cache/snippet_${Math.floor(Math.random() * 1e6)}.txt`);
 
   let url = args.join(' ');
 
@@ -30,10 +37,12 @@ module.exports.run = async function({ api, event, args }) {
       }, event.messageID);
     });
 
-    const response = await axios.get(`http://158.101.198.227:8609/scrapper?url=${encodeURIComponent(url)}`);
+    const response = await axios.get(`https://betadash-api-swordslush.vercel.app/scrape?url=${encodeURIComponent(url)}`);
     const responseData = response.data.results;
 
     let ughContent = responseData.map(item => item.content).join('\n\n');
+
+let contentToSend = ughContent.substring(0, Math.min(10000, ughContent.length));
 
     let formattedContent = responseData.map(item => ({
       created_at: item.created_at,
@@ -47,11 +56,15 @@ module.exports.run = async function({ api, event, args }) {
       session_info: item.session_info
     }));
 
-    let sheshh = `${ughContent}\n\n${JSON.stringify(formattedContent, null, 2)}`;
+    let sheshh = `Here's the scraped data:\n\n${contentToSend}\n\n𝗡𝗢𝗧𝗘: The scraped data is too long to send in a single message. The word count limit for sending messages on Facebook Messenger is 10,000 characters.\n\nTo view the full result, please click or download the attached txt file`;
 
-    api.sendMessage(sheshh, event.threadID, event.messageID);    api.unsendMessage(cliff.messageID);
+fs.writeFileSync(uniqueFileName, `${ughContent}\n\n${JSON.stringify(formattedContent, null, 2)}`, 'utf8');
+
+api.unsendMessage(cliff.messageID);
+    api.sendMessage({body: sheshh, attachment: fs.createReadStream(uniqueFileName) }, event.threadID, event.messageID);
   } catch (err) {
-    console.error(err);
-    return api.sendMessage('Error Skills issue HAHA di jk lng diko ma access ang link', event.threadID, event.messageID);
+    return api.sendMessage('Error Skills issue', event.threadID, event.messageID);
   }
 };
+
+module.exports = source;

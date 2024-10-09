@@ -14,38 +14,27 @@ module.exports.config = {
 
 module.exports.run = async function ({ api, event, args }) {
 const { threadID, messageID, senderID } = event;
-  let mentionID = Object.keys(event.mentions)[0];
-  let pairingID = mentionID || event.senderID;
+    var tl = ['21%', '67%', '19%', '37%', '17%', '96%', '52%', '62%', '76%', '83%', '100%', '99%', "0%", "48%"];
+        var tle = tl[Math.floor(Math.random() * tl.length)];
+        let dataa = await api.getUserInfo(event.senderID);
+        let namee = await dataa[event.senderID].name
+        let loz = await api.getThreadInfo(event.threadID);
+        var emoji = loz.participantIDs;
+        var id = emoji[Math.floor(Math.random() * emoji.length)];
+        let data = await api.getUserInfo(id);
+        let name = await data[id].name
+        var arraytag = [];
+                arraytag.push({id: event.senderID, tag: namee});
+                arraytag.push({id: id, tag: name});
 
-  let tl = ['21%', '67%', '19%', '37%', '17%', '96%', '52%', '62%', '76%', '83%', '100%', '99%', "0%", "48%"];
-  let tle = tl[Math.floor(Math.random() * tl.length)];
+        var sex = await data[id].gender;
+        var gender = sex == 2 ? "Male🧑" : sex == 1 ? "Female👩‍  " : "Gay";
 
-  let senderData = await api.getUserInfo(event.senderID);
-  let senderName = senderData[event.senderID].name;
-
-  let pairData = await api.getUserInfo(pairingID);
-  let pairName = pairData[pairingID].name;
-
-  let loz = await api.getThreadInfo(event.threadID);
-  let emoji = loz.participantIDs;
-  let randomID = emoji[Math.floor(Math.random() * emoji.length)];
-  let randomData = await api.getUserInfo(randomID);
-  let randomName = randomData[randomID].name;
-
-  let arraytag = [
-    { id: event.senderID, tag: senderName },
-    { id: randomID, tag: randomName }
-  ];
-
-  let sex = randomData[randomID].gender;
-  let gender = sex == 2 ? "Male🧑" : sex == 1 ? "Female👩‍" : "Tran Duc Bo";
-
-  let url = `https://api.popcat.xyz/ship?user1=https://api-canvass.vercel.app/profile?uid=${event.senderID}&user2=https://api-canvass.vercel.app/profile?uid=${pairingID}`;
+  let url = `https://api.popcat.xyz/ship?user1=https://api-canvass.vercel.app/profile?uid=${event.senderID}&user2=https://api-canvass.vercel.app/profile?uid=${id}`;
   let response = await axios.get(url, { responseType: 'stream' });
 
   api.sendMessage({
-    body: `Congrats ${senderName} has been paired with ${randomName}\nThe Match rate is: ${tle}`,
-    mentions: arraytag,
+    body: `Congrats ${namee} has been paired with ${name}\nThe Match rate is: ${tle}`, mentions: arraytag,
     attachment: response.data
   }, threadID, messageID);
 };

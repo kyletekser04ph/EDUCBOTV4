@@ -59,11 +59,11 @@ https://www.facebook.com/swordigo.swordslush.`);
           const filePath = path.join(folderPath, file);
           fs.unlinkSync(filePath);
 
-          await new Promise(resolve => setTimeout(resolve, 3000));
+          await new Promise(resolve => setTimeout(resolve, 1000));
           await api.editMessage(`File ${file} deleted successfully from ${folderPath}!`, messageID, event.threadID);
         }
 
-        await new Promise(resolve => setTimeout(resolve, 3000));
+        await new Promise(resolve => setTimeout(resolve, 1000));
         await api.editMessage(`All files in the ${folderPath} folder deleted successfully!`, messageID, event.threadID);
       } else {
         await api.editMessage(`${folderPath} folder is empty.`, messageID, event.threadID);

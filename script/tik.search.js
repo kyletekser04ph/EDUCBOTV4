@@ -45,7 +45,7 @@ module.exports.run = async function({ api, event, args }) {
     const videoUrl = videoData.url;
     const message = `𝐓𝐢𝐤𝐭𝐨𝐤 𝐫𝐞𝐬𝐮𝐥𝐭:\n\n𝐓𝐢𝐭𝐥𝐞: ${videoData.title}\n𝐃𝐮𝐫𝐚𝐭𝐢𝐨𝐧: ${videoData.duration}s\n𝐑𝐞𝐠𝐢𝐨𝐧: ${videoData.region}`;
 
-    const filePath = path.join(__dirname, `/../cache/tiktok_video.mp4`);
+    const filePath = path.join(__dirname, `/cache/tiktok_video.mp4`);
     const writer = fs.createWriteStream(filePath);
 
     const videoResponse = await axios({
