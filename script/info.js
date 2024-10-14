@@ -1,9 +1,10 @@
-const fs = require("fs");
+const fs = require('fs');
+const axios = require("axios");
 const moment = require("moment-timezone");
-const request = require("request");
-const path = require("path");
 
-module.exports.config = {
+let owner = {};
+
+owner["config"] = {
     name: "info",
     version: "1.0.1",
     aliases: ["info", "owner", "Owner", "Info", "in", "fo"],
@@ -14,7 +15,26 @@ module.exports.config = {
     hasPrefix: false,
 };
 
-module.exports.run = async function({ api, event, args, prefix, admin }) {
+owner["run"] = async function({ api, event, prefix, admin }) {
+const database = JSON.parse(fs.readFileSync('./data/database.json', 'utf8'));
+
+let threadCount = 0;
+let userCount = new Set();
+
+database.forEach(entry => {
+  const threadID = Object.keys(entry)[0];
+  const users = entry[threadID];
+
+  if (users.length > 0) {
+    threadCount++;
+  }
+
+  users.forEach(user => {
+    userCount.add(user.id);
+  });
+});
+
+userCount = userCount.size;
     let time = process.uptime();
     let years = Math.floor(time / (60 * 60 * 24 * 365));
     let months = Math.floor((time % (60 * 60 * 24 * 365)) / (60 * 60 * 24 * 30));
@@ -26,10 +46,33 @@ module.exports.run = async function({ api, event, args, prefix, admin }) {
     const uptimeString = `${years > 0 ? `${years} years ` : ''}${months > 0 ? `${months} months ` : ''}${weeks > 0 ? `${weeks} weeks ` : ''}${days % 7 > 0 ? `${days % 7} days ` : ''}${hours > 0 ? `${hours} hours ` : ''}${minutes > 0 ? `${minutes} minutes ` : ''}${seconds} seconds`;
 
     const FILESOWNER = "𝗖𝗶𝗱";
-    const juswa = moment.tz("Asia/Manila").format("『D/MM/YYYY』 【HH:mm:ss】");
-    const link = ["https://i.imgur.com/qxPR4i6.mp4",
-"https://i.imgur.com/9LDVC57.mp4", "https://i.imgur.com/r7IxgiR.mp4", "https://i.imgur.com/J1jWubu.mp4", "https://i.imgur.com/DJylTiy.mp4", "https://i.imgur.com/v4mLGte.mp4", "https://i.imgur.com/uthREbe.mp4", "https://i.imgur.com/ee8fHna.mp4", "https://i.imgur.com/VffzOwS.mp4", "https://i.imgur.com/ci5nztg.mp4", "https://i.imgur.com/qHPeKDV.mp4", "https://i.imgur.com/Rkl5UmH.mp4",
+    const juswa = moment.tz("Asia/Manila").format("『D/MM/YYYY』【HH:mm:ss】");
+
+    let userid = api.getCurrentUserID();
+    let dataa = await api.getUserInfo(userid);
+    let namee = dataa[userid].name;
+
+    let data = await api.getUserInfo(admin);
+    let name = data[admin].name;
+
+    const im = [
+        "https://i.imgur.com/Fs6fZcZ.jpeg",
+        "https://i.imgur.com/Mw9SHFX.jpeg"
+    ];
+    const randomIndex = Math.floor(Math.random() * im.length);
+    const imgur = im[randomIndex];
+
+    const response = `https://api.popcat.xyz/welcomecard?background=${imgur}&text1=AUTOBOT+INFORMATION&text2=${namee}&text3=Messenger+Chatbot&avatar=https://api-canvass.vercel.app/profile?uid=${userid}`;
+
+  /** const link = [
+                    "https://i.imgur.com/uthREbe.mp4",
+                    "https://i.imgur.com/v4mLGte.mp4",
+                    "https://i.imgur.com/DJylTiy.mp4",     "https://i.imgur.com/ee8fHna.mp4", "https://i.imgur.com/VffzOwS.mp4", "https://i.imgur.com/ci5nztg.mp4", "https://i.imgur.com/qHPeKDV.mp4", "https://i.imgur.com/Rkl5UmH.mp4",
 "https://i.imgur.com/IGXINCB.mp4",
+                    "https://i.imgur.com/qxPR4i6.mp4",
+                    "https://i.imgur.com/9LDVC57.mp4",                
+                    "https://i.imgur.com/r7IxgiR.mp4",          
+                    "https://i.imgur.com/J1jWubu.mp4", 
                     "https://i.imgur.com/JnmXyO3.mp4",
                     "https://i.imgur.com/Qudb0Vl.mp4",
                     "https://i.imgur.com/N3wIadu.mp4",
@@ -76,32 +119,28 @@ module.exports.run = async function({ api, event, args, prefix, admin }) {
                     "https://i.imgur.com/8h1Vgum.mp4",
                     "https://i.imgur.com/CTcsUZk.mp4",
                     "https://i.imgur.com/e505Ko2.mp4",
-"https://i.imgur.com/3umJ6NL.mp4"
-                 ];
+                    "https://i.imgur.com/3umJ6NL.mp4"
+                 ]; **/
 
-    const callback = () => {
-        api.sendMessage({
-            body: `《《 𝗢𝗪𝗡𝗘𝗥 𝗜𝗡𝗙𝗢 》》
+    const responsee = await axios.get(encodeURI(response), { responseType: 'stream' });
 
-⁂ Bot Name: YAZKYBOT 
+    api.sendMessage({
+        body: `《《 𝗢𝗪𝗡𝗘𝗥 𝗜𝗡𝗙𝗢 》》
+
+⁂ Bot Name: ${namee}
 ✧ Main admin: 𝗖𝗹𝗶𝗳𝗳𝗩𝗶𝗻𝗰𝗲𝗻𝘁
 ♛ Bot Admin Link: https://www.facebook.com/${admin}
 ❂ Bot Prefix: ${prefix}
 ✫ Files Owner: ${FILESOWNER}
-➟ UPTIME ${uptimeString}
+𖣯 ALL Threads: ${threadCount}
+ᗢ ALL Users: ${userCount}
+➟ UPTIME: ${uptimeString}
 ✬ Today is: ${juswa} 
 
 ➳ Bot is running ${hours}:${minutes}:${seconds}.
 ✫ Thanks for using my bot`,
-            attachment: fs.createReadStream(__dirname + "/../cache/owner_video.mp4")
-        }, event.threadID, () => fs.unlinkSync(__dirname + "/../cache/owner_video.mp4"));
-    };
-    const linkIndex = Math.floor(Math.random() * link.length);
-    request(encodeURI(link[linkIndex]))
-        .on('error', (err) => {
-            console.error('Error downloading video:', err);
-            api.sendMessage('An error occurred while processing the command.', event.threadID, null, event.messageID);
-        })
-        .pipe(fs.createWriteStream(__dirname + "/../cache/owner_video.mp4"))
-        .on("close", callback);
+        attachment: responsee.data
+    }, event.threadID, event.messageID);
 };
+
+module.exports = owner;

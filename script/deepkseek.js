@@ -1,5 +1,4 @@
-module.exports
-    .config = {
+module.exports.config = {
   name: 'deepseek',
   version: '1.1.1',
   hasPermssion: 0,
@@ -39,13 +38,12 @@ module.exports.run = async function({ api, event, args }) {
      }, event.messageID);
     });
 
-      const response = await axios.get(`https://nethwieai.neth.workers.dev/ai?model=@hf/thebloke/deepseek-coder-6.7b-instruct-awq&system=&user=${encodeURIComponent(user)}`);
+      const response = await axios.get(`https://www.vertearth.cloud/api/deepseek?prompt=${encodeURIComponent(user)}`);
 
-      const responseData = response.data.msg;
+      const responseData = response.data.response;
       const baby = `𝗗𝗘𝗘𝗣𝗦𝗘𝗘𝗞 (𝗖𝗢𝗗𝗘𝗥)\n▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱\n${responseData}`;
       api.editMessage(baby, cliff.messageID);
   } catch (err) {
-      console.error(err);
       return api.sendMessage('An error occurred while processing your request.', event.threadID, event.messageID);
   }
 };

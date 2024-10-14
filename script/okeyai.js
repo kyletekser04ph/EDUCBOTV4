@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 module.exports.config = {
-    name: 'hercai',
+    name: 'okeyai',
     version: '1.0.0',
     role: 0,
     hasPrefix: false,
@@ -13,17 +13,18 @@ module.exports.config = {
 
 module.exports.run = async function({ api, event, args }) {
     if (!args[0]) {
-        api.sendMessage("Please provide a question or statement after 'hercai'. For example: hercai What is the capital of France?", event.threadID);
+        api.sendMessage("Please provide a question", event.threadID);
         return;
     }
 
     const question = args.join(" ");
-    const apiUrl = `https://openai-rest-api.vercel.app/hercai?ask=${encodeURIComponent(question)}&model=v3`;
+    const apiUrl = `https://www.vertearth.cloud/api/okeyai?prompt=${encodeURIComponent(question)}`;
 
     try {
         const response = await axios.get(apiUrl);
-        api.sendMessage(response.data.reply, event.threadID, event.messageID);
+        api.sendMessage(response.data.response, event.threadID, event.messageID);
     } catch (error) {
         api.sendMessage("An error occurred while processing your request. Please try again later.", event.threadID);
     }
 };
+

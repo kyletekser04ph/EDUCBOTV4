@@ -5,7 +5,7 @@ async function getUserNames(api, uid) {
     const userInfo = await api.getUserInfo([uid]);
     return Object.values(userInfo).map(user => user.name || `User${uid}`);
   } catch (error) {
-    console.error('Error getting user names:', error);
+    console.error();
     return [];
   }
 }
@@ -22,19 +22,19 @@ function formatFont(text) {
 }
 
 module.exports.config = {
-  name: 'snowflakes',
+  name: 'nova',
   version: '1.1.1',
   hasPermssion: 0,
   role: 0,
-  credits: 'hashier',
-  description: 'powered by Snowflakes Ai',
+  credits: 'kiff',
+  description: 'powered by Astro Nova',
   usePrefix: false,
   hasPrefix: false,
   commandCategory: 'snowflakes',
   usages: '[prompt]',
   usage: 'prompt',
   cooldowns: 0,
-  aliases: ["snowai"],
+  aliases: [],
   cooldown: 0,
 };
 
@@ -47,19 +47,18 @@ module.exports. run = async function({ api, event, args }) {
     if (!user) { 
       return api.sendMessage("Please provide a question first!", event.threadID, event.messageID);
     }
-   
-  const cliff = await new Promise(resolve => { api.sendMessage('❄️ 𝗦𝗡𝗢𝗪𝗙𝗟𝗔𝗞𝗘𝗦 (𝐀𝐈)\n▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱\n🔍 Searching Please Wait...', event.threadID, (err, info1) => {
+
+  const cliff = await new Promise(resolve => { api.sendMessage('🔍 Searching Please Wait...', event.threadID, (err, info1) => {
       resolve(info1);
      }, event.messageID);
     });
-  
-    const response = await axios.get(`https://mextral.onrender.com/nividea?model=snowflake/arctic&question=${encodeURIComponent(user)}`);
+
+    const response = await axios.get(`https://www.vertearth.cloud/api/astronova?prompt=${encodeURIComponent(user)}`);
     const responseData = response.data;
     const content = formatFont(responseData.response);
-    await api.editMessage(`❄️ 𝗦𝗡𝗢𝗪𝗙𝗟𝗔𝗞𝗘𝗦 (𝐀𝐈)\n▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱\n𝗔𝗻𝘀: ${content}\n▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱\n👤 Question Asked by: ${userNames.join(', ')}`, cliff.messageID);
+    await api.editMessage(`❄️ 𝗔𝗦𝗧𝗥𝗢𝗡𝗢𝗩𝗔 (𝐀𝐈)\n━━━━━━━━━━━━━━━━━━\n𝗔𝗻𝘀: ${content}\n━━━━━━━━━━━━━━━━━━\n👤 Asked by: ${userNames.join(', ')}`, cliff.messageID);
 
   } catch (err) {
-    console.error(err);
     return api.sendMessage("An error occurred while processing your request.", event.threadID, event.messageID);
   }  
 }

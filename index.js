@@ -5,6 +5,7 @@ const express = require('express');
 const app = express();
 const chalk = require('chalk');
 const gradient = require('gradient-string');
+const socketIo = require('socket.io');
 const bodyParser = require('body-parser');
 const axios = require('axios');
 const script = path.join(__dirname, 'script');
@@ -340,7 +341,60 @@ app.post('/login', async (req, res) => {
   }
 });
 
-app.use(express.json());
+const server = require('http').createServer(app);
+const io = socketIo(server);
+
+let requestCount = 0;
+const countFilePath = path.join(__dirname, 'public','count.json');
+
+app.use((req, res, next) => {
+  const forwardedFor = req.headers['x-forwarded-for'];
+  const clientIp = forwardedFor ? forwardedFor.split(',')[0].trim() : req.connection.remoteAddress;
+requestCount++;
+  fs.readFile(countFilePath, 'utf8', (err, data) => {
+    if (err) return console.error(err);
+
+    const countData = JSON.parse(data);
+    const existingEntry = countData.find(entry => entry.ip === clientIp);
+
+    if (existingEntry) {
+      existingEntry.count += 1;  
+    } else {
+      countData.push({ ip: clientIp, count: 1 });
+    }
+
+    fs.writeFile(countFilePath, JSON.stringify(countData, null, 2), (err) => {
+      if (err) console.error(err);
+    });
+
+    io.emit('updateRequestCount', countData);
+    next();
+  });
+});
+
+app.get('/requests', (req, res) => {
+  fs.readFile(countFilePath, 'utf8', (err, data) => {
+    if (err) {
+      res.status(500).json({ error: 'Error reading request count' });
+    } else {
+      const requestObj = JSON.parse(data);
+      let totalCount = requestObj.reduce((acc, curr) => acc + curr.count, 0);
+const jsonData = {
+       request: totalCount, 
+       data: requestObj,
+};
+const htmlResponse = 
+        `<html>
+        <body style="background: linear-gradient(135deg, #181335, #0b0c26); color: white; font-family: monospace; background-size: cover; margin: 0;">
+            <pre style="color: #ffd700; font-size: 45px;">${JSON.stringify(jsonData, null, 2)}</pre>
+        </body>
+        </html>`;
+      res.send(htmlResponse);
+    }
+  });
+});
+
+
 
 const sessionFolder = path.join(__dirname, './data/session');
 if (!fs.existsSync(sessionFolder)) fs.mkdirSync(sessionFolder);

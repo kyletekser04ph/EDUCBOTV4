@@ -1,39 +1,30 @@
+const axios = require('axios');
+
 module.exports.config = {
-    name: "gpt3",
-    version: "1.0.0",
+    name: 'gpt3',
+    version: '1.0.0',
     role: 0,
-    credits: "cliff",
     hasPrefix: false,
-    description: "This module provides AI-powered responses using GPT-3.",
-    usage: "<question>",
-    cooldowns: 5,
-    aliases: ["Gpt3"]
+    description: "An AI command powered by OpenAI",
+    usages: "",
+    credits: 'Developer',
+    cooldown: 5,
 };
 
-module.exports.run = async function ({ api, event, args }) {
-    try {
-        const { G4F } = require("g4f");
-
-        function reply(a) {
-            api.sendMessage(a, event.threadID, event.messageID);
-        }
-
-        const g4f = new G4F();
-        const textInput = args.join(' ');
-        if (!textInput) return reply('Please provide a question.');
-
-        const messages = [
-            { role: "user", content: textInput }
-        ];
-        const options = {
-            provider: g4f.providers.GPT,
-            model: "gpt-3.5-turbo",
-            debug: true,
-            proxy: ""
-        };
-        const response = await g4f.chatCompletion(messages, options);
-        reply(response);
-    } catch (e) {
-        return reply(e.message);
+module.exports.run = async function({ api, event, args }) {
+    if (!args[0]) {
+        api.sendMessage("Please provide a question", event.threadID);
+        return;
     }
-}
+
+    const question = args.join(" ");
+    const apiUrl = `https://www.vertearth.cloud/api/togetherai?prompt=${encodeURIComponent(question)}`;
+
+    try {
+        const response = await axios.get(apiUrl);
+        api.sendMessage(response.data.response, event.threadID, event.messageID);
+    } catch (error) {
+        api.sendMessage("An error occurred while processing your request. Please try again later.", event.threadID);
+    }
+};
+

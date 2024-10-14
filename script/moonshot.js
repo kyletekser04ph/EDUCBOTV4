@@ -1,13 +1,13 @@
 const axios = require('axios');
 
 module.exports.config = {
-  name: "cohere",
+  name: "moonshot",
   version: "9",
   role: 0,
   hasPrefix: false,
   credits: "Cliff", //api by kiff
   description: "AI powered by command R",
-  aliases: ["co"],
+  aliases: [],
   cooldowns: 0,
 };
 module.exports.run = async function ({api, event, args}) {
@@ -25,12 +25,13 @@ if (!query) {
      }, event.messageID);
     });
 
-  const apiUrl = `https://www.vertearth.cloud/api/cohere?prompt=${query}`;
+  const apiUrl = `https://www.vertearth.cloud/api/moonshot?prompt=${query}`;
 
   try {
     const response = await axios.get(apiUrl);
-    const ans = response.data.response.message;
-    api.editMessage(`${tae} | 𝗖𝗢𝗛𝗘𝗥𝗘-𝗣𝗟𝗨𝗦++\n━━━━━━━━━━━━━━━━━━\n${ans}\n━━━━━━━━━━━━━━━━━━`, cliff.messageID);
+    const ans = response.data.response;
+    api.editMessage(`
+❨ ◯ | 𝗠𝗢𝗢𝗡𝗦𝗛𝗢𝗧\n━━━━━━━━━━━━━━━━━━\n${ans}\n━━━━━━━━━━━━━━━━━━`, cliff.messageID);
   } catch (error) {
     console.error();
     api.sendMessage("API SUCKS", event.threadID, event.messageID);

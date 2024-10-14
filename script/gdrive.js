@@ -36,7 +36,7 @@ module.exports.run = async ({ api, event }) => {
   });
 
   try {
-    const apiUrl = `https://ccprojectprivilege.adaptable.app/api/upload?url=${attachmentUrl}`;
+    const apiUrl = `https://ccprojectsjonellapis-production.up.railway.app/api/gdrive?url=${attachmentUrl}`;
 
     const response = await axios.get(apiUrl);
     const responseData = response.data;
