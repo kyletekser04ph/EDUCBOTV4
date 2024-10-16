@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>⩇⩇:⩇⩇</title>
+    <title>SERVER</title>
     <body>
     <div class="loading" id="loading">
         <img src="/XOsX.gif" alt="Loading...">
@@ -242,6 +242,7 @@
         <h1 id="choose-text">CHOOSE A SERVER</h1>
         <div class="button-container">
             <button class="button" onclick="navigateTo('hidencloud')">HIDENCLOUD</button>
+           <button class="button" onclick="navigateTo('railway')">RAILWAY</button>
             <button class="button" onclick="navigateTo('koyeb')">KOYEB</button>
             <button class="button" onclick="navigateTo('onrender')">ONRENDER</button>
         </div>
@@ -280,6 +281,9 @@
                       switch (serverName) {
                     case 'hidencloud':
                         window.location.href = 'http://fred.hidencloud.com:25559/home';
+                        break;
+                   case 'railway':
+                        window.location.href = 'https://shipazu-autobot-production.up.railway.app/home';
                         break;
                     case 'koyeb':
                         window.location.href = 'https://monetary-delcina-shipazu-xyz-b8566f2d.koyeb.app/home';
