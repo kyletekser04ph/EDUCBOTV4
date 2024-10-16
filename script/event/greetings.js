@@ -42,13 +42,13 @@ module.exports.handleEvent = async function ({ api, event }) {
             message: "⏰ time now: 06:30 PM\n\nDinner plans tonight? Let's enjoy a hearty meal together."
         },
         "07:00:00 PM": {
-            message: "🌠 𝗔𝗨𝗧𝗢𝗚𝗥𝗘𝗘𝗧 🌠\n▬▬▬▬▬▬▬▬▬▬▬▬▬\n⏰ time now: 07:00 PM\n\nGood evening! 🌠 Time to recharge for another day of greatness."
+            message: "⏰ time now: 07:00 PM\n\nGood evening! 🌠 Time to recharge for another day of greatness."
         },
         "09:00:00 PM": {
             message: "⏰ time now: 09:00 PM\n\nGood evening! 🌕 End your day with positive thoughts and calmness."
         },
         "11:00:00 PM": {
-            message: "💤 𝗔𝗨𝗧𝗢𝗚𝗥𝗘𝗘𝗧 💤\n▬▬▬▬▬▬▬▬▬▬▬▬▬\n⏰ time now: 11:00 PM\n\nEvening! 🌝 Take time to enjoy the quiet moments tonight."
+            message: "⏰ time now: 11:00 PM\n\nEvening! 🌝 Take time to enjoy the quiet moments tonight."
         },
         "12:00:00 AM": {
             message: "⏰ time now: 12:00 AM\n\nMidnight is here. Rest well and dream big!"

@@ -120,7 +120,9 @@ userCount = userCount.size;
                     "https://i.imgur.com/CTcsUZk.mp4",
                     "https://i.imgur.com/e505Ko2.mp4",
                     "https://i.imgur.com/3umJ6NL.mp4"
-                 ]; **/
+                 ];
+                 𖣯 ALL Threads: ${threadCount}
+ᗢ ALL Users: ${userCount} **/
 
     const responsee = await axios.get(encodeURI(response), { responseType: 'stream' });
 
@@ -132,8 +134,6 @@ userCount = userCount.size;
 ♛ Bot Admin Link: https://www.facebook.com/${admin}
 ❂ Bot Prefix: ${prefix}
 ✫ Files Owner: ${FILESOWNER}
-𖣯 ALL Threads: ${threadCount}
-ᗢ ALL Users: ${userCount}
 ➟ UPTIME: ${uptimeString}
 ✬ Today is: ${juswa} 
 

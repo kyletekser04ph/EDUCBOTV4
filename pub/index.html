@@ -242,12 +242,8 @@
         <h1 id="choose-text">CHOOSE A SERVER</h1>
         <div class="button-container">
             <button class="button" onclick="navigateTo('hidencloud')">HIDENCLOUD</button>
-            <button class="button" onclick="navigateTo('xeh')">XEH</button>
             <button class="button" onclick="navigateTo('koyeb')">KOYEB</button>
             <button class="button" onclick="navigateTo('onrender')">ONRENDER</button>
-<button class="button" onclick="navigateTo('techstar')">TECHSTAR</button>
-<button class="button" onclick="navigateTo('hmv')">HMV</button>
-
         </div>
 
         <div class="loading-container" id="loading-container">
@@ -285,20 +281,11 @@
                     case 'hidencloud':
                         window.location.href = 'http://fred.hidencloud.com:25559/home';
                         break;
-                    case 'xeh':
-                        window.location.href = '/error';
-                        break;
                     case 'koyeb':
                         window.location.href = 'https://monetary-delcina-shipazu-xyz-b8566f2d.koyeb.app/home';
                         break;
                     case 'onrender':
                         window.location.href = 'https://autobot-fuzzvy.onrender.com/home';
-                        break;
-                    case 'hmv':
-                        window.location.href = 'http://sgp1.hmvhostings.com:25627/home';
-                    break;
-                     case 'techstar':
-                        window.location.href = 'http://fn0.techstar.host:25649/home';
                         break;
                     default:
                         chooseText.style.display = 'block';
