@@ -31,10 +31,9 @@ module.exports.run = async function({ api, event, args }) {
 
       const response = await axios.get(`https://www.vertearth.cloud/api/Qwen1.572BChat?prompt=${encodeURIComponent(user)}`);
 
-      const responseData = response.data.msg;
-      const baby = `𝗤𝗪𝗘𝗡-1.572𝗕\n▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱\n${responseData}\n▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱`;
-      api.editMessage(baby, cliff.messageID);
+      const responseData = response.data.response;
+      api.editMessage(responseData, cliff.messageID);
   } catch (err) {
-      return api.sendMessage('An error occurred while processing your request.', event.threadID, event.messageID);
+      return api.sendMessage('Api sucks.', event.threadID, event.messageID);
   }
 };

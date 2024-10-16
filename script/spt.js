@@ -15,7 +15,7 @@ module.exports.config = {
   usePrefix: false,
   cooldowns: 1,
   hasPrefix: false,
-  aliases: [],
+  aliases: ["music","sing"],
   cooldown: 10
 };
 

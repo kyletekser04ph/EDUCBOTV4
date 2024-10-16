@@ -24,7 +24,7 @@ const config = {
 
 const handleEvent = async ({ event, prefix, api }) => {
     let KEY = [
-        "bot", "Bot", "robot", "robot"
+        "hi", "hello","bot", "Bot", "robot", "robot"
     ];
 
     if (!hiFlag || !checkKeyword(event.body, KEY)) return;

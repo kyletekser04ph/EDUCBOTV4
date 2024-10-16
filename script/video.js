@@ -32,11 +32,12 @@ module.exports.run = async function ({ api, args, event }) {
         return;
     }
 
-    const ugh = api.sendMessage(`⏱️ | Searching, for '${searchQuery}' please wait...`, event.threadID);
+ const ugh = await new Promise(resolve => { api.sendMessage(`⏱️ | Searching, for '${searchQuery}' please wait...`, event.threadID, (err, info1) => {
+      resolve(info1);
+     }, event.messageID);
+    });
 
-    api.setMessageReaction("🕥", event.messageID, (err) => {}, true);
-
-    const response = await axios.get(`https://betadash-api-swordslush.vercel.app/video?search=${encodeURIComponent(searchQuery)}`);
+    const response = await axios.get(`https://yt-video-production.up.railway.app/video?search=${encodeURIComponent(searchQuery)}`);
 
     const data = response.data;
     const videoUrl = data.downloadUrl;
@@ -49,7 +50,7 @@ module.exports.run = async function ({ api, args, event }) {
 
     fs.writeFileSync(videoPath, Buffer.from(videoResponse.data));
 
-    api.setMessageReaction("✅", event.messageID, (err) => {}, true);
+api.unsendMessage(ugh.messageID);
 
     await api.sendMessage(
       {
@@ -60,18 +61,17 @@ module.exports.run = async function ({ api, args, event }) {
       event.messageID
     );
     fs.unlinkSync(videoPath);
-    api.unsendMessage(ugh.messageID);
   } catch (error) {
              const tf = await new Promise(resolve => {
                 api.sendMessage(error.message, event.threadID, (err, info) => {
                     resolve(info);
                 });
             });
-        
+
             setTimeout(() => {
                 api.unsendMessage(tf.messageID);
             }, 10000);
-          
+
             return;
   }
 };
