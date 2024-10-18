@@ -58,17 +58,16 @@ module.exports.run = async function ({ api, event, args }) {
     try {
       api.sendMessage({ body: "🗨️ | 𝙼𝚎𝚝𝚊 𝙰𝙸 𝚒𝚜 𝚜𝚎𝚊𝚛𝚌𝚑𝚒𝚗𝚐 𝚏𝚘𝚛 𝚊𝚗𝚜𝚠𝚎𝚛, 𝙿𝚕𝚎𝚊𝚜𝚎 𝚠𝚊𝚒𝚝..." }, event.threadID, event.messageID);
 
-      const response = await axios.get(`https://nethwieai.neth.workers.dev/ai?model=@cf/meta/llama-3-8b-instruct-awq&system=llama3&user=${encodeURIComponent(content)}`);
+      const response = await axios.get(`https://betadash-api-swordslush.vercel.app/llama-3.1-405b-instruct-free?ask=${encodeURIComponent(content)}`);
 
-				if (response.data && response.data.msg) {
-					const formattedContent = formatFont(response.data.msg);
+        if (response.data && response.data.message) {
+          const formattedContent = formatFont(response.data.message);
         api.sendMessage({ body: `🔮 𝐌𝐞𝐭𝐚/𝐋𝐥𝐚𝐦𝐚3 (𝐀𝐈)\n\n🖋️ 𝐀𝐬𝐤: '${content}'\n\n${formattedContent}` }, event.threadID, event.messageID);
       } else {
         console.error('🚫 𝙴𝚛𝚛𝚘𝚛: 𝙸𝚗𝚟𝚊𝚕𝚒𝚍 𝙼𝚎𝚝𝚊 𝚛𝚎𝚜𝚙𝚘𝚗𝚜𝚎 𝚏𝚘𝚛𝚖𝚊𝚝');
         api.sendMessage({ body: '🚫 𝙴𝚛𝚛𝚘𝚛: 𝙸𝚗𝚟𝚊𝚕𝚒𝚍 𝙼𝚎𝚝𝚊 𝚛𝚎𝚜𝚙𝚘𝚗𝚜𝚎 𝚏𝚘𝚛𝚖𝚊𝚝' }, event.threadID, event.messageID);
       }
     } catch (error) {
-      console.error('🚫 𝙴𝚛𝚛𝚘𝚛:', error.message);
       api.sendMessage({ body: '🚫 𝙰𝚗 𝚎𝚛𝚛𝚘𝚛 𝚘𝚌𝚌𝚞𝚛𝚎𝚍' }, event.threadID, event.messageID);
     }
   }

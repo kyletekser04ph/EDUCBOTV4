@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 module.exports.config = {
-    name: 'gpt3',
+    name: 'davinciv4',
     version: '1.0.0',
     role: 0,
     hasPrefix: false,
@@ -18,12 +18,11 @@ module.exports.run = async function({ api, event, args }) {
     }
 
     const question = args.join(" ");
-    const apiUrl = `https://www.vertearth.cloud/api/gpt4?prompt=${encodeURIComponent(question)}`;
+    const apiUrl = `https://betadash-api-swordslush.vercel.app/davinci-002?ask=${encodeURIComponent(question)}`;
 
     try {
         const response = await axios.get(apiUrl);
-        api.sendMessage(`✦ | 𝗚𝗣𝗧-𝟯 𝗔𝗥𝗖𝗛𝗜𝗧𝗘𝗖𝗧𝗨𝗥𝗘
-━━━━━━━━━━━━━━━━━━\n${response.data.response.answer}\n━━━━━━━━━━━━━━━━━━`, event.threadID, event.messageID);
+        api.sendMessage(response.data.message, event.threadID, event.messageID);
     } catch (error) {
         api.sendMessage("An error occurred while processing your request. Please try again later.", event.threadID);
     }

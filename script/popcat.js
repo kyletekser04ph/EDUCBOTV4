@@ -23,7 +23,6 @@ module.exports.run = async ({ api, event, args }) => {
   const respond = response.data.response;
   api.sendMesaage(respond, event.threadID, event.messageID);
  } catch (error) {
-  console.error("An error occurred:", error);
   api.sendMessage("Oops! Something went wrong.", event.threadID, event.messageID);
  }
 };

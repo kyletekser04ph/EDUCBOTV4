@@ -16,7 +16,7 @@ owner["config"] = {
 };
 
 owner["run"] = async function({ api, event, prefix, admin }) {
-const database = JSON.parse(fs.readFileSync('./data/database.json', 'utf8'));
+/** const database = JSON.parse(fs.readFileSync('./data/database.json', 'utf8'));
 
 let threadCount = 0;
 let userCount = new Set();
@@ -34,7 +34,7 @@ database.forEach(entry => {
   });
 });
 
-userCount = userCount.size;
+userCount = userCount.size; **/
     let time = process.uptime();
     let years = Math.floor(time / (60 * 60 * 24 * 365));
     let months = Math.floor((time % (60 * 60 * 24 * 365)) / (60 * 60 * 24 * 30));
@@ -130,6 +130,7 @@ userCount = userCount.size;
         body: `《《 𝗢𝗪𝗡𝗘𝗥 𝗜𝗡𝗙𝗢 》》
 
 ⁂ Bot Name: ${namee}
+₪ Bot Admin: ${name}
 ✧ Main admin: 𝗖𝗹𝗶𝗳𝗳𝗩𝗶𝗻𝗰𝗲𝗻𝘁
 ♛ Bot Admin Link: https://www.facebook.com/${admin}
 ❂ Bot Prefix: ${prefix}

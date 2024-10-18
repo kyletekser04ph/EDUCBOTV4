@@ -45,10 +45,10 @@ module.exports.run = async function({ api, event, args }) {
      }, event.messageID);
     });
 
-      const response = await axios.get(`https://markdevs-api.onrender.com/api/v2/gpt4?query=${encodeURIComponent(user)}`);
+      const response = await axios.get(`https://betadash-api-swordslush.vercel.app/gpt-4-turbo-2024-04-09?ask=${encodeURIComponent(user)}`);
 
       const responseData = response.data;
-      const content = formatFont(responseData.respond);
+      const content = formatFont(responseData.message);
       const baby = `֎ | 𝗚𝗣𝗧𝟰-𝗧𝗨𝗥𝗕𝗢 (AI)\n━━━━━━━━━━━━━━━━━━━ \n🖋️ Ans: '${content}`;
 
       api.editMessage(baby, cliff.messageID);
@@ -58,11 +58,11 @@ module.exports.run = async function({ api, event, args }) {
                     resolve(info);
                 });
             });
-        
+
             setTimeout(() => {
                 api.unsendMessage(tf.messageID);
             }, 10000);
-          
+
             return;
   }
 };

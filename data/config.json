@@ -6,7 +6,7 @@
       "adminName": [],
       "devMode": false,
       "database": false,
-      "restartTime": 20
+      "restartTime": 72
 		},
 		"fcaOption": {
 			"forceLogin": true,

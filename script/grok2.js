@@ -21,13 +21,13 @@ function formatFont(text) {
 }
 
 module.exports.config = {
-  name: 'gpt4',
+  name: 'grok-2',
   version: '1.1.1',
   hasPermssion: 0,
   role: 0,
   credits: "cliff",
   author: '',
-  description: 'trained by google',
+  description: 'trained by elonmusk',
   usePrefix: false,
   hasPrefix: false,
   commandCategory: 'AI',
@@ -61,18 +61,18 @@ module.exports.run = async function({ api, event, args }) {
         }, event.messageID);
       });
 
-      const apiUrl = "https://betadash-api-swordslush.vercel.app/gpt-4o-2024-08-06?ask=";
+      const apiUrl = "https://betadash-api-swordslush.vercel.app/grok-2-mini?ask=";
       const encodedUser = encodeURIComponent(user);
       const url = apiUrl + encodedUser;
       const response = await axios.get(url);
       const responseData = response.data.message; 
       const formattedMessage = formatFont(responseData);
 
-      const baby = `֎ | 𝗚𝗣𝗧-𝟰 (𝗔𝗦𝗦𝗜𝗦𝗧𝗔𝗡𝗧)\n━━━━━━━━━━━━━━━━━━\n${formattedMessage}\n━━━━━━━━━━━━━━━━━━`;
+      const baby = `♅.ᐟ | 𝗚𝗥𝗢𝗞-𝟮-𝗠𝗶𝗻𝗶\n━━━━━━━━━━━━━━━━━━\n${responseData}\n━━━━━━━━━━━━━━━━━━`;
       api.editMessage(baby, cliff.messageID);
   } catch (err) {
                const tf = await new Promise(resolve => {
-                api.sendMessage('nag luluko', event.threadID, (err, info) => {
+                api.sendMessage('sorry Patay na siguro ang api', event.threadID, (err, info) => {
                     resolve(info);
                 });
             });

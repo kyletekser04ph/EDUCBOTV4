@@ -10,7 +10,6 @@ c["config"] = {
     description: "fal.ai Image generation",
     usages: "[prompt]",
     cooldown: 5,
-    aliases: ["fluxpro"]
 };
 
 c["run"] = async ({ api, event, args }) => {

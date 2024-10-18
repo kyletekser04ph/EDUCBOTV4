@@ -31,7 +31,7 @@ module.exports.run = async function({ api, event, args }) {
         return;
   }
 
-    const ugh = api.sendMessage("⏱️ | Searching, please wait...", event.threadID);
+    const ugh = api.sendMessage("⏱️ | Searching, please wait...", event.threadID, event.messageID);
 
     const response = await axios.get(`https://betadash-search-download.vercel.app/tiksearch?search=${encodeURIComponent(searchQuery)}`);
 
@@ -45,7 +45,7 @@ module.exports.run = async function({ api, event, args }) {
     const videoUrl = videoData.url;
     const message = `𝐓𝐢𝐤𝐭𝐨𝐤 𝐫𝐞𝐬𝐮𝐥𝐭:\n\n𝐓𝐢𝐭𝐥𝐞: ${videoData.title}\n𝐃𝐮𝐫𝐚𝐭𝐢𝐨𝐧: ${videoData.duration}s\n𝐑𝐞𝐠𝐢𝐨𝐧: ${videoData.region}`;
 
-    const filePath = path.join(__dirname, `/cache/tiktok_video.mp4`);
+    const filePath = path.join(__dirname, 'cache', 'tiktok_video.mp4');
     const writer = fs.createWriteStream(filePath);
 
     const videoResponse = await axios({
@@ -57,14 +57,15 @@ module.exports.run = async function({ api, event, args }) {
     videoResponse.data.pipe(writer);
 
     writer.on('finish', () => {
+
+api.unsendMessage(ugh.messageID);
+      
       api.sendMessage(
         { body: message, attachment: fs.createReadStream(filePath) },
-        event.threadID,
+        event.threadID, event.messageID,
         () => fs.unlinkSync(filePath)
       );
     });
-
-    api.unsendMessage(ugh.messageID);
   } catch (error) {
     api.sendMessage("An error occurred while processing the request.", event.threadID);
   }

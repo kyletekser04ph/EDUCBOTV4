@@ -4,8 +4,8 @@ const fs = require('fs').promises;
 const storageFile = 'user_data.json';
 const axiosStatusFile = 'axios_status.json';
 
-const primaryApiUrl = 'https://cprojectapisjonellv2.adaptable.app/api/gptconvo';
-const backupApiUrl = 'https://jonellccprojectapis10.adaptable.app/api/gpt4o';
+const primaryApiUrl = 'https://ccprojectsjonellapis-production.up.railway.app/api/gptconvo';
+const backupApiUrl = 'https://ccprojectsjonellapis-production.up.railway.app/api/gpt4o';
 
 let isPrimaryApiStable = true;
 
@@ -16,7 +16,7 @@ module.exports.config = {
     credits: "Jonell Magallanes",
     description: "EDUCATIONAL",
     hasPrefix: false,
-    aliases: ["Gpt5"],
+    aliases: ["Gpt5", "gpt5"],
     usages: "[question]",
     cooldowns: 5,
     hasPermission: 0,
@@ -37,7 +37,7 @@ module.exports.run = async function ({ api, event, args }) {
         apiUrl = `${primaryApiUrl}?ask=${content}&id=${uid}`;
         apiName = 'Primary Axios';
     } else {
-        apiUrl = `${backupApiUrl}?context=${content}`;
+        apiUrl = `${backupApiUrl}?ask=${content}&id=${uid}`;
         apiName = 'Backup Axios';
     }
 
@@ -93,7 +93,7 @@ module.exports.run = async function ({ api, event, args }) {
 
         try {
             api.sendMessage("🔄 | Trying Switching Axios!", event.threadID);
-            const backupResponse = await axios.get(`${backupApiUrl}?context=${content}`);
+            const backupResponse = await axios.get(`${backupApiUrl}?ask=${content}&id=${uid}`);
             const backupResult = backupResponse.data.response;
 
             if (!backupResult) {
@@ -109,7 +109,7 @@ module.exports.run = async function ({ api, event, args }) {
             const totalRequestCount = await getTotalRequestCount();
             const userNames = await getUserNames(api, uid);
 
-            const responseMessage = `🧩 | 𝙔𝘼𝙕𝙆 - 𝖢𝖮𝖭𝖵𝖤𝖱S.....\n━━━━━━━━━━━━━━━━━━\n${backupResult}\n━━━━━━━━━━━━━━━━━━\n👤 Asked by: ${userNames.join(', ')}`;
+            const responseMessage = `🧩 | 𝗚𝗣𝗧𝟱 - 𝖢𝖮𝖭𝖵𝖤𝖱S.....\n━━━━━━━━━━━━━━━━━━\n${backupResult}\n━━━━━━━━━━━━━━━━━━\n👤 Asked by: ${userNames.join(', ')}`;
             api.editMessage(responseMessage, cliff.messageID);
 
             isPrimaryApiStable = false;

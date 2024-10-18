@@ -3,7 +3,7 @@ const axios = require("axios");
 const fs = require("fs");
 
 module.exports.config = {
-  name: "video",
+  name: "videov2",
   version: "9",
   credits: "Cliff",
   description: "Search video from YouTube",
@@ -37,14 +37,14 @@ module.exports.run = async function ({ api, args, event }) {
      }, event.messageID);
     });
 
-    const response = await axios.get(`https://betadash-search-download.vercel.app/video?search=${encodeURIComponent(searchQuery)}`);
+    const response = await axios.get(`https://yt-video-production.up.railway.app/video?search=${encodeURIComponent(searchQuery)}`);
 
     const data = response.data;
     const videoUrl = data.downloadUrl;
     const title = data.title;
     const thumbnail = data.thumbnail;
 
-    const videoPath = path.join(__dirname, "cache", "videov2.mp4");
+    const videoPath = path.join(__dirname, "cache", "video.mp4");
 
     const videoResponse = await axios.get(videoUrl, { responseType: "arraybuffer" });
 

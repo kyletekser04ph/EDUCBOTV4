@@ -196,6 +196,7 @@ function buildAPI(globalOptions, html, jar) {
       'getThreadInfo',
       'getThreadList',
       'getThreadPictures',
+      'getUID',
       'getUserID',
       'getUserInfo',
       'handleMessageRequest',
