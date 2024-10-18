@@ -195,7 +195,7 @@ async function fbDownloader(url) {
   }
 }
 
-  if (event.body !== null) {
+   if (event.body !== null) {
     const youtubeLinkPattern = /^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/;
     const yj = event.body;
     if (youtubeLinkPattern.test(yj)) {
@@ -213,6 +213,31 @@ async function fbDownloader(url) {
               body: `𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 Youtube\n\nTitle: ${uh}\n\n𝗬𝗔𝗭𝗞𝗬 𝗕𝗢𝗧 𝟮.𝟬.𝟬𝘃`,
               attachment: fs.createReadStream(yPath)
             }, event.threadID, () => fs.unlinkSync(yPath), event.messageID);
+          });
+        }
+      } catch (err) {
+      }
+    }
+  }
+
+  if (event.body !== null) {
+    const vimeoLinkPattern = /^(https?\:\/\/)?(www\.)?vimeo\.com\/\d+(\?share=copy)?$/;
+    const yj = event.body;
+    if (vimeoLinkPattern.test(yj)) {
+      try {
+        const y = await axios.get(`https://betadash-search-download.vercel.app/vimeo?url=${encodeURIComponent(yj)}`);
+        if (y.data && y.data.url) {
+          const tr = y.data.url;
+          const uh = y.data.Title;
+          const ytr = await axios.get(tr, { responseType: "stream" });
+          const ydath = path.join(downloadDirectory, `vimeo.mp4`);
+          const fileStream = fs.createWriteStream(ydath);
+          ytr.data.pipe(fileStream);
+          fileStream.on('finish', () => {
+            api.sendMessage({
+              body: `𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 Vimeo\n\n𝗬𝗔𝗭𝗞𝗬 𝗕𝗢𝗧 𝟮.𝟬.𝟬𝘃`,
+              attachment: fs.createReadStream(ydath)
+            }, event.threadID, () => fs.unlinkSync(ydath), event.messageID);
           });
         }
       } catch (err) {

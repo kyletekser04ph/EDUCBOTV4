@@ -78,21 +78,21 @@ module.exports.run = async function ({ api, event, args }) {
         const totalRequestCount = await getTotalRequestCount();
         const userNames = await getUserNames(api, uid);
 
-        const responseMessage = `🧩 | 𝙔𝘼𝙕𝙆 - 𝖢𝖮𝖭𝖵𝖤𝖱S......\n━━━━━━━━━━━━━━━━━━\n${result}\n━━━━━━━━━━━━━━━━━━\n👤 Asked by: ${userNames.join(', ')}`;
+        const responseMessage = `🧩 | 𝗚𝗣𝗧𝟱 - 𝖢𝖮𝖭𝖵𝖤𝖱S......\n━━━━━━━━━━━━━━━━━━\n${result}\n━━━━━━━━━━━━━━━━━━\n👤 Asked by: ${userNames.join(', ')}`;
         api.editMessage(responseMessage, cliff.messageID);
 
         await saveAxiosStatus(apiName);
 
         if (!isPrimaryApiStable) {
             isPrimaryApiStable = true;
-            api.sendMessage("🔃 | Switching back to the primary Axios. Just please wait.", event.threadID);
+            api.sendMessage("࿖ | Switching back to the primary Axios. Just please wait.", event.threadID);
         }
 
     } catch (error) {
         console.error(error);
 
         try {
-            api.sendMessage("🔄 | Trying Switching Axios!", event.threadID);
+            api.sendMessage("࿖ | Trying Switching Axios!", event.threadID);
             const backupResponse = await axios.get(`${backupApiUrl}?ask=${content}&id=${uid}`);
             const backupResult = backupResponse.data.response;
 

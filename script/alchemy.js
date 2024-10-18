@@ -33,19 +33,22 @@ canvas["run"] = async function ({ api, event, args }) {
 
   const apiUrl = `${domainPart1}${domainPart2}${domainPart3}/alchemy?text=${encodeURIComponent(text)}`;
 
-  api.sendMessage("Processing your request, please wait...", async (err, info) => {
-    const id = info.messageID;
-    try {
-      const imageStream = await axios.get(apiUrl, { responseType: 'stream' });
-      api.unsendMessage(id);
-      api.sendMessage({
-        body: `Here is your image:`,
-        attachment: imageStream.data
-      });
-    } catch (error) {
-      api.sendMessage(`Error: ${error.message}`, event.threadID);
-    }
+  const cliff = await new Promise(resolve => {
+    api.sendMessage('Processing your request, please wait...', event.threadID, (err, info1) => {
+      resolve(info1);
+    }, event.messageID);
   });
+
+  try {
+    const imageStream = await axios.get(apiUrl, { responseType: 'stream' });
+    api.unsendMessage(cliff.messageID);
+    api.sendMessage({
+      body: `Here is your image:`,
+      attachment: imageStream.data
+    }, event.threadID, event.messageID);
+  } catch (error) {
+    api.sendMessage(`Error: ${error.message}`, event.threadID);
+  }
 };
 
 module.exports = canvas;
