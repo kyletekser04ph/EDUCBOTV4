@@ -36,11 +36,11 @@ if (!query) {
      }, event.messageID);
     });
 
-  const apiUrl = `https://openapi-idk8.onrender.com/blackbox?chat=${query}`;
+  const apiUrl = `https://yt-video-production.up.railway.app/blackbox?ask=${query}`;
 
   try {
     const response = await axios.get(apiUrl);
-    const ans = response.data.response;
+    const ans = response.data.Response;
     const cleanResponseData = ans.replace(/\n\nIs this answer helpful to you\? Kindly click the link below\nhttps:\/\/click2donate.kenliejugarap.com\n\(Clicking the link and clicking any ads or button and wait for 30 seconds \(3 times\) everyday is a big donation and help to us to maintain the servers, last longer, and upgrade servers in the future\)/, '');
     api.editMessage(`${tae} | 𝗕𝗟𝗔𝗖𝗞𝗕𝗢𝗫 𝗔𝗜\n━━━━━━━━━━━━━━━━━━\n${ans}\n━━━━━━━━━━━━━━━━━━`, cliff.messageID);
   } catch (error) {

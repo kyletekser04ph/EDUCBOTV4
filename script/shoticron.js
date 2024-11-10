@@ -2,7 +2,7 @@ const axios = require('axios');
 
 module.exports.config = {
     name: "shoticron",
-    credits: "cliff", 
+    credits: "Marjhun // modified by cliff", 
     version: "2.0.0",
     cooldown: 0,
     role: 2,

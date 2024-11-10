@@ -31,7 +31,6 @@
     "mime-types": "^2.1.35",
     "moment-timezone": "^0.5.45",
     "mqtt": "^3.0.0",
-    "nayan-server": "^2.2.7",
     "ngl.js": "^1.0.5",
     "node-cron": "^3.0.3",
     "npmlog": "^1.2.0",

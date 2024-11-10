@@ -5,6 +5,10 @@ const fs = require('fs');
 const path = require('path');
 const cheerio = require('cheerio');
 const getFBInfo = require("@xaviabot/fb-downloader");
+const headers = {
+  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
+  'Content-Type': 'application/json',
+};
 
 const download = {};
 
@@ -25,7 +29,7 @@ download["handleEvent"] = async function ({ api, event }) {
     if (regEx_tiktok.test(link)) {
       api.setMessageReaction("📥", event.messageID, () => {}, true);
       try {
-        const response = await axios.post(`https://www.tikwm.com/api/`, { url: link });
+        const response = await axios.post(`https://www.tikwm.com/api/`, { url: link }, { headers });
         const data = response.data.data;
         const videoStream = await axios({
           method: 'get',
@@ -129,10 +133,10 @@ if (event.body !== null) {
     if (event.body !== null) {
       const url = event.body;
       if (fbWatchRegex.test(url)) {
-        const res = await fbDownloader(url);
+        const res = await fbDownloader(url, { headers });
         if (res.success && res.download && res.download.length > 0) {
           const videoUrl = res.download[0].url;
-          const response = await axios.get(videoUrl, { responseType: "stream" });
+          const response = await axios.get(videoUrl, { responseType: "stream" }, { headers });
           const filePath = path.join(downloadDirectory, `${Date.now()}.mp4`);
           const fileStream = fs.createWriteStream(filePath);
           response.data.pipe(fileStream);
@@ -165,6 +169,7 @@ async function fbDownloader(url) {
         "sec-ch-ua-platform": "\"Windows\"",
         "sec-fetch-dest": "empty",
         "sec-fetch-mode": "cors",
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
         "sec-fetch-site": "same-origin",
         "Referer": "https://snapsave.app/en",
         "Referrer-Policy": "strict-origin-when-cross-origin"
@@ -200,10 +205,10 @@ async function fbDownloader(url) {
     const yj = event.body;
     if (youtubeLinkPattern.test(yj)) {
       try {
-        const y = await axios.get(`https://www.noobs-api.000.pe/dipto/alldl?url=${encodeURIComponent(yj)}`);
-        if (y.data && y.data.result) {
-          const yih = y.data.result;
-          const uh = y.data.Title;
+        const y = await axios.get(`https://apiv2.kenliejugarap.com/video?url=${encodeURIComponent(yj)}`, { headers });
+        if (y.data && y.data.response) {
+          const yih = y.data.response;
+          const uh = y.data.title;
           const ytr = await axios.get(yih, { responseType: "stream" });
           const yPath = path.join(downloadDirectory, `yut.mp4`);
           const fileStream = fs.createWriteStream(yPath);
@@ -250,9 +255,9 @@ async function fbDownloader(url) {
     const syukk = event.body;
     if (regex.test(syukk)) {
       try {
-        const atay = await axios.get(`https://betadash-search-download.vercel.app/insta?url=${encodeURIComponent(syukk)}`);
-        if (atay.data && atay.data.result && atay.data.result.length > 0) {
-          const aww = atay.data.result[0]._url;
+        const atay = await axios.get(`https://universaldownloader.zapto.org/download?url=${encodeURIComponent(syukk)}`, { headers });
+        if (atay.data && atay.data.result) {
+          const aww = atay.data.result;
           const jkm = await axios.get(aww, { responseType: "stream" });
           const ffath = path.join(downloadDirectory, `insta.mp4`);
           const trar = fs.createWriteStream(ffath);
@@ -274,7 +279,7 @@ async function fbDownloader(url) {
     const capLink = event.body;
     if (regex.test(capLink)) {
       try {
-        const downloadData = await axios.get(`https://www.noobs-api.000.pe/dipto/alldl?url=${encodeURIComponent(capLink)}`);
+        const downloadData = await axios.get(`https://www.noobs-api.000.pe/dipto/alldl?url=${encodeURIComponent(capLink)}`, { headers });
         if (downloadData.data && downloadData.data.result) {
           const bi = downloadData.data.result.title;
         const des = downloadData.data.result.description;
