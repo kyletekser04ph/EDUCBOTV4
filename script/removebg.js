@@ -28,9 +28,12 @@ module.exports.run = async ({ api, event, args }) => {
 
   try {
     api.sendMessage("🕟 | 𝚁𝚎𝚖𝚘𝚟𝚒𝚗𝚐 𝚋𝚊𝚌𝚔𝚐𝚛𝚘𝚞𝚗𝚍, 𝙿𝚕𝚎𝚊𝚜𝚎 𝚠𝚊𝚒𝚝...", threadID, messageID);
-    const response = await axios.get(`https://betadash-uploader.vercel.app/removebg?url=${encodeURIComponent(photoUrl)}`);
+      const imgurUploadUrl = `https://betadash-uploader.vercel.app/imgur?link=${encodeURIComponent(url)}`;
+            const upload = await axios.get(imgurUploadUrl);
+            const imgurLink = upload.data.uploaded.image;
+    const response = await axios.get(`https://kaiz-apis.gleeze.com/api/removebg-v2?url=${imgurLink}`);
 
-    const img = (await axios.get(response.data, { responseType: "arraybuffer" })).data;
+    const img = (await axios.get(response.data.imageUrl, { responseType: "arraybuffer" })).data;
 
     api.sendMessage({
       body: "🔮 𝙱𝚊𝚌𝚔𝚐𝚛𝚘𝚞𝚗𝚍 𝚛𝚎𝚖𝚘𝚟𝚎 𝚜𝚞𝚌𝚌𝚎𝚜𝚜𝚏𝚞𝚕𝚕𝚢",

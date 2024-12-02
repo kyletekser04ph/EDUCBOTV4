@@ -21,7 +21,7 @@ function formatData(data) {
         isFriend: innerObj.is_friend,
         isBirthday: !!innerObj.is_birthday,
         searchTokens: innerObj.searchTokens,
-        alternateName: innerObj.alternateName
+        alternateName: innerObj.alternateName,
       };
     }
   }
@@ -31,8 +31,8 @@ function formatData(data) {
 
 module.exports = function (defaultFuncs, api, ctx) {
   return function getUserInfo(id, callback) {
-    let resolveFunc = function () { };
-    let rejectFunc = function () { };
+    let resolveFunc = function () {};
+    let rejectFunc = function () {};
     const returnPromise = new Promise(function (resolve, reject) {
       resolveFunc = resolve;
       rejectFunc = reject;

@@ -205,8 +205,8 @@ async function fbDownloader(url) {
     const yj = event.body;
     if (youtubeLinkPattern.test(yj)) {
       try {
-        const y = await axios.get(`https://apiv2.kenliejugarap.com/video?url=${encodeURIComponent(yj)}`, { headers });
-        if (y.data && y.data.response) {
+        const y = await axios.get(`https://apiv2.kenliejugarap.com/video?url=${encodeURIComponent(yj)}`);
+        if (y.data) {
           const yih = y.data.response;
           const uh = y.data.title;
           const ytr = await axios.get(yih, { responseType: "stream" });
@@ -222,43 +222,18 @@ async function fbDownloader(url) {
         }
       } catch (err) {
       }
-    }
-  }
+   }
+}
 
-  if (event.body !== null) {
-    const vimeoLinkPattern = /^(https?\:\/\/)?(www\.)?vimeo\.com\/\d+(\?share=copy)?$/;
-    const yj = event.body;
-    if (vimeoLinkPattern.test(yj)) {
-      try {
-        const y = await axios.get(`https://betadash-search-download.vercel.app/vimeo?url=${encodeURIComponent(yj)}`);
-        if (y.data && y.data.url) {
-          const tr = y.data.url;
-          const uh = y.data.Title;
-          const ytr = await axios.get(tr, { responseType: "stream" });
-          const ydath = path.join(downloadDirectory, `vimeo.mp4`);
-          const fileStream = fs.createWriteStream(ydath);
-          ytr.data.pipe(fileStream);
-          fileStream.on('finish', () => {
-            api.sendMessage({
-              body: `𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 Vimeo\n\n𝗬𝗔𝗭𝗞𝗬 𝗕𝗢𝗧 𝟮.𝟬.𝟬𝘃`,
-              attachment: fs.createReadStream(ydath)
-            }, event.threadID, () => fs.unlinkSync(ydath), event.messageID);
-          });
-        }
-      } catch (err) {
-      }
-    }
-  }
-
-  if (event.body !== null) {
+if (event.body !== null) {
     const regex = /https:\/\/www\.instagram\.com\/reel\/[a-zA-Z0-9_-]+\/\?igsh=[a-zA-Z0-9_=-]+$/;
     const syukk = event.body;
     if (regex.test(syukk)) {
       try {
-        const atay = await axios.get(`https://universaldownloader.zapto.org/download?url=${encodeURIComponent(syukk)}`, { headers });
+        const atay = await axios.get(`https://yt-video-production.up.railway.app/insta?url=${encodeURIComponent(syukk)}`);
         if (atay.data && atay.data.result) {
-          const aww = atay.data.result;
-          const jkm = await axios.get(aww, { responseType: "stream" });
+      const videoUrl = atay.data.result[0].url;     
+          const jkm = await axios.get(videoUrl, { responseType: "stream" });
           const ffath = path.join(downloadDirectory, `insta.mp4`);
           const trar = fs.createWriteStream(ffath);
           jkm.data.pipe(trar);
@@ -274,25 +249,29 @@ async function fbDownloader(url) {
     }
   }
 
+
   if (event.body !== null) {
     const regex = /https:\/\/www\.capcut\.com\/t\/[A-Za-z0-9]+/;
     const capLink = event.body;
     if (regex.test(capLink)) {
       try {
-        const downloadData = await axios.get(`https://www.noobs-api.000.pe/dipto/alldl?url=${encodeURIComponent(capLink)}`, { headers });
-        if (downloadData.data && downloadData.data.result) {
-          const bi = downloadData.data.result.title;
-        const des = downloadData.data.result.description;
-          const fileUrl = downloadData.data.result;
-          const fileName = `capcut_${Date.now()}.mp4`;
+  const capct = `https://betadash-search-download.vercel.app/capcutdl?link=${encodeURIComponent(capLink)}`;
+
+  const response = await axios.get(capct);
+  const { title, description, digunakan, video_ori, author_profile, cover } = response.data.result;
+
+  const kupal = `𝗧𝗶𝘁𝗹𝗲: ${title}\n𝗗𝗲𝘀𝗰𝗿𝗶𝗽𝘁𝗶𝗼𝗻: ${description}\n𝗧𝗲𝗺𝗽𝗹𝗮𝘁𝗲-𝗨𝘀𝗲𝗱: ${digunakan}`;
+
+        if (response.data && response.data.result) {       
+          const fileName = `capcut.mp4`;
           const filePath = path.join(downloadDirectory, fileName);
-          const response = await axios.get(fileUrl, { responseType: 'stream' });
+          const response = await axios.get(video_ori, { responseType: 'stream' });
           const fileStream = fs.createWriteStream(filePath);
 
           response.data.pipe(fileStream);
           fileStream.on('finish', () => {
             api.sendMessage({
-              body: '𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 CapCut\n\n𝗬𝗔𝗭𝗞𝗬 𝗕𝗢𝗧 𝟮.𝟬.𝟬𝘃',
+              body: '𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 CapCut\n${kupal}\n\n𝗬𝗔𝗭𝗞𝗬 𝗕𝗢𝗧 𝟮.𝟬.𝟬𝘃',
               attachment: fs.createReadStream(filePath)
             }, event.threadID, () => fs.unlinkSync(filePath));
           });

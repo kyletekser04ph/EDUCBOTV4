@@ -1,6 +1,10 @@
 const path = require("path");
 const axios = require("axios");
 const fs = require("fs");
+const headers = {
+  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
+  'Content-Type': 'application/json',
+};
 
 module.exports.config = {
   name: "videov2",
@@ -37,7 +41,7 @@ module.exports.run = async function ({ api, args, event }) {
      }, event.messageID);
     });
 
-    const response = await axios.get(`https://yt-video-production.up.railway.app/video?search=${encodeURIComponent(searchQuery)}`);
+    const response = await axios.get(`https://yt-video-production.up.railway.app/video?search=${encodeURIComponent(searchQuery)}`, { headers} );
 
     const data = response.data;
     const videoUrl = data.downloadUrl;

@@ -18,7 +18,7 @@ module.exports.run = async function({ api, event, args }) {
         const senderID = event.messageReply.senderID;
         return api.shareContact(senderID, event.messageReply.senderID, event.threadID);
       } else {
-        return api.shareContact(event.senderID, event.senderID, event.threadID);
+        return api.shareContact(`your id: ${event.senderID}`, event.senderID, event.threadID);
       }
     } else if (Object.keys(event.mentions).length === 0) {
       const fblink = args.join(" ");
