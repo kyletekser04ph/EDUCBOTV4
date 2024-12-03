@@ -36,7 +36,7 @@ module.exports.run = async function({ api, event, args }) {
       }, event.messageID);
     });
 
-    const response = await axios.get(`https://markdevs-last-api-t48o.onrender.com/gpt4?prompt=${encodeURIComponent(user)}&uid=${userid}`);
+    const response = await axios.get(`https://markdevs-last-api-s7d0.onrender.com/gpt4?prompt=${encodeURIComponent(user)}&uid=${userid}`);
 
     const responseData = response.data.gpt4;
 

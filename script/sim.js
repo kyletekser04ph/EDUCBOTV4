@@ -17,8 +17,8 @@ module.exports.run = async function({ api, event, args }) {
   const content = encodeURIComponent(args.join(" "));
   if (!args[0]) return api.sendMessage("Please type a message...", tid, mid);
   try {
-      const res = await axios.get(`https://simsimfun-tag.vercel.app/sim?ask=${content}`);
-      const respond = res.data.respond;
+      const res = await axios.get(`https://markdevs-last-api-s7d0.onrender.com/sim?q=${content}`);
+      const respond = res.data.response;
       if (res.data.error) {
           api.sendMessage(`Error: ${res.data.error}`, tid, (error, info) => {
               if (error) {
