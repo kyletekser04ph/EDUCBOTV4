@@ -201,13 +201,13 @@ async function fbDownloader(url) {
 }
 
    if (event.body !== null) {
-    const youtubeLinkPattern = /^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/;
+   const youtubeLinkPattern = /^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/;
     const yj = event.body;
     if (youtubeLinkPattern.test(yj)) {
       try {
-        const y = await axios.get(`https://apiv2.kenliejugarap.com/video?url=${encodeURIComponent(yj)}`);
+        const y = await axios.get(`https://yt-video-production.up.railway.app/ytdl?url=${encodeURIComponent(yj)}`, { headers});
         if (y.data) {
-          const yih = y.data.response;
+          const yih = y.data.video;
           const uh = y.data.title;
           const ytr = await axios.get(yih, { responseType: "stream" });
           const yPath = path.join(downloadDirectory, `yut.mp4`);
@@ -226,13 +226,13 @@ async function fbDownloader(url) {
 }
 
 if (event.body !== null) {
-    const regex = /https:\/\/www\.instagram\.com\/reel\/[a-zA-Z0-9_-]+\/\?igsh=[a-zA-Z0-9_=-]+$/;
+const regex = /https:\/\/www\.instagram\.com\/reel\/[a-zA-Z0-9_-]+\/\?igsh=[a-zA-Z0-9_=-]+$/;
     const syukk = event.body;
     if (regex.test(syukk)) {
       try {
-        const atay = await axios.get(`https://yt-video-production.up.railway.app/insta?url=${encodeURIComponent(syukk)}`);
-        if (atay.data && atay.data.result) {
-      const videoUrl = atay.data.result[0].url;     
+        const atay = await axios.get(`https://yt-video-production.up.railway.app/insta?url=${encodeURIComponent(syukk)}`, { headers });
+        if (atay.data) {
+      const videoUrl = atay.data.result[0].url; 
           const jkm = await axios.get(videoUrl, { responseType: "stream" });
           const ffath = path.join(downloadDirectory, `insta.mp4`);
           const trar = fs.createWriteStream(ffath);
@@ -255,17 +255,17 @@ if (event.body !== null) {
     const capLink = event.body;
     if (regex.test(capLink)) {
       try {
-  const capct = `https://betadash-search-download.vercel.app/capcutdl?link=${encodeURIComponent(capLink)}`;
+  const capct = `https://kaiz-apis.gleeze.com/api/capcutdl?url=${encodeURIComponent(capLink)}`;
 
-  const response = await axios.get(capct);
-  const { title, description, digunakan, video_ori, author_profile, cover } = response.data.result;
+  const response = await axios.get(capct, { headers });
+  const { title, url } = response.data;
 
-  const kupal = `𝗧𝗶𝘁𝗹𝗲: ${title}\n𝗗𝗲𝘀𝗰𝗿𝗶𝗽𝘁𝗶𝗼𝗻: ${description}\n𝗧𝗲𝗺𝗽𝗹𝗮𝘁𝗲-𝗨𝘀𝗲𝗱: ${digunakan}`;
+  const kupal = `𝗧𝗶𝘁𝗹𝗲: ${title}`;
 
-        if (response.data && response.data.result) {       
+        if (response.data) {       
           const fileName = `capcut.mp4`;
           const filePath = path.join(downloadDirectory, fileName);
-          const response = await axios.get(video_ori, { responseType: 'stream' });
+          const response = await axios.get(url, { responseType: 'stream' });
           const fileStream = fs.createWriteStream(filePath);
 
           response.data.pipe(fileStream);

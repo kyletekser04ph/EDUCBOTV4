@@ -9,49 +9,68 @@ module.exports.config = {
   credits: "cliff",
   description: "Text to voice speech messages",
   hasPrefix: false,
-  usages: `Text to speech messages`,
+  usages: "Text to speech messages",
   cooldown: 0,
 };
 
-module.exports.run = async function({ api, event, args }) {
+module.exports.run = async function ({ api, event, args }) {
   try {
-    const { createReadStream, unlinkSync } = fs;
-    const { resolve } = path;
+    const { createReadStream, unlinkSync, ensureDirSync } = fs;
+    const { resolve, join } = path;
 
-    let content = (event.type === "message_reply") ? event.messageReply.body : args.join(" ");
-    let languageToSay = detectLanguage(content);
-    let msg = content.slice(languageToSay.length).trim();
+    const cacheDir = resolve(__dirname, "cache");
+    ensureDirSync(cacheDir);
 
-    const filePath = resolve(__dirname, 'cache', `${event.threadID}_${event.senderID}.mp3`);
-    await downloadFile(`https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(msg)}&tl=${languageToSay}&client=tw-ob`, filePath);
 
-    return api.sendMessage({ attachment: createReadStream(filePath) }, event.threadID, () => unlinkSync(filePath), event.messageID);
+    let content =
+      event.type === "message_reply" && event.messageReply.body
+        ? event.messageReply.body
+        : args.join(" ");
+
+    if (!content) {
+      return api.sendMessage(
+        "Please provide text to convert to speech",
+        event.threadID,
+        event.messageID
+      );
+    }
+
+    const filePath = join(cacheDir, `say.mp3`);
+
+    await downloadFile(`https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(
+        content
+      )}&tl=tl&client=tw-ob`,
+      filePath
+    );
+
+
+    return api.sendMessage(
+      { attachment: createReadStream(filePath) },
+      event.threadID,
+      (err) => {
+        if (!err) unlinkSync(filePath);
+      },
+      event.messageID
+    );
   } catch (error) {
-    console.error(error);
+    api.sendMessage(
+      "An error occurred while processing your request.",
+      event.threadID,
+event.messageID
+    );
   }
 };
-
-function detectLanguage(content) {
-  const supportedLanguages = ["ru", "en", "ko", "ja", "tl"];
-  for (const lang of supportedLanguages) {
-    if (content.startsWith(lang)) {
-      return lang;
-    }
-  }
-  // Default language if not specified or not supported
-  return "tl";
-}
 
 async function downloadFile(url, filePath) {
   const writer = fs.createWriteStream(filePath);
   const response = await axios({
     url,
-    method: 'GET',
-    responseType: 'stream'
+    method: "GET",
+    responseType: "stream",
   });
   response.data.pipe(writer);
   return new Promise((resolve, reject) => {
-    writer.on('finish', resolve);
-    writer.on('error', reject);
+    writer.on("finish", resolve);
+    writer.on("error", reject);
   });
 }

@@ -37,10 +37,21 @@ module.exports.run = async ({ api, event, args }) => {
 
     const findingMessage = await api.sendMessage(`𝚂𝙴𝙰𝚁𝙲𝙷𝙸𝙽𝙶 𝙵𝙾𝚁 "${search}"`, event.threadID);
 
-    const youtubeTrackUrl = `https://dlvc.vercel.app/yt-audio?search=${encodeURIComponent(search)}`;
+        const videoSearchUrl = `https://betadash-search-download.vercel.app/yt?search=${search}`;
+
+        const videoResponse = await axios.get(videoSearchUrl);
+        const videoData = videoResponse.data[0];
+
+        if (!videoData) {
+            return res.status(404).json({ error: 'Video not found' });
+        }
+
+const videoUrl = videoData.url;
+
+    const youtubeTrackUrl = `https://yt-video-production.up.railway.app/ytdl?url=${videoUrl}`;
     const trackResponse = await axios.get(youtubeTrackUrl);
 
-    const { downloadUrl, title } = trackResponse.data;
+    const { audio, title } = trackResponse.data;
 
     const cacheDir = path.join(__dirname, 'cache');
     const fileName = `music.mp3`;
@@ -48,7 +59,7 @@ module.exports.run = async ({ api, event, args }) => {
 
     fs.ensureDirSync(cacheDir);
 
-    const audioStream = await axios.get(downloadUrl, { responseType: 'arraybuffer' });
+    const audioStream = await axios.get(audio, { responseType: 'arraybuffer' });
     fs.writeFileSync(filePath, Buffer.from(audioStream.data));
 
     api.sendMessage({

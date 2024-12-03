@@ -20,7 +20,7 @@ module.exports.config = {
   aliases: ["listusers", "listbots", "activeusers", "list-users", "bot-users", "active-users", "active-bots", "list-bot", "botstatus"],
   description: 'List all active bots in the history session.',
   version: '1.4.0',
-  role: 2,
+  role: 1,
   cooldown: 0,
   credits: "cliff",
   hasPrefix: false,
@@ -31,9 +31,6 @@ module.exports.config = {
 };
 
 module.exports.run = async function ({ api, event, args }) {
-  const pogi = "61557118090040";
-   if (!pogi.includes(event.senderID))
-   return api.sendMessage("This Command is only for AUTOBOT owner.", event.threadID, event.messageID);
   const { threadID, messageID } = event;
 
   if (args[0] && args[0].toLowerCase() === 'logout') {
