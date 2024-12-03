@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 module.exports.config = {
-    name: "flux3",
+    name: "flux",
     description: "Generate image from fal ai flux pro",
     cooldown: 5,
     aliases: [],
@@ -29,7 +29,7 @@ module.exports.run = async function ({ api, event, args }) {
             }, event.messageID);
         });
 
-        const apiUrl = `https://www.samirxpikachu.run.place/ArcticFL?prompt=${encodeURIComponent(prompt)}--styles+3`;
+        const apiUrl = `https://kaiz-apis.gleeze.com/api/flux?prompt=${encodeURIComponent(prompt)}`;
 
         const h = await axios.get(apiUrl, { responseType: 'stream' });
 
