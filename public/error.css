@@ -2,15 +2,18 @@
 @import url(https://fonts.googleapis.com/css?family=Gilda+Display);
 
 html {
-  background-color:black;
+  background: url('https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExeTg5MGg1MnF2cTlmZWt0b2pyaXl1bm1kdzIwNDZwdW4zZ2dsZ20zdiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/G8ZnRrBepIE1Xan4nO/giphy.gif') no-repeat center center fixed;
+  background-size: cover;
   color: white;
   overflow: hidden;
-  height: 100%;
+ display: flex;
+justify-content: center;
+height: 100%;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-      font-size: medium;
+      font-size: medium; 
 }
 
 .error {

@@ -15,7 +15,7 @@ module.exports.config = {
   usePrefix: false,
   cooldowns: 1,
   hasPrefix: false,
-  aliases: [],
+  aliases: ["spotify", "Spotify"],
   cooldown: 10
 };
 
@@ -39,11 +39,11 @@ module.exports.run = async ({ api, event, args }) => {
 
     const findingMessage = await api.sendMessage(`Searching for "${search}"`, event.threadID);
 
-    const apiUrl = `https://betadash-search-download.vercel.app/spt?search=${encodeURIComponent(search)}&apikey=syugg`;
+    const apiUrl = `https://betadash-search-download.vercel.app/spt?search=${encodeURIComponent(search)}`;
     const response = await axios.get(apiUrl);
 
-    if (response.data && response.data.spotify.length > 0) {
-      const firstSong = response.data.spotify[0].result;
+    if (response.data) {
+      const firstSong = response.data.download_url;
 
       const cacheDir = path.join(__dirname, 'cache');
       const fileName = `spt.mp3`;
@@ -58,7 +58,7 @@ module.exports.run = async ({ api, event, args }) => {
       fs.writeFileSync(filePath, Buffer.from(musicResponse.data));
 
       api.sendMessage({
-        body: `Here is your music 👍`,
+        body: `ᯤ Title: ${response.data.title}`,
         attachment: fs.createReadStream(filePath)
       }, event.threadID, () => fs.unlinkSync(filePath), event.messageID);
 
@@ -69,11 +69,11 @@ module.exports.run = async ({ api, event, args }) => {
                     resolve(info);
                 });
             });
-        
+
             setTimeout(() => {
                 api.unsendMessage(t.messageID);
             }, 10000);
-          
+
             return;
     }
   } catch (error) {
@@ -82,11 +82,11 @@ module.exports.run = async ({ api, event, args }) => {
                     resolve(info);
                 });
             });
-        
+
             setTimeout(() => {
                 api.unsendMessage(tf.messageID);
             }, 10000);
-          
+
             return;
   }
 };

@@ -23,15 +23,15 @@ module.exports.run = async function({ api, event, args }) {
           return api.sendMessage('Please provide a question first!', event.threadID, event.messageID);
       }
 
-      const cliff = await new Promise(resolve => { api.sendMessage('Պ | 𝗠𝗶𝘅𝘁𝗿𝗮𝗹-𝟴𝘅𝟮𝟮𝗕\n▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱\n🔍 Searching Please Wait....', event.threadID, (err, info1) => {
+      const cliff = await new Promise(resolve => { api.sendMessage('🔍 Searching Please Wait....', event.threadID, (err, info1) => {
       resolve(info1);
      }, event.messageID);
     });
 
-      const response = await axios.get(`https://www.samirxpikachu.run.place/Mixtral/142B?prompt=${encodeURIComponent(user)}`);
+      const response = await axios.get(`https://api.kenliejugarap.com/mistral-large/?question=${encodeURIComponent(user)}`);
 
-      const responseData = response.data.content;
-      const baby = `Պ | 𝗠𝗶𝘅𝘁𝗿𝗮𝗹-𝟴𝘅𝟮𝟮𝗕\n▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱\n${responseData}`;
+      const responseData = response.data.response;
+      const baby = `Պ | 𝗠𝗶𝘅𝘁𝗿𝗮𝗹\n━━━━━━━━━━━━━━━${responseData}\n━━━━━━━━━━━━━━━`;
       api.editMessage(baby, cliff.messageID);
   } catch (err) {
       return api.sendMessage('An error occurred while processing your request.', event.threadID, event.messageID);

@@ -7,7 +7,7 @@ let f = path.join(__dirname, 'cache', 'ss.png');
 module.exports["config"] = {
     name: "screenshot",
     version: "1.0.0",
-    role: 2,
+    role: 1,
     hasPrefix: false,
     credits: "cliff",
     description: "screenshot web",

