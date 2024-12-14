@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const name = "campaign";
+const name = "broadway";
 
 module.exports.config = {
   name: name,
@@ -26,15 +26,17 @@ module.exports.run = async function({ api, event, args }) {
 
     const imageUrl = args.join(" ");
 
+    
+
     if (!mentionID && !imageUrl && !url) {
       return api.sendMessage('Please mention or reply to a user or provide an image URL or reply by image.', event.threadID, event.messageID);
     }
 
     let responseUrl;
     if (mentionID) {
-      responseUrl = `https://api-canvass.vercel.app/campaign?userid=${mentionID}`;
+      responseUrl = `https://api-canvass.vercel.app/${name}?userid=${mentionID}`;
     } else if (imageUrl) {
-      responseUrl = `https://api-canvass.vercel.app/campaign?image=${encodeURIComponent(imageUrl)}`;
+      responseUrl = `https://api-canvass.vercel.app/${name}?image=${encodeURIComponent(imageUrl)}`;
     } else if (url) {
       const imgurApiUrl = `https://betadash-uploader.vercel.app/imgur?link=${url}`;
       const imgurResponse = await axios.get(imgurApiUrl);

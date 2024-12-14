@@ -1,7 +1,7 @@
 let t = {};
 
 t["config"] = {
-    name: "light-writing",
+    name: "snow-globe",
     version: "1.0.1",
     role: 0,
     hasPrefix: false,
@@ -21,7 +21,7 @@ t["run"] = async function({ api, event, args }) {
     if (!text) return api.sendMessage("provide a text first", event.threadID, event.messageID);	
 
     try {
-        const response = await axios.get(`https://api-canvass.vercel.app/light-writing?text=${encodeURIComponent(text)}`, { responseType: 'arraybuffer' });
+        const response = await axios.get(`https://api-canvass.vercel.app/christmas?name=${encodeURIComponent(text)}`, { responseType: 'arraybuffer' });
 
         await fs.writeFile(pathImg, response.data);
 

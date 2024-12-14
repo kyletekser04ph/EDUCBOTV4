@@ -17,6 +17,10 @@ module.exports.run = async function(ctx) {
    if (!pogi.includes(event.senderID))
    return api.sendMessage("This Command is only for AUTOBOT owner.", event.threadID, event.messageID); 
     const input = ctx.args.join(' ');
+
+    if (!input) return
+  api.sendMessage("Please provide a code to evaluate", event.threadID, event.messageID);
+  
     try {
       const runner = await eval(input);
       ctx.api.sendMessage(

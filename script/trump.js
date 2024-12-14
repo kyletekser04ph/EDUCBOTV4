@@ -1,15 +1,17 @@
 let t = {};
 
+const name = "trump";
+
 t["config"] = {
-    name: "light-writing",
+    name: name,
     version: "1.0.1",
     role: 0,
     hasPrefix: false,
     credits: "cliff",
-    description: "",
-    commandCategory: "canvas",
+    description: " canvas",
+    commandCategory: "game",
     usages: "[text]",
-    cooldowns: 5,
+    cooldowns: 0
 };
 
 t["run"] = async function({ api, event, args }) {	
@@ -18,10 +20,16 @@ t["run"] = async function({ api, event, args }) {
     const pathImg = __dirname + '/cache/e.png';
     const text = args.join(" ");
 
-    if (!text) return api.sendMessage("provide a text first", event.threadID, event.messageID);	
-
     try {
-        const response = await axios.get(`https://api-canvass.vercel.app/light-writing?text=${encodeURIComponent(text)}`, { responseType: 'arraybuffer' });
+const mentionID = event.senderID || Object.keys(event.mentions)[0] || (event.messageReply && event.messageReply.senderID);
+
+
+if (!mentionID || !text) {
+      return api.sendMessage('Please mention or reply to a user. and provide a text', event.threadID, event.messageID);
+    }
+
+    if (!mentionID || !text) return api.sendMessage("provide a text first", event.threadID, event.messageID);	
+        const response = await axios.get(`https://api-canvass.vercel.app/${name}?userid=${mentionID}&text=${encodeURIComponent(text)}`, { responseType: 'arraybuffer' });
 
         await fs.writeFile(pathImg, response.data);
 

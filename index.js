@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const login = require('./fb-chat-api/index');
+const login = require("./fb-chat-api/index");
 const express = require('express');
 const app = express();
 const chalk = require('chalk');
@@ -263,8 +263,6 @@ app.use('/pub/:filename', (req, res) => {
     });
   });
 }); **/
-
-
 
 app.use('/data/:filename', (req, res) => {
   const filenamessssss = req.params.filename;
@@ -851,7 +849,9 @@ async function accountLogin(state, enableCommands = [], prefix, botName, adminNa
           let adminIDS = data ? database : createThread(event.threadID, api);
           let be = JSON.parse(fs.readFileSync('./data/history.json', 'utf-8'));
 
+let user = be.find(entry => entry.userid === userid) || {};
 
+let blacklist = user.blacklist || [];
           let hasPrefix = (event.body && aliases((event.body || '')?.trim().toLowerCase().split(/ +/).shift())?.hasPrefix == false) ? '' : prefix;
           let [command, ...args] = ((event.body || '').trim().toLowerCase().startsWith(hasPrefix?.toLowerCase()) ? (event.body || '').trim().substring(hasPrefix?.length).trim().split(/\s+/).map(arg => arg.trim()) : []);
           if (hasPrefix && aliases(command)?.hasPrefix === false) {
@@ -922,13 +922,7 @@ async function accountLogin(state, enableCommands = [], prefix, botName, adminNa
     return;
   }
 }
-
-          if (event.body && event.body.toLowerCase().startsWith(prefix.toLowerCase()) && aliases(command)?.name) {
-
-let j = JSON.parse(fs.readFileSync('./data/history.json', 'utf-8'));
-
-  let blacklist = j.find(item => item.userid === userid) || { userid: userid, blacklist: [] };
-
+        if (event.body && event.body.toLowerCase().startsWith(prefix.toLowerCase()) && aliases(command)?.name) {
               if (blacklist.includes(event.senderID)) {
                   api.sendMessage(
                     "We're sorry, but you've been banned from using the bot. If you believe this is a mistake or would like to appeal, please contact one of the bot admins for further assistance.",
