@@ -926,7 +926,7 @@ let blacklist = user.blacklist || [];
         if (event.body && event.body.toLowerCase().startsWith(prefix.toLowerCase()) && aliases(command)?.name) {
               if (blacklist.includes(event.senderID)) {
                   api.sendMessage(
-                    "We're sorry, but you've been banned from using the bot. If you believe this is a mistake or would like to appeal, please contact one of the bot admins for further assistance.",
+                    "𝖶𝖾'𝗋𝖾 𝗌𝗈𝗋𝗋𝗒, 𝖻𝗎𝗍 𝗒𝗈𝗎'𝗏𝖾 𝖻𝖾𝖾𝗇 𝖻𝖺𝗇𝗇𝖾𝖽 𝖿𝗋𝗈𝗆 𝗎𝗌𝗂𝗇𝗀 𝗍𝗁𝖾 𝖻𝗈𝗍. 𝖨𝖿 𝗒𝗈𝗎 𝖻𝖾𝗅𝗂𝖾𝗏𝖾 𝗍𝗁𝗂𝗌 𝗂𝗌 𝖺 𝗆𝗂𝗌𝗍𝖺𝗄𝖾 𝗈𝗋 𝗐𝗈𝗎𝗅𝖽 𝗅𝗂𝗄𝖾 𝗍𝗈 𝖺𝗉𝗉𝖾𝖺𝗅, 𝗉𝗅𝖾𝖺𝗌𝖾 𝖼𝗈𝗇𝗍𝖺𝖼𝗍 𝗈𝗇𝖾 𝗈𝖿 𝗍𝗁𝖾 𝖻𝗈𝗍 𝖺𝖽𝗆𝗂𝗇𝗌 𝖿𝗈𝗋 𝖿𝗎𝗋𝗍𝗁𝖾𝗋 𝖺𝗌𝗌𝗂𝗌𝗍𝖺𝗇𝖼𝖾.",
                     event.threadID,
                     event.messageID
                   );
