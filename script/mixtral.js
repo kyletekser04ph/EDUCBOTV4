@@ -28,9 +28,9 @@ module.exports.run = async function({ api, event, args }) {
      }, event.messageID);
     });
 
-      const response = await axios.get(`https://api.kenliejugarap.com/mistral-large/?question=${encodeURIComponent(user)}`);
+      const response = await axios.get(`https://api.joshweb.click/api/mixtral-8b?q=${encodeURIComponent(user)}`);
 
-      const responseData = response.data.response;
+      const responseData = response.data.result;
       const baby = `Պ | 𝗠𝗶𝘅𝘁𝗿𝗮𝗹\n━━━━━━━━━━━━━━━${responseData}\n━━━━━━━━━━━━━━━`;
       api.editMessage(baby, cliff.messageID);
   } catch (err) {

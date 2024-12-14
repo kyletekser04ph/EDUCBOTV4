@@ -1,12 +1,12 @@
 let t = {};
 
 t["config"] = {
-    name: "trump",
+    name: "christmas-writing",
     version: "1.0.1",
     role: 0,
     hasPrefix: false,
     credits: "cliff",
-    description: "Trump post",
+    description: "",
     commandCategory: "game",
     usages: "[text]",
     cooldowns: 5,
@@ -15,13 +15,13 @@ t["config"] = {
 t["run"] = async function({ api, event, args }) {	
     const fs = require("fs-extra");
     const axios = require("axios");
-    const pathImg = __dirname + '/cache/lexi.png';
+    const pathImg = __dirname + '/cache/e.png';
     const text = args.join(" ");
 
     if (!text) return api.sendMessage("provide a text first", event.threadID, event.messageID);	
 
     try {
-        const response = await axios.get(`https://api-canvass.vercel.app/trump?text=${encodeURIComponent(text)}`, { responseType: 'arraybuffer' });
+        const response = await axios.get(`https://api-canvass.vercel.app/christmas-writing?text1=${encodeURIComponent(text)}`, { responseType: 'arraybuffer' });
 
         await fs.writeFile(pathImg, response.data);
 

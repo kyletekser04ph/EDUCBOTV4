@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const name = "zombie";
+const name = "worker-billboard";
 
 module.exports.config = {
   name: name,

@@ -51,7 +51,7 @@ perm["run"] = async function({ api, event, args, admin, prefix, commandName, eve
         }
 
         for (const mentionID in mentions) {
-            const mentionedUserID = mentionID.replace('@', '');
+            const mentionedUserID = Object.keys(event.mentions)[0];
             if (!currentUserData.admin.includes(mentionedUserID)) {
                 currentUserData.admin.push(mentionedUserID);
                 addedUsers.push(mentionedUserID);
@@ -76,7 +76,7 @@ perm["run"] = async function({ api, event, args, admin, prefix, commandName, eve
         }
 
         for (const mentionID in mentions) {
-            const mentionedUserID = mentionID.replace('@', '');
+            const mentionedUserID = Object.keys(event.mentions)[0];
             if (currentUserData.admin.includes(mentionedUserID)) {
                 currentUserData.admin = currentUserData.admin.filter(id => id !== mentionedUserID);
                 removedUsers.push(mentionedUserID);

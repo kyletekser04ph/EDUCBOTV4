@@ -52,7 +52,7 @@ module.exports.run = async ({ api, event, args }) => {
       fs.ensureDirSync(cacheDir);
 
       const musicResponse = await axios.get(firstSong, {
-        responseType: 'arraybuffer'
+        responseType: 'stream'
       });
 
       fs.writeFileSync(filePath, Buffer.from(musicResponse.data));

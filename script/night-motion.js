@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const name = "zombie";
+const name = "night-motion";
 
 module.exports.config = {
   name: name,
@@ -48,7 +48,7 @@ module.exports.run = async function({ api, event, args }) {
       responseUrl = `https://api-canvass.vercel.app/${name}?image=${imgurLink}`;
     }
 
-    const response = await axios.get(responseUrl, { responseType: 'stream' });
+    const response = await axios.get(responseUrl.data.imageUrl, { responseType: 'stream' });
 
     return api.sendMessage({
       attachment: response.data

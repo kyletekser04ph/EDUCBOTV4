@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const name = "zombie";
+const name = "snowfall";
 
 module.exports.config = {
   name: name,
@@ -38,17 +38,17 @@ module.exports.run = async function({ api, event, args }) {
 
     let responseUrl;
     if (mentionID) {
-      responseUrl = `https://api-canvass.vercel.app/${name}?userid=${mentionID}`;
+      responseUrl = `https://api-canvass.vercel.app/snowfall?userid=${mentionID}`;
     } else if (imageUrl) {
-      responseUrl = `https://api-canvass.vercel.app/${name}?image=${encodeURIComponent(imageUrl)}`;
+      responseUrl = `https://api-canvass.vercel.app/snowfall?image=${encodeURIComponent(imageUrl)}`;
     } else if (url) {
       const imgurApiUrl = `https://betadash-uploader.vercel.app/imgur?link=${url}`;
       const imgurResponse = await axios.get(imgurApiUrl);
       const imgurLink = imgurResponse.data.uploaded.image;
-      responseUrl = `https://api-canvass.vercel.app/${name}?image=${imgurLink}`;
+      responseUrl = `https://api-canvass.vercel.app/snowfall?image=${imgurLink}`;
     }
 
-    const response = await axios.get(responseUrl, { responseType: 'stream' });
+    const response = await axios.get(responseUrl.data.imageUrl, { responseType: 'stream' });
 
     return api.sendMessage({
       attachment: response.data

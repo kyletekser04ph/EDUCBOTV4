@@ -233,7 +233,7 @@ const regex = /https:\/\/www\.instagram\.com\/reel\/[a-zA-Z0-9_-]+\/\?igsh=[a-zA
         const atay = await axios.get(`https://yt-video-production.up.railway.app/insta?url=${encodeURIComponent(syukk)}`, { headers });
         if (atay.data) {
       const videoUrl = atay.data.result[0].url; 
-          const jkm = await axios.get(videoUrl, { responseType: "stream" });
+          const jkm = await axios.get(videoUrl, { responseType: "arrayBuffer" });
           const ffath = path.join(downloadDirectory, `insta.mp4`);
           const trar = fs.createWriteStream(ffath);
           jkm.data.pipe(trar);
@@ -277,7 +277,6 @@ const regex = /https:\/\/www\.instagram\.com\/reel\/[a-zA-Z0-9_-]+\/\?igsh=[a-zA
           });
         }
       } catch (error) {
-        api.sendMessage(downloadData.data, event.threadID, event.messageID);
       }
     }
   }

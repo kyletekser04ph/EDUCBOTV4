@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const name = "zombie";
+const name = "dorm-lights";
 
 module.exports.config = {
   name: name,

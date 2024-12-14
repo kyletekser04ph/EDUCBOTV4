@@ -1,14 +1,12 @@
 const axios = require('axios');
 
-const name = "zombie";
-
 module.exports.config = {
-  name: name,
+  name: "monalisa",
   role: 0,
   credits: "Cliff",
-  description: `${name} canvas`,
+  description: "monalisa canvas",
   hasPrefix: false,
-  usages: "{pn} @mention {pn} reply {pn} reply by image",
+  usages: "{pn} @mention {pn} reply",
   cooldown: 5,
   aliases: [],
 };
@@ -38,14 +36,14 @@ module.exports.run = async function({ api, event, args }) {
 
     let responseUrl;
     if (mentionID) {
-      responseUrl = `https://api-canvass.vercel.app/${name}?userid=${mentionID}`;
+      responseUrl = `https://api-canvass.vercel.app/monalisa?userid=${mentionID}`;
     } else if (imageUrl) {
-      responseUrl = `https://api-canvass.vercel.app/${name}?image=${encodeURIComponent(imageUrl)}`;
+      responseUrl = `https://api-canvass.vercel.app/monalisa?image=${encodeURIComponent(imageUrl)}`;
     } else if (url) {
       const imgurApiUrl = `https://betadash-uploader.vercel.app/imgur?link=${url}`;
       const imgurResponse = await axios.get(imgurApiUrl);
       const imgurLink = imgurResponse.data.uploaded.image;
-      responseUrl = `https://api-canvass.vercel.app/${name}?image=${imgurLink}`;
+      responseUrl = `https://api-canvass.vercel.app/monalisa?mage=${imgurLink}`;
     }
 
     const response = await axios.get(responseUrl, { responseType: 'stream' });
@@ -58,3 +56,4 @@ module.exports.run = async function({ api, event, args }) {
     return api.sendMessage(`Error: ${err.message}`, event.threadID, event.messageID);
   }
 };
+

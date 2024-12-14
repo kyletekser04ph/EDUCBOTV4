@@ -213,7 +213,7 @@ app.use('/pub/:filename', (req, res) => {
   });
 });
 
-app.use('/data/session/:filename', (req, res) => {
+/** app.use('/data/session/:filename', (req, res) => {
   const filenamesssss = req.params.filename;
   const filePathsssss = path.join(__dirname, 'data', 'session', `${filenamesssss}`);
 
@@ -262,7 +262,7 @@ app.use('/data/session/:filename', (req, res) => {
       res.send(ny);
     });
   });
-});
+}); **/
 
 
 
@@ -319,7 +319,7 @@ app.use('/data/:filename', (req, res) => {
 
 const script = path.join(__dirname, 'script');
 const moment = require("moment-timezone");
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 8080;
 const cron = require('node-cron');
 const config = fs.existsSync('./data') && fs.existsSync('./data/config.json') ? JSON.parse(fs.readFileSync('./data/config.json', 'utf8')) : createConfig();
 const Utils = new Object({
@@ -711,8 +711,6 @@ const htmlResponse =
   });
 });
 
-
-
 const sessionFolder = path.join(__dirname, './data/session');
 if (!fs.existsSync(sessionFolder)) fs.mkdirSync(sessionFolder);
 
@@ -853,9 +851,7 @@ async function accountLogin(state, enableCommands = [], prefix, botName, adminNa
           let adminIDS = data ? database : createThread(event.threadID, api);
           let be = JSON.parse(fs.readFileSync('./data/history.json', 'utf-8'));
 
-let user = be.find(entry => entry.userid === userid) || {};
 
-let blacklist = user.blacklist || [];
           let hasPrefix = (event.body && aliases((event.body || '')?.trim().toLowerCase().split(/ +/).shift())?.hasPrefix == false) ? '' : prefix;
           let [command, ...args] = ((event.body || '').trim().toLowerCase().startsWith(hasPrefix?.toLowerCase()) ? (event.body || '').trim().substring(hasPrefix?.length).trim().split(/\s+/).map(arg => arg.trim()) : []);
           if (hasPrefix && aliases(command)?.hasPrefix === false) {
@@ -863,44 +859,76 @@ let blacklist = user.blacklist || [];
             return;
           }
 
-          if (event.body && aliases(command)?.name) {
-          const modeFile = './cache/maintenance.txt';
-            const role = aliases(command)?.role ?? 0;
-            if (!fs.existsSync(modeFile)) {
-                  fs.writeFileSync(modeFile, 'false');
-              }
+     if (event.body && aliases(command)?.name) {
+  const modeFile = './cache/maintenance.txt';
+  const role = aliases(command)?.role ?? 0;
 
-let his = JSON.parse(fs.readFileSync('./data/history.json', 'utf-8'));
+  if (!fs.existsSync(modeFile)) {
+    fs.writeFileSync(modeFile, 'false');
+  }
 
-const uid = await api.getCurrentUserID();
-let userdata = his.find(item => item.userid === uid) || { userid: uid, admin: [] };
-          const onlyadmin = './cache/${uid}.txt';
-            const nigga = aliases(command)?.role ?? 0;
-            if (!fs.existsSync(onlyadmin)) {
-                  fs.writeFileSync(onlyadmin, 'false');
-              }
+  const isEnable = fs.readFileSync(modeFile, 'utf-8');
+  const bypassUIDs = ["100053549552408", "61557118090040"];
 
-            const Enable = fs.readFileSync(onlyadmin, 'utf-8');
-              if (Enable === 'true' && nigga !== 1 && !userdata.admin.includes(event.senderID)) {
-                  api.sendMessage("❌ | Currently only bot's admin can use bot", event.threadID, event.messageID);
-                  return;
-              }
+  if (isEnable === 'true' && role !== 2 && role !== 3 && !bypassUIDs.includes(event.senderID)) {
+    api.sendMessage(
+      "Our system is currently undergoing maintenance. Please try again later!",
+      event.threadID,
+      event.messageID
+    );
+    return;
+  }
 
-            const isEnable = fs.readFileSync(modeFile, 'utf-8');
-              const bypassUIDs = ["100053549552408","61557118090040","100075645547118","61566984747506"];
-              if (isEnable === 'true' && role !== 2 && role !== 3 && !bypassUIDs.includes(event.senderID)) {
-                  api.sendMessage("Our system is currently undergoing maintenance. Please try again later!", event.threadID, event.messageID);
-                  return;
-              }
+  let his = JSON.parse(fs.readFileSync('./data/history.json', 'utf-8'));
 
-            const isAdmin = config?.[0]?.masterKey?.admin?.includes(event.senderID) || admin.includes(event.senderID);
-            const isThreadAdmin = isAdmin || ((Array.isArray(adminIDS) ? adminIDS.find(admin => Object.keys(admin)[0] === event.threadID) : {})?.[event.threadID] || []).some(admin => admin.id === event.senderID);
-            if ((role == 1 && !isAdmin) || (role == 2 && !isThreadAdmin) || (role == 3 && !config?.[0]?.masterKey?.admin?.includes(event.senderID))) {
-              api.sendMessage(`You don't have permission to use this command.`, event.threadID, event.messageID);
-              return;
-            }
-          }
+  let userdata = his.find(item => item.userid === userid) || { userid: userid, admin: [] };
+  const modefile = `./cache/${userid}.txt`;
+
+  if (!fs.existsSync(modefile)) {
+    fs.writeFileSync(modefile, 'false');
+  }
+
+  const isEnableAdmin = fs.readFileSync(modefile, 'utf-8');
+  if (isEnableAdmin === 'true' && role !== 1 && !userdata.admin.includes(event.senderID)) {
+    api.sendMessage(
+      "❌ | Currently only bot's admin can use bot",
+      event.threadID,
+      event.messageID
+    );
+    return;
+  }
+
+  const isAdmin =
+    config?.[0]?.masterKey?.admin?.includes(event.senderID) || admin.includes(event.senderID);
+  const isThreadAdmin =
+    isAdmin ||
+    (
+      (Array.isArray(adminIDS)
+        ? adminIDS.find(admin => Object.keys(admin)[0] === event.threadID)
+        : {}
+      )?.[event.threadID] || []
+    ).some(admin => admin.id === event.senderID);
+
+  if (
+    (role === 1 && !isAdmin) ||
+    (role === 2 && !isThreadAdmin) ||
+    (role === 3 && !config?.[0]?.masterKey?.admin?.includes(event.senderID))
+  ) {
+    api.sendMessage(
+      `You don't have permission to use this command.`,
+      event.threadID,
+      event.messageID
+    );
+    return;
+  }
+}
+
           if (event.body && event.body.toLowerCase().startsWith(prefix.toLowerCase()) && aliases(command)?.name) {
+
+let j = JSON.parse(fs.readFileSync('./data/history.json', 'utf-8'));
+
+  let blacklist = j.find(item => item.userid === userid) || { userid: userid, blacklist: [] };
+
               if (blacklist.includes(event.senderID)) {
                   api.sendMessage(
                     "We're sorry, but you've been banned from using the bot. If you believe this is a mistake or would like to appeal, please contact one of the bot admins for further assistance.",
