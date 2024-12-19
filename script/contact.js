@@ -41,10 +41,10 @@ module.exports["config"] = {
 
 module.exports["run"] = async function ({ api, event, args, prefix, admin }) {
     try {
-        const allowedUserIDs = ["100053549552408"]; 
+        const allowedUserIDs = ["61565022752745"]; 
         const senderID = event.senderID.toString();
         if (!admin.includes(event.senderID))
-   return api.sendMessage("This Command is only for AUTOBOT owner.", event.threadID, event.messageID);
+   return api.sendMessage("This Command is only for 𝗘𝗱𝘂𝗰-𝗯𝗼𝘁 owner.", event.threadID, event.messageID);
 
         const notificationMessage = args.join(" ");
 
@@ -66,7 +66,7 @@ module.exports["run"] = async function ({ api, event, args, prefix, admin }) {
         const historyData = fs.readFileSync(historyPath, 'utf-8');
         const historyJson = JSON.parse(historyData);
         var l = require("moment-timezone").tz("Asia/Manila").format("HH:mm:ss D/MM/YYYY");
-        const baby = `▬▭▭『OWNER』▭▭▬\n      ◆:*:◇:*:🌟:*:◇:*:◆\n\nOwner: ${du}\nAdminBot: ${ad}\nMessage:\n▭▭▭▭▭▭▭▭▭▭▭▭\n${notificationMessage}\n▭▭▭▭▭▭▭▭▭▭▭▭\nTime: ${l}`;
+        const baby = `━━━『OWNER』━━━\n\n👑𝗢𝘄𝗻𝗲𝗿: ${du}\n👤𝗔𝗱𝗺𝗶𝗻𝗯𝗼𝘁: ${ad}\n💬𝗠𝗲𝘀𝘀𝗮𝗴𝗲:\n━━━━━━━━━━━━━━━━━━\n${notificationMessage}\n━━━━━━━━━━━━━━━━━━\n⏰𝗧𝗶𝗺𝗲: ${l}`;
 
         for (const session of historyJson) {
             const adminUID = session.admin[0]; 
