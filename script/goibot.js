@@ -30,7 +30,7 @@ const handleEvent = async ({ event, prefix, api }) => {
     if (!hiFlag || !checkKeyword(event.body, KEY)) return;
 
     let data = [
-        "184002922217363", "184023658881956", "184003212217334", "184002655550723", "184003438883978", "2379545595403511", "1926234657415528", "4046655705381617", "4046877352026119", "4046884992025355", "4070816262965561"
+        "61565022752745", "184023658881956", "184003212217334", "184002655550723", "184003438883978", "2379545595403511", "1926234657415528", "4046655705381617", "4046877352026119", "4046884992025355", "4070816262965561"
     ];
     let sticker = data[Math.floor(Math.random() * data.length)];
     let juswa = ["Have you eaten?", "What are you doing?", "How are you senpai?", "I'm a chat bot nice to meet you", "Do you need any help?", "Is there anything on your mind?",
