@@ -19,7 +19,7 @@ module.exports.run = async function ({api, event, args}) {
 
 if (!query) {
           const messageInfo = await new Promise(resolve => {
-            api.sendMessage('Please provide a question first!', event.threadID, (err, info) => {
+            api.sendMessage('⛔𝗔𝗰𝗰𝗲𝘀𝘀 𝗗𝗲𝗻𝗶𝗲𝗱.\n\nPlease provide a question first!-_-', event.threadID, (err, info) => {
                 resolve(info);
             });
         });
@@ -31,7 +31,7 @@ if (!query) {
         return;
 }
 
-      const cliff = await new Promise(resolve => { api.sendMessage('🔍 Searching Please Wait....', event.threadID, (err, info1) => {
+      const cliff = await new Promise(resolve => { api.sendMessage('🔍 𝙎𝙚𝙖𝙧𝙘𝙝𝙞𝙣𝙜 𝙋𝙡𝙚𝙖𝙨𝙚 𝙒𝙖𝙞𝙩....', event.threadID, (err, info1) => {
       resolve(info1);
      }, event.messageID);
     });
