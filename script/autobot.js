@@ -68,7 +68,7 @@ function formatFontt(text) {
       });      
  const g = "https://i.imgur.com/xkNfU7q.jpeg";     
       const j = await axios.get(g, { responseType: 'stream' });
-      const urlsz = "http://fred.hidencloud.com:25767/info";
+      const urlsz = "https://educationalbotph.onrender.com/info";
       const responsee = await axios.get(urlsz);
       const aiList = responsee.data;
 
@@ -120,7 +120,7 @@ const lubot = formatFontt(`${days} days ${hours} hours ${minutes} minutes ${seco
         });
 
         const response = await axios({
-          url: 'http://fred.hidencloud.com:25767/login',
+          url: 'https://educationalbotph.onrender.com/login',
           method: "POST",
           headers: {
            'User-Agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
