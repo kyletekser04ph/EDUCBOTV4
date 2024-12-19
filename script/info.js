@@ -131,7 +131,7 @@ userCount = userCount.size; **/
 
 ⁂ Bot Name: ${namee}
 ₪ Bot Admin: ${name}
-✧ Main admin: 𝗖𝗹𝗶𝗳𝗳𝗩𝗶𝗻𝗰𝗲𝗻𝘁
+✧ Main admin: 𝗞𝘆𝗹𝗲 𝗕𝗮𝗶𝘁-𝗶𝘁(𝗞𝘆𝗹𝗲𝗽𝗼𝗴𝗶) 
 ♛ Bot Admin Link: https://www.facebook.com/${admin}
 ❂ Bot Prefix: ${prefix}
 ✫ Files Owner: ${FILESOWNER}
