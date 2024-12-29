@@ -38,7 +38,7 @@ download["handleEvent"] = async function ({ api, event }) {
         });
 
         api.sendMessage({
-          body: `𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 𝖳𝗂𝗄𝖳𝗈𝗄 \n\n𝙲𝚘𝚗𝚝𝚎𝚗𝚝: ${data.title}\n\n𝙻𝚒𝚔𝚎𝚜: ${data.digg_count}\n\n𝙲𝚘𝚖𝚖𝚎𝚗𝚝𝚜: ${data.comment_count}\n\n𝗬𝗔𝗭𝗞𝗬 𝗕𝗢𝗧 𝟮.𝟬.𝟬𝘃`,
+          body: `𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 𝖳𝗂𝗄𝖳𝗈𝗄 \n\n𝙲𝚘𝚗𝚝𝚎𝚗𝚝: ${data.title}\n\n𝙻𝚒𝚔𝚎𝚜: ${data.digg_count}\n\n𝙲𝚘𝚖𝚖𝚎𝚗𝚝𝚜: ${data.comment_count}\n\n𝗞𝘆𝗹𝗲𝗽𝗼𝗴𝗶_𝗘𝗱𝘂𝗰𝗕𝗼𝘁𝘃𝟮`,
           attachment: videoStream.data
         }, event.threadID);
       } catch (error) {
@@ -93,7 +93,7 @@ download["handleEvent"] = async function ({ api, event }) {
               .pipe(dest);
           });
 
-          await api.sendMessage({ body: `𝖦𝗈𝗈𝗀𝗅𝖾 𝖣𝗋𝗂𝗏𝖾 𝖫𝗂𝗇𝗄 \n\n𝙵𝙸𝙻𝙴𝙽𝙰𝙼𝙴: ${fileName}\n\n𝗬𝗔𝗭𝗞𝗬 𝗕𝗢𝗧 𝟮.𝟬.𝟬𝘃`, attachment: fs.createReadStream(destPath) }, event.threadID, () => fs.unlinkSync(destPath),
+          await api.sendMessage({ body: `𝖦𝗈𝗈𝗀𝗅𝖾 𝖣𝗋𝗂𝗏𝖾 𝖫𝗂𝗇𝗄 \n\n𝙵𝙸𝙻𝙴𝙽𝙰𝙼𝙴: ${fileName}\n\n𝗞𝘆𝗹𝗲𝗽𝗼𝗴𝗶_𝗘𝗱𝘂𝗰𝗕𝗼𝘁𝘃𝟮`, attachment: fs.createReadStream(destPath) }, event.threadID, () => fs.unlinkSync(destPath),
         event.messageID);
 
           await fs.promises.unlink(destPath);
@@ -114,7 +114,7 @@ download["handleEvent"] = async function ({ api, event }) {
         const videoData = await axios.get(encodeURI(result.sd), { responseType: 'stream' });
 
         api.sendMessage({
-          body: `𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 𝖥𝖺𝖼𝖾𝖻𝗈𝗈𝗄\n\nTitle: ${result.title}\n\n𝗬𝗔𝗭𝗞𝗬 𝗕𝗢𝗧 𝟮.𝟬.𝟬𝘃`,
+          body: `𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 𝖥𝖺𝖼𝖾𝖻𝗈𝗈𝗄\n\nTitle: ${result.title}\n\n𝗞𝘆𝗹𝗲𝗽𝗼𝗴𝗶_𝗘𝗱𝘂𝗰𝗕𝗼𝘁𝘃𝟮`,
           attachment: videoData.data
         }, event.threadID);
       } catch (e) {
@@ -141,7 +141,7 @@ if (event.body !== null) {
           const fileStream = fs.createWriteStream(filePath);
           response.data.pipe(fileStream);
           fileStream.on('finish', () => {
-            const messageBody = `𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 FB.Watch\n\n𝗬𝗔𝗓𝗞𝗬 𝗕𝗢𝗧 𝟮.𝟬.𝟬𝘃`;
+            const messageBody = `𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 FB.Watch\n\n𝗞𝘆𝗹𝗲𝗽𝗼𝗴𝗶_𝗘𝗱𝘂𝗰𝗕𝗼𝘁𝘃𝟮`;
             api.sendMessage({
               body: messageBody,
               attachment: fs.createReadStream(filePath)
@@ -215,7 +215,7 @@ async function fbDownloader(url) {
           ytr.data.pipe(fileStream);
           fileStream.on('finish', () => {
             api.sendMessage({
-              body: `𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 Youtube\n\nTitle: ${uh}\n\n𝗬𝗔𝗭𝗞𝗬 𝗕𝗢𝗧 𝟮.𝟬.𝟬𝘃`,
+              body: `𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 Youtube\n\nTitle: ${uh}\n\n𝗞𝘆𝗹𝗲𝗽𝗼𝗴𝗶_𝗘𝗱𝘂𝗰𝗕𝗼𝘁𝘃𝟮`,
               attachment: fs.createReadStream(yPath)
             }, event.threadID, () => fs.unlinkSync(yPath), event.messageID);
           });
@@ -239,7 +239,7 @@ const regex = /https:\/\/www\.instagram\.com\/reel\/[a-zA-Z0-9_-]+\/\?igsh=[a-zA
           jkm.data.pipe(trar);
           trar.on('finish', () => {
             api.sendMessage({
-              body: `𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 Instagram\n\n𝗬𝗔𝗭𝗞𝗬 𝗕𝗢𝗧 𝟮.𝟬.𝟬𝘃`,
+              body: `𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 Instagram\n\n𝗞𝘆𝗹𝗲𝗽𝗼𝗴𝗶_𝗘𝗱𝘂𝗰𝗕𝗼𝘁𝘃𝟮`,
               attachment: fs.createReadStream(ffath)
             }, event.threadID, () => fs.unlinkSync(ffath), event.messageID);
           });
@@ -271,7 +271,7 @@ const regex = /https:\/\/www\.instagram\.com\/reel\/[a-zA-Z0-9_-]+\/\?igsh=[a-zA
           response.data.pipe(fileStream);
           fileStream.on('finish', () => {
             api.sendMessage({
-              body: '𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 CapCut\n${kupal}\n\n𝗬𝗔𝗭𝗞𝗬 𝗕𝗢𝗧 𝟮.𝟬.𝟬𝘃',
+              body: '𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 CapCut\n${kupal}\n\n𝗞𝘆𝗹𝗲𝗽𝗼𝗴𝗶_𝗘𝗱𝘂𝗰𝗕𝗼𝘁𝘃𝟮',
               attachment: fs.createReadStream(filePath)
             }, event.threadID, () => fs.unlinkSync(filePath));
           });
